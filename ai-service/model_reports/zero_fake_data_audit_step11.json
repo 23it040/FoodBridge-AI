@@ -1,0 +1,47 @@
+{
+  "auditName": "Step 11 Recommendation Zero Fake Data Integrity Audit",
+  "auditTimestamp": "2026-08-14T11:27:00Z",
+  "fakeNGOs": 0,
+  "fakeCoordinates": 0,
+  "fakeDemand": 0,
+  "fakeCapacity": 0,
+  "fakeHistory": 0,
+  "defaultCoordinates": 0,
+  "hardcodedScores": 0,
+  "auditStatus": "PASSED",
+  "totalFindings": 4,
+  "findings": [
+    {
+      "file": "ai-service\\tests\\test_step10_decision_engine.py",
+      "line": 34,
+      "matchedPattern": "FAKE_NGO",
+      "lineContent": "assert audit[\"fakeNGOs\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step9_operational_intelligence.py",
+      "line": 34,
+      "matchedPattern": "FAKE_NGO",
+      "lineContent": "assert audit[\"fakeNGOs\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "backend\\services\\ngo.service.js",
+      "line": 20,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "password: Math.random().toString(36).slice(-8),",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "server\\src\\utils\\helpers.js",
+      "line": 4,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "return String(Math.floor(min + Math.random() * (max - min + 1)));",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "modelName": "FoodBridge NGO-Donation Recommender Engine",
+  "modelType": "RULE_BASED",
+  "status": "LIVE_RULE_BASED",
+  "version": "1.0.0",
+  "description": "Explainable real-time rule-based matching engine combining verified FoodBridge MongoDB NGOs and OpenStreetMap external organizations.",
+  "factors": [
+    {
+      "name": "distance",
+      "weight": 0.35,
+      "requiredFields": ["donorLatitude", "donorLongitude", "ngoLatitude", "ngoLongitude"],
+      "calculation": "Haversine formula straight-line distance in kilometers",
+      "availabilityRule": "Available when both donor and NGO coordinates exist and are within valid bounds (-90 to 90 lat, -180 to 180 lng)",
+      "normalizationRule": "Max score (1.0) for distance <= 1km, linear decay down to 0.0 at 25km"
+    },
+    {
+      "name": "categoryMatch",
+      "weight": 0.25,
+      "requiredFields": ["foodCategory"],
+      "calculation": "Exact or normalized match between donation category and NGO historical request categories",
+      "availabilityRule": "Available when donation category is defined",
+      "normalizationRule": "1.0 for direct category match, 0.5 for general match, 0.0 for no match"
+    },
+    {
+      "name": "expiryUrgency",
+      "weight": 0.15,
+      "requiredFields": ["expiryTime"],
+      "calculation": "Calculates remaining hours until donation expiry (CRITICAL < 6h, URGENT < 24h, NORMAL >= 24h)",
+      "availabilityRule": "Available when valid expiry timestamp exists",
+      "normalizationRule": "Higher urgency favors closer NGOs to minimize transportation time"
+    },
+    {
+      "name": "historicalDemand",
+      "weight": 0.15,
+      "requiredFields": ["ngoId", "foodCategory"],
+      "calculation": "Count of historical FoodRequest records created by NGO for the specific food category",
+      "availabilityRule": "Available for MongoDB NGOs with historical request records; marked unavailable for OSM entries",
+      "normalizationRule": "Score scales with historical category request volume"
+    },
+    {
+      "name": "currentWorkload",
+      "weight": 0.05,
+      "requiredFields": ["ngoId"],
+      "calculation": "Count of currently active/pending FoodRequest records for the NGO",
+      "availabilityRule": "Available for MongoDB NGOs; marked unavailable if capacity is not stored",
+      "normalizationRule": "Slight penalty for high active pending workload to prevent overloading"
+    },
+    {
+      "name": "verificationStatus",
+      "weight": 0.05,
+      "requiredFields": ["isVerified", "verificationStatus"],
+      "calculation": "Verification check against MongoDB User record",
+      "availabilityRule": "Available for MongoDB NGOs (1.0); marked EXTERNAL (0.5) for OSM entries",
+      "normalizationRule": "1.0 for verified MongoDB partners, 0.5 for external OSM facilities"
+    }
+  ],
+  "dynamicNormalization": "If any factor data is unavailable, the factor is placed in factorsUnavailable and the final Match Score is normalized strictly over the sum of weights of available factors."
+}
