@@ -1,0 +1,87 @@
+{
+  "datasetName": "Food Demand Forecasting",
+  "source": "Kaggle",
+  "synthetic": false,
+  "rawRows": 456548,
+  "mergedRows": 456548,
+  "usableRows": 456548,
+  "rawColumns": 9,
+  "mergedColumns": 15,
+  "columnNames": [
+    "id",
+    "week",
+    "center_id",
+    "meal_id",
+    "checkout_price",
+    "base_price",
+    "emailer_for_promotion",
+    "homepage_featured",
+    "num_orders",
+    "city_code",
+    "region_code",
+    "center_type",
+    "op_area",
+    "category",
+    "cuisine"
+  ],
+  "missingValues": {
+    "id": 0,
+    "week": 0,
+    "center_id": 0,
+    "meal_id": 0,
+    "checkout_price": 0,
+    "base_price": 0,
+    "emailer_for_promotion": 0,
+    "homepage_featured": 0,
+    "num_orders": 0,
+    "city_code": 0,
+    "region_code": 0,
+    "center_type": 0,
+    "op_area": 0,
+    "category": 0,
+    "cuisine": 0
+  },
+  "duplicateRows": 0,
+  "target": "num_orders",
+  "uniqueCategories": [
+    "Beverages",
+    "Biryani",
+    "Desert",
+    "Extras",
+    "Fish",
+    "Other Snacks",
+    "Pasta",
+    "Pizza",
+    "Rice Bowl",
+    "Salad",
+    "Sandwich",
+    "Seafood",
+    "Soup",
+    "Starters"
+  ],
+  "uniqueCuisines": [
+    "Continental",
+    "Indian",
+    "Italian",
+    "Thai"
+  ],
+  "uniqueCenterTypes": [
+    "TYPE_A",
+    "TYPE_B",
+    "TYPE_C"
+  ],
+  "uniqueCentersCount": 77,
+  "uniqueMealsCount": 51,
+  "dateRange": {
+    "startWeek": 1,
+    "endWeek": 145,
+    "totalWeeks": 145
+  },
+  "targetStats": {
+    "min": 13.0,
+    "max": 24299.0,
+    "mean": 261.8727603669275,
+    "median": 136.0,
+    "std": 395.922797742466
+  }
+}

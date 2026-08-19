@@ -1,0 +1,274 @@
+{
+  "modelScope": "Milk quality classification",
+  "dataset": "Milk Quality Dataset (milknew.csv)",
+  "synthetic": false,
+  "foodBridgeTrained": false,
+  "split": {
+    "trainRows": 741,
+    "valRows": 159,
+    "testRows": 159
+  },
+  "models": {
+    "logistic_regression": {
+      "validation": {
+        "accuracy": 0.8239,
+        "precision_macro": 0.8259,
+        "recall_macro": 0.8285,
+        "f1_macro": 0.8205,
+        "f1_weighted": 0.8272,
+        "roc_auc_macro": 0.9177,
+        "confusion_matrix": [
+          [
+            53,
+            2,
+            9
+          ],
+          [
+            5,
+            44,
+            7
+          ],
+          [
+            5,
+            0,
+            34
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.8616,
+        "precision_macro": 0.8532,
+        "recall_macro": 0.8624,
+        "f1_macro": 0.8553,
+        "f1_weighted": 0.8636,
+        "roc_auc_macro": 0.9418,
+        "confusion_matrix": [
+          [
+            56,
+            3,
+            6
+          ],
+          [
+            2,
+            48,
+            6
+          ],
+          [
+            4,
+            1,
+            33
+          ]
+        ]
+      }
+    },
+    "random_forest": {
+      "validation": {
+        "accuracy": 0.9937,
+        "precision_macro": 0.9917,
+        "recall_macro": 0.9948,
+        "f1_macro": 0.9932,
+        "f1_weighted": 0.9937,
+        "roc_auc_macro": 1.0,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            1
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            39
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.9874,
+        "precision_macro": 0.9833,
+        "recall_macro": 0.9897,
+        "f1_macro": 0.9862,
+        "f1_weighted": 0.9875,
+        "roc_auc_macro": 0.9984,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            2
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            38
+          ]
+        ]
+      }
+    },
+    "gradient_boosting": {
+      "validation": {
+        "accuracy": 0.9937,
+        "precision_macro": 0.9917,
+        "recall_macro": 0.9948,
+        "f1_macro": 0.9932,
+        "f1_weighted": 0.9937,
+        "roc_auc_macro": 0.9985,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            1
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            39
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.9874,
+        "precision_macro": 0.9833,
+        "recall_macro": 0.9897,
+        "f1_macro": 0.9862,
+        "f1_weighted": 0.9875,
+        "roc_auc_macro": 0.9985,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            2
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            38
+          ]
+        ]
+      }
+    },
+    "hist_gradient_boosting": {
+      "validation": {
+        "accuracy": 0.9937,
+        "precision_macro": 0.9917,
+        "recall_macro": 0.9948,
+        "f1_macro": 0.9932,
+        "f1_weighted": 0.9937,
+        "roc_auc_macro": 0.9999,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            1
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            39
+          ]
+        ]
+      },
+      "test": {
+        "accuracy": 0.9874,
+        "precision_macro": 0.9833,
+        "recall_macro": 0.9897,
+        "f1_macro": 0.9862,
+        "f1_weighted": 0.9875,
+        "roc_auc_macro": 0.9999,
+        "confusion_matrix": [
+          [
+            63,
+            0,
+            2
+          ],
+          [
+            0,
+            56,
+            0
+          ],
+          [
+            0,
+            0,
+            38
+          ]
+        ]
+      }
+    }
+  },
+  "selectedModel": "random_forest",
+  "selectedModelMetrics": {
+    "validation": {
+      "accuracy": 0.9937,
+      "precision_macro": 0.9917,
+      "recall_macro": 0.9948,
+      "f1_macro": 0.9932,
+      "f1_weighted": 0.9937,
+      "roc_auc_macro": 1.0,
+      "confusion_matrix": [
+        [
+          63,
+          0,
+          1
+        ],
+        [
+          0,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          39
+        ]
+      ]
+    },
+    "test": {
+      "accuracy": 0.9874,
+      "precision_macro": 0.9833,
+      "recall_macro": 0.9897,
+      "f1_macro": 0.9862,
+      "f1_weighted": 0.9875,
+      "roc_auc_macro": 0.9984,
+      "confusion_matrix": [
+        [
+          63,
+          0,
+          2
+        ],
+        [
+          0,
+          56,
+          0
+        ],
+        [
+          0,
+          0,
+          38
+        ]
+      ]
+    }
+  }
+}

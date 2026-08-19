@@ -1,0 +1,46 @@
+{
+  "modelName": "demand",
+  "version": "1.0.0",
+  "trainingDataset": "Food Demand Forecasting",
+  "trainingSource": "Kaggle",
+  "synthetic": false,
+  "syntheticData": false,
+  "FoodBridgeCompatible": true,
+  "foodBridgeTrained": false,
+  "trainingDate": "2026-08-14",
+  "trainingSamples": 350918,
+  "validationSamples": 49141,
+  "testSamples": 49298,
+  "features": [
+    "category",
+    "center_type",
+    "week",
+    "op_area",
+    "lag_1",
+    "rolling_3_mean"
+  ],
+  "target": "num_orders",
+  "algorithm": "gradient_boosting",
+  "metrics": {
+    "MAE": 92.1543,
+    "RMSE": 224.9484,
+    "R2": 0.5874,
+    "MAPE": 75.1287,
+    "WAPE": 38.2185,
+    "sMAPE": 45.3706
+  },
+  "baselineComparison": {
+    "selectedModel": "gradient_boosting",
+    "modelTestWAPE": 38.2185,
+    "baselineTestWAPE": 40.2231,
+    "wapeReductionPercentagePoints": 2.0,
+    "modelTestR2": 0.5874,
+    "baselineTestR2": 0.4363,
+    "r2Improvement": 0.1511,
+    "mlOutperformsBaseline": true,
+    "conclusion": "Gradient Boosting ML model outperforms naive previous-week baseline (WAPE reduced from 40.22% to 38.22%, R\u00b2 increased from 0.4363 to 0.5874)."
+  },
+  "status": "EXTERNAL_DATA_MODEL",
+  "uncertainty": "Prediction uncertainty is not calibrated.",
+  "description": "Initial model trained on public food-demand dataset (Kaggle). Not trained on FoodBridge historical data."
+}

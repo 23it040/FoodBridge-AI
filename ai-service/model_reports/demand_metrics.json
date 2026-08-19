@@ -1,0 +1,127 @@
+{
+  "dataset": "Food Demand Forecasting",
+  "synthetic": false,
+  "target": "num_orders",
+  "split": {
+    "trainWeeks": "1-115",
+    "trainSamples": 350918,
+    "valWeeks": "116-130",
+    "valSamples": 49141,
+    "testWeeks": "131-145",
+    "testSamples": 49298
+  },
+  "baseline": {
+    "description": "Naive Previous-Week Demand (lag_1)",
+    "validation": {
+      "MAE": 105.6541,
+      "RMSE": 252.863,
+      "R2": 0.5534,
+      "MAPE": 67.9738,
+      "WAPE": 41.2543,
+      "sMAPE": 48.2102
+    },
+    "test": {
+      "MAE": 96.9877,
+      "RMSE": 262.948,
+      "R2": 0.4363,
+      "MAPE": 65.2813,
+      "WAPE": 40.2231,
+      "sMAPE": 47.0877
+    }
+  },
+  "models": {
+    "ridge": {
+      "validation": {
+        "MAE": 106.9493,
+        "RMSE": 237.7382,
+        "R2": 0.6052,
+        "MAPE": 89.095,
+        "WAPE": 41.76,
+        "sMAPE": 52.583
+      },
+      "test": {
+        "MAE": 97.8941,
+        "RMSE": 232.7603,
+        "R2": 0.5583,
+        "MAPE": 85.6669,
+        "WAPE": 40.599,
+        "sMAPE": 51.4794
+      }
+    },
+    "random_forest": {
+      "validation": {
+        "MAE": 112.0479,
+        "RMSE": 246.0464,
+        "R2": 0.5771,
+        "MAPE": 84.3209,
+        "WAPE": 43.7508,
+        "sMAPE": 47.4133
+      },
+      "test": {
+        "MAE": 100.0142,
+        "RMSE": 235.199,
+        "R2": 0.549,
+        "MAPE": 76.426,
+        "WAPE": 41.4782,
+        "sMAPE": 46.2082
+      }
+    },
+    "gradient_boosting": {
+      "validation": {
+        "MAE": 102.9036,
+        "RMSE": 234.5497,
+        "R2": 0.6157,
+        "MAPE": 80.5234,
+        "WAPE": 40.1803,
+        "sMAPE": 46.507
+      },
+      "test": {
+        "MAE": 92.1543,
+        "RMSE": 224.9484,
+        "R2": 0.5874,
+        "MAPE": 75.1287,
+        "WAPE": 38.2185,
+        "sMAPE": 45.3706
+      }
+    },
+    "hist_gradient_boosting": {
+      "validation": {
+        "MAE": 100.4181,
+        "RMSE": 238.5662,
+        "R2": 0.6025,
+        "MAPE": 80.9591,
+        "WAPE": 39.2098,
+        "sMAPE": 46.811
+      },
+      "test": {
+        "MAE": 89.5008,
+        "RMSE": 227.0627,
+        "R2": 0.5796,
+        "MAPE": 76.5754,
+        "WAPE": 37.1181,
+        "sMAPE": 45.6518
+      }
+    }
+  },
+  "selectedModel": "gradient_boosting",
+  "selectionReason": "Selected 'gradient_boosting' because it achieved the highest validation R\u00b2 (0.6157) and superior WAPE over baseline.",
+  "testMetrics": {
+    "MAE": 92.1543,
+    "RMSE": 224.9484,
+    "R2": 0.5874,
+    "MAPE": 75.1287,
+    "WAPE": 38.2185,
+    "sMAPE": 45.3706
+  },
+  "modelVsBaselineComparison": {
+    "selectedModel": "gradient_boosting",
+    "modelTestWAPE": 38.2185,
+    "baselineTestWAPE": 40.2231,
+    "wapeReductionPercentagePoints": 2.0,
+    "modelTestR2": 0.5874,
+    "baselineTestR2": 0.4363,
+    "r2Improvement": 0.1511,
+    "mlOutperformsBaseline": true,
+    "conclusion": "Gradient Boosting ML model outperforms naive previous-week baseline (WAPE reduced from 40.22% to 38.22%, R\u00b2 increased from 0.4363 to 0.5874)."
+  }
+}

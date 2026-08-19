@@ -1,0 +1,139 @@
+{
+  "model": "gradient_boosting",
+  "dataset": "Food Demand Forecasting (Kaggle)",
+  "totalFeatures": 21,
+  "aggregatedFeatureImportance": [
+    {
+      "feature": "lag_1",
+      "aggregatedImportance": 0.625601,
+      "rank": 1
+    },
+    {
+      "feature": "rolling_3_mean",
+      "aggregatedImportance": 0.198506,
+      "rank": 2
+    },
+    {
+      "feature": "week",
+      "aggregatedImportance": 0.117278,
+      "rank": 3
+    },
+    {
+      "feature": "category",
+      "aggregatedImportance": 0.047744,
+      "rank": 4
+    },
+    {
+      "feature": "op_area",
+      "aggregatedImportance": 0.009772,
+      "rank": 5
+    },
+    {
+      "feature": "center_type",
+      "aggregatedImportance": 0.0011,
+      "rank": 6
+    }
+  ],
+  "detailedTransformedFeatureImportance": [
+    {
+      "feature": "lag_1",
+      "importance": 0.625601,
+      "rank": 1
+    },
+    {
+      "feature": "rolling_3_mean",
+      "importance": 0.198506,
+      "rank": 2
+    },
+    {
+      "feature": "week",
+      "importance": 0.117278,
+      "rank": 3
+    },
+    {
+      "feature": "category_Rice Bowl",
+      "importance": 0.017146,
+      "rank": 4
+    },
+    {
+      "feature": "category_Sandwich",
+      "importance": 0.014006,
+      "rank": 5
+    },
+    {
+      "feature": "op_area",
+      "importance": 0.009772,
+      "rank": 6
+    },
+    {
+      "feature": "category_Beverages",
+      "importance": 0.009325,
+      "rank": 7
+    },
+    {
+      "feature": "category_Pizza",
+      "importance": 0.002821,
+      "rank": 8
+    },
+    {
+      "feature": "category_Salad",
+      "importance": 0.002408,
+      "rank": 9
+    },
+    {
+      "feature": "category_Seafood",
+      "importance": 0.001676,
+      "rank": 10
+    },
+    {
+      "feature": "center_type_TYPE_A",
+      "importance": 0.000463,
+      "rank": 11
+    },
+    {
+      "feature": "center_type_TYPE_C",
+      "importance": 0.000404,
+      "rank": 12
+    },
+    {
+      "feature": "center_type_TYPE_B",
+      "importance": 0.000233,
+      "rank": 13
+    },
+    {
+      "feature": "category_Desert",
+      "importance": 0.0001,
+      "rank": 14
+    },
+    {
+      "feature": "category_Pasta",
+      "importance": 9.3e-05,
+      "rank": 15
+    },
+    {
+      "feature": "category_Biryani",
+      "importance": 8.1e-05,
+      "rank": 16
+    },
+    {
+      "feature": "category_Other Snacks",
+      "importance": 4.8e-05,
+      "rank": 17
+    },
+    {
+      "feature": "category_Starters",
+      "importance": 2.6e-05,
+      "rank": 18
+    },
+    {
+      "feature": "category_Extras",
+      "importance": 1.4e-05,
+      "rank": 19
+    },
+    {
+      "feature": "category_Fish",
+      "importance": 0.0,
+      "rank": 20
+    }
+  ]
+}

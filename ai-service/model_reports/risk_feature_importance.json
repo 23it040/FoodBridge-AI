@@ -1,0 +1,50 @@
+{
+  "model": "random_forest",
+  "dataset": "Milk Quality Dataset (milknew.csv)",
+  "features": [
+    "pH",
+    "temperature",
+    "taste",
+    "odor",
+    "fat",
+    "turbidity",
+    "color"
+  ],
+  "featureImportance": [
+    {
+      "feature": "pH",
+      "importance": 0.39694,
+      "rank": 1
+    },
+    {
+      "feature": "temperature",
+      "importance": 0.231265,
+      "rank": 2
+    },
+    {
+      "feature": "fat",
+      "importance": 0.092501,
+      "rank": 3
+    },
+    {
+      "feature": "turbidity",
+      "importance": 0.090667,
+      "rank": 4
+    },
+    {
+      "feature": "odor",
+      "importance": 0.077016,
+      "rank": 5
+    },
+    {
+      "feature": "color",
+      "importance": 0.071397,
+      "rank": 6
+    },
+    {
+      "feature": "taste",
+      "importance": 0.040213,
+      "rank": 7
+    }
+  ]
+}

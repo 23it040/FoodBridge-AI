@@ -1,0 +1,64 @@
+{
+  "dataset": "Food Demand Forecasting (Kaggle)",
+  "features": {
+    "week": {
+      "foodBridgeEquivalent": "week_of_year",
+      "status": "COMPATIBLE",
+      "note": "Derived from current date"
+    },
+    "category": {
+      "foodBridgeEquivalent": "food_category",
+      "status": "COMPATIBLE",
+      "note": "Direct semantic match with food categories"
+    },
+    "center_type": {
+      "foodBridgeEquivalent": "ngo_type / region_tier",
+      "status": "COMPATIBLE",
+      "note": "Mapped from NGO organization profile or region"
+    },
+    "op_area": {
+      "foodBridgeEquivalent": "coverage_radius_km",
+      "status": "COMPATIBLE",
+      "note": "Operational area of NGO/center"
+    },
+    "lag_1": {
+      "foodBridgeEquivalent": "previous_requests / historical_demand",
+      "status": "COMPATIBLE",
+      "note": "Previous week request volume from FoodRequest"
+    },
+    "rolling_3_mean": {
+      "foodBridgeEquivalent": "rolling_request_average",
+      "status": "COMPATIBLE",
+      "note": "Average recent demand from FoodRequest"
+    },
+    "checkout_price": {
+      "foodBridgeEquivalent": null,
+      "status": "INCOMPATIBLE",
+      "note": "FoodBridge is free donation app, no pricing"
+    },
+    "base_price": {
+      "foodBridgeEquivalent": null,
+      "status": "INCOMPATIBLE",
+      "note": "FoodBridge is free donation app, no pricing"
+    },
+    "emailer_for_promotion": {
+      "foodBridgeEquivalent": null,
+      "status": "INCOMPATIBLE",
+      "note": "No email promotion feature in donation platform"
+    },
+    "homepage_featured": {
+      "foodBridgeEquivalent": null,
+      "status": "INCOMPATIBLE",
+      "note": "No homepage featured meal promotion feature"
+    }
+  },
+  "foodBridgeCompatibleFeatures": [
+    "week",
+    "category",
+    "center_type",
+    "op_area",
+    "lag_1",
+    "rolling_3_mean"
+  ],
+  "primaryDemandSource": "FoodRequest (requested quantity, status, date, category, NGO location)"
+}

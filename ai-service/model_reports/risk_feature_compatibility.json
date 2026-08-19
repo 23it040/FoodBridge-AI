@@ -1,0 +1,52 @@
+{
+  "modelScope": "Milk quality classification",
+  "dataset": "Milk Quality Dataset (milknew.csv)",
+  "features": {
+    "pH": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect pH / acidity sensor readings."
+    },
+    "temperature": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect storage temperature."
+    },
+    "taste": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect organoleptic taste sensor values."
+    },
+    "odor": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect olfactory / gas sensor values."
+    },
+    "fat": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect fat concentration metrics."
+    },
+    "turbidity": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect optical turbidity metrics."
+    },
+    "color": {
+      "status": "INCOMPATIBLE",
+      "foodBridgeField": null,
+      "reason": "FoodBridge does not currently collect optical color spectrometry metrics."
+    },
+    "food_category": {
+      "status": "MAPPABLE",
+      "foodBridgeField": "FoodDonation.category",
+      "reason": "Category field maps to Milk / Dairy items. Model is scoped strictly to milk products."
+    }
+  },
+  "summary": {
+    "compatibleCount": 0,
+    "mappableCount": 1,
+    "incompatibleCount": 7,
+    "conclusion": "Model requires physical sensor features (temperature, pH, odor, turbidity) unavailable in current FoodBridge database records."
+  }
+}
