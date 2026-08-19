@@ -1,0 +1,39 @@
+{
+  "datasetName": "FoodBridge Priority Historical Dataset",
+  "dataSource": "FoodBridge MongoDB",
+  "auditTimestamp": "2026-08-14T06:03:10.349855",
+  "syntheticRows": 0,
+  "externalRows": 0,
+  "totalDonations": 0,
+  "totalRequests": 0,
+  "totalLifecycleEvents": 0,
+  "rawRecords": 0,
+  "validTrainingRecords": 0,
+  "invalidTrainingRecords": 0,
+  "rejectionReasons": {
+    "MISSING_DONATION": 0,
+    "MISSING_REQUEST": 0,
+    "MISSING_ACCEPTANCE": 0,
+    "MISSING_PICKUP_COMPLETION": 0,
+    "MISSING_CREATION_TIMESTAMP": 0,
+    "MISSING_FEATURE_TIMESTAMP": 0,
+    "TEMPORAL_LEAKAGE": 0,
+    "MISSING_CATEGORY": 0,
+    "INVALID_QUANTITY": 0,
+    "INVALID_COORDINATES": 0
+  },
+  "completedPickups": 0,
+  "validTargets": 0,
+  "weeksAvailable": 0,
+  "minimumRecordsRequired": 500,
+  "minimumWeeksRequired": 12,
+  "duplicateRecords": 0,
+  "leakageViolations": 0,
+  "dateRange": {
+    "earliest": null,
+    "latest": null
+  },
+  "targetDefinition": "time_to_successful_pickup (PICKUP_COMPLETED.timestamp - DONATION_CREATED.timestamp)",
+  "readinessStatus": "INSUFFICIENT_DATA",
+  "conclusion": "Real FoodBridge transaction volume is below the 500-record / 12-week readiness threshold."
+}

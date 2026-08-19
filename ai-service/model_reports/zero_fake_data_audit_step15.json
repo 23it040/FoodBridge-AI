@@ -1,0 +1,79 @@
+{
+  "auditName": "Step 15 AI Model Monitoring Zero Fake Data Audit",
+  "auditTimestamp": "2026-08-14T11:53:00Z",
+  "syntheticData": 0,
+  "fakeMetrics": 0,
+  "fakePredictions": 0,
+  "fakeTrainingRecords": 0,
+  "fakeDriftValues": 0,
+  "fakeModelVersions": 0,
+  "fakeNotifications": 0,
+  "auditStatus": "PASSED",
+  "totalFindings": 8,
+  "findings": [
+    {
+      "file": "ai-service\\model_reports\\demand_model_metadata.json",
+      "line": 7,
+      "matchedPattern": "SYNTHETIC_DATA",
+      "lineContent": "\"syntheticData\": false,",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\model_reports\\model_metadata.json",
+      "line": 5,
+      "matchedPattern": "SYNTHETIC_DATA",
+      "lineContent": "\"syntheticData\": false,",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\model_reports\\priority_metrics.json",
+      "line": 13,
+      "matchedPattern": "SYNTHETIC_DATA",
+      "lineContent": "\"syntheticData\": false,",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step10_decision_engine.py",
+      "line": 35,
+      "matchedPattern": "FAKE_PREDICTIONS",
+      "lineContent": "assert audit[\"fakePredictions\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step9_operational_intelligence.py",
+      "line": 35,
+      "matchedPattern": "FAKE_PREDICTIONS",
+      "lineContent": "assert audit[\"fakePredictions\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\training\\train_demand_model.py",
+      "line": 385,
+      "matchedPattern": "SYNTHETIC_DATA",
+      "lineContent": "\"syntheticData\": False,",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "backend\\services\\ngo.service.js",
+      "line": 20,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "password: Math.random().toString(36).slice(-8),",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "server\\src\\utils\\helpers.js",
+      "line": 4,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "return String(Math.floor(min + Math.random() * (max - min + 1)));",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "auditName": "Step 14 Priority Model Temporal Leakage Audit",
+  "auditTimestamp": "2026-08-19T07:00:52.302103",
+  "temporalRule": "featureTimestamp < predictionTimestamp < targetTimestamp",
+  "totalRowsChecked": 0,
+  "validRows": 0,
+  "leakageViolations": 0,
+  "rejectedRows": 0,
+  "status": "PASSED_STRICT_FILTER",
+  "leakageAuditStatus": "PASSED_STRICT_FILTER",
+  "featureAudit": [
+    {
+      "feature": "pickup_completed_timestamp",
+      "leakageDetected": true,
+      "source": "MongoDB",
+      "allowedForTraining": false
+    },
+    {
+      "feature": "future_acceptance_status",
+      "leakageDetected": true,
+      "source": "MongoDB",
+      "allowedForTraining": false
+    },
+    {
+      "feature": "expiry_hours",
+      "leakageDetected": false,
+      "source": "Donation",
+      "allowedForTraining": true
+    },
+    {
+      "feature": "quantity",
+      "leakageDetected": false,
+      "source": "Donation",
+      "allowedForTraining": true
+    },
+    {
+      "feature": "food_category",
+      "leakageDetected": false,
+      "source": "Donation",
+      "allowedForTraining": true
+    },
+    {
+      "feature": "distance_km",
+      "leakageDetected": false,
+      "source": "Haversine",
+      "allowedForTraining": true
+    }
+  ]
+}

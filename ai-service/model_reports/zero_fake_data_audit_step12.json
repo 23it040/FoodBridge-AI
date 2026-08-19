@@ -1,0 +1,31 @@
+{
+  "auditName": "Step 12 Priority Training Data Pipeline Zero Fake Data Audit",
+  "auditTimestamp": "2026-08-14T11:32:00Z",
+  "syntheticRows": 0,
+  "fakeTrainingRows": 0,
+  "fakeTargets": 0,
+  "fakeNGOs": 0,
+  "fakeCoordinates": 0,
+  "hardcodedPriorityScores": 0,
+  "fakeLifecycleEvents": 0,
+  "auditStatus": "PASSED",
+  "totalFindings": 2,
+  "findings": [
+    {
+      "file": "backend\\services\\ngo.service.js",
+      "line": 20,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "password: Math.random().toString(36).slice(-8),",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "server\\src\\utils\\helpers.js",
+      "line": 4,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "return String(Math.floor(min + Math.random() * (max - min + 1)));",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "datasetName": "FoodBridge Priority Dataset Step 14 Audit",
+  "dataSource": "FoodBridge MongoDB",
+  "auditTimestamp": "2026-08-19T07:00:52.304245",
+  "totalMongoRecords": 0,
+  "candidateRecords": 0,
+  "validTrainingRecords": 0,
+  "validTargets": 0,
+  "rejectedRecords": 0,
+  "rejectionReasons": {},
+  "duplicateRows": 0,
+  "missingValues": 0,
+  "invalidReferences": 0,
+  "invalidTimestamps": 0,
+  "weeksAvailable": 0,
+  "syntheticRows": 0,
+  "readinessStatus": "INSUFFICIENT_DATA"
+}

@@ -1,0 +1,2735 @@
+{
+  "totalUsers": 109,
+  "adminsCount": 45,
+  "donorsCount": 51,
+  "ngosCount": 13,
+  "users": [
+    {
+      "_id": "6a66048b18381a731c76f07b",
+      "name": "Test Donor",
+      "email": "testdonor_1785070731487@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:58:51.610Z",
+      "updatedAt": "2026-07-26T12:58:51.610Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a66048c18381a731c76f07e",
+      "name": "Hope Foundation",
+      "email": "ngo_1785070731487@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:58:52.047Z",
+      "updatedAt": "2026-07-26T12:58:52.047Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6604a718381a731c76f082",
+      "name": "Test Donor",
+      "email": "testdonor_1785070759910@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:59:19.968Z",
+      "updatedAt": "2026-07-26T12:59:19.968Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6604a818381a731c76f085",
+      "name": "Hope Foundation",
+      "email": "ngo_1785070759910@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:59:20.360Z",
+      "updatedAt": "2026-07-26T12:59:20.360Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6604b7c4216dc1717d3203",
+      "name": "Test Donor",
+      "email": "testdonor_1785070775490@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:59:35.601Z",
+      "updatedAt": "2026-07-26T12:59:35.601Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6604b8c4216dc1717d3206",
+      "name": "Hope Foundation",
+      "email": "ngo_1785070775490@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T12:59:36.041Z",
+      "updatedAt": "2026-07-26T12:59:36.041Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a660523c4216dc1717d320a",
+      "name": "satkarm",
+      "email": "23it040@charusat.edu.in",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T13:01:23.523Z",
+      "updatedAt": "2026-08-05T06:42:06.589Z",
+      "__v": 0,
+      "phone": "9574431370"
+    },
+    {
+      "_id": "6a660599c4216dc1717d320e",
+      "name": "isha",
+      "email": "varmijivani1611@gmail.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-26T13:03:21.442Z",
+      "updatedAt": "2026-07-26T13:03:21.442Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a6b8d6e31ba3beb03e17510",
+      "name": "Laksh Jivani",
+      "email": "23it030@charusat.edu.in",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-30T17:44:14.920Z",
+      "updatedAt": "2026-07-30T17:44:14.920Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c26e3dbdc74f66a76579",
+      "name": "QA User",
+      "email": "qa.user.80b2126f@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T04:56:14.387Z",
+      "updatedAt": "2026-08-05T04:56:14.387Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c2803dbdc74f66a7657d",
+      "name": "QA User",
+      "email": "qa.user@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T04:56:32.325Z",
+      "updatedAt": "2026-08-05T04:56:32.325Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c2d33dbdc74f66a76585",
+      "name": "QA Donor",
+      "email": "qa.donor.8dcdeb5c@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T04:57:55.290Z",
+      "updatedAt": "2026-08-05T04:57:55.290Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c2d43dbdc74f66a76591",
+      "name": "QA Admin",
+      "email": "qa.admin.d08cb4e6@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T04:57:56.269Z",
+      "updatedAt": "2026-08-05T04:57:56.269Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5ae8f35e0f61b13cc5d",
+      "name": "Audit Admin",
+      "email": "audit.20260805104006@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:10:06.126Z",
+      "updatedAt": "2026-08-05T05:10:07.885Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5c58f35e0f61b13cc68",
+      "name": "User Audit",
+      "email": "user.20260805104029@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:10:29.991Z",
+      "updatedAt": "2026-08-05T05:10:33.283Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5c68f35e0f61b13cc6b",
+      "name": "Admin Audit",
+      "email": "admin.20260805104029@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:10:30.485Z",
+      "updatedAt": "2026-08-05T05:10:30.485Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5e98f35e0f61b13cc7b",
+      "name": "User Audit",
+      "email": "user.20260805104105@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:05.158Z",
+      "updatedAt": "2026-08-05T05:11:08.233Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5e98f35e0f61b13cc7e",
+      "name": "Admin Audit",
+      "email": "admin.20260805104105@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:05.600Z",
+      "updatedAt": "2026-08-05T05:11:05.600Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5f98f35e0f61b13cc8e",
+      "name": "User Audit",
+      "email": "user.20260805104121@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:21.678Z",
+      "updatedAt": "2026-08-05T05:11:24.705Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c5fa8f35e0f61b13cc91",
+      "name": "Admin Audit",
+      "email": "admin.20260805104121@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:22.125Z",
+      "updatedAt": "2026-08-05T05:11:22.125Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c60a8f35e0f61b13cca1",
+      "name": "User Audit",
+      "email": "user.20260805104138@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:38.861Z",
+      "updatedAt": "2026-08-05T05:11:41.880Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c60b8f35e0f61b13cca4",
+      "name": "Admin Audit",
+      "email": "admin.20260805104138@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:11:39.327Z",
+      "updatedAt": "2026-08-05T05:11:39.327Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c62f8f35e0f61b13ccb4",
+      "name": "User Audit",
+      "email": "user.20260805104214@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:12:15.086Z",
+      "updatedAt": "2026-08-05T05:12:17.988Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c62f8f35e0f61b13ccb7",
+      "name": "Admin Audit",
+      "email": "admin.20260805104214@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:12:15.524Z",
+      "updatedAt": "2026-08-05T05:12:15.524Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c64a8f35e0f61b13ccc7",
+      "name": "User Audit",
+      "email": "user.20260805104242@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:12:42.970Z",
+      "updatedAt": "2026-08-05T05:12:45.885Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c64b8f35e0f61b13ccca",
+      "name": "Admin Audit",
+      "email": "admin.20260805104242@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:12:43.396Z",
+      "updatedAt": "2026-08-05T05:12:43.396Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6608f35e0f61b13ccda",
+      "name": "User Audit",
+      "email": "user.20260805104304@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:13:04.518Z",
+      "updatedAt": "2026-08-05T05:13:07.771Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6608f35e0f61b13ccdd",
+      "name": "Admin Audit",
+      "email": "admin.20260805104304@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:13:04.987Z",
+      "updatedAt": "2026-08-05T05:13:04.987Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c67b8f35e0f61b13cced",
+      "name": "User Audit",
+      "email": "user.20260805104329@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:13:31.196Z",
+      "updatedAt": "2026-08-05T05:13:34.545Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c67b8f35e0f61b13ccf0",
+      "name": "Admin Audit",
+      "email": "admin.20260805104329@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:13:31.936Z",
+      "updatedAt": "2026-08-05T05:13:31.936Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6a58f35e0f61b13cd00",
+      "name": "User Audit",
+      "email": "user.20260805104413@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:14:13.315Z",
+      "updatedAt": "2026-08-05T05:14:16.321Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6a58f35e0f61b13cd03",
+      "name": "Admin Audit",
+      "email": "admin.20260805104413@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:14:13.747Z",
+      "updatedAt": "2026-08-05T05:14:13.747Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6d98f35e0f61b13cd13",
+      "name": "User Audit",
+      "email": "user.20260805104505@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:15:05.483Z",
+      "updatedAt": "2026-08-05T05:15:08.330Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6d98f35e0f61b13cd16",
+      "name": "Admin Audit",
+      "email": "admin.20260805104505@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:15:05.937Z",
+      "updatedAt": "2026-08-05T05:15:05.937Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c6f78f35e0f61b13cd26",
+      "name": "Proof User",
+      "email": "proof.20260805104535@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:15:35.983Z",
+      "updatedAt": "2026-08-05T05:15:35.983Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7118f35e0f61b13cd2a",
+      "name": "Live User",
+      "email": "user.20260805104601@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:01.986Z",
+      "updatedAt": "2026-08-05T05:16:05.142Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7128f35e0f61b13cd2d",
+      "name": "Live Admin",
+      "email": "admin.20260805104601@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:02.440Z",
+      "updatedAt": "2026-08-05T05:16:02.440Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7318f35e0f61b13cd3d",
+      "name": "User Audit",
+      "email": "user.20260805104632@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:33.077Z",
+      "updatedAt": "2026-08-05T05:16:35.815Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7318f35e0f61b13cd40",
+      "name": "Admin Audit",
+      "email": "admin.20260805104632@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:33.468Z",
+      "updatedAt": "2026-08-05T05:16:33.468Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7478f35e0f61b13cd50",
+      "name": "Live User",
+      "email": "user.20260805104654@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:55.091Z",
+      "updatedAt": "2026-08-05T05:16:58.222Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c7478f35e0f61b13cd53",
+      "name": "Live Admin",
+      "email": "admin.20260805104654@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:16:55.582Z",
+      "updatedAt": "2026-08-05T05:16:55.582Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c8b9a7837aa58daa8c4f",
+      "name": "User Audit",
+      "email": "user.20260805105304@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:23:05.212Z",
+      "updatedAt": "2026-08-05T05:23:08.112Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c8b9a7837aa58daa8c52",
+      "name": "Admin Audit",
+      "email": "admin.20260805105304@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:23:05.721Z",
+      "updatedAt": "2026-08-05T05:23:05.721Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c8d5a7837aa58daa8c62",
+      "name": "User Audit",
+      "email": "user.20260805105333@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:23:33.479Z",
+      "updatedAt": "2026-08-05T05:23:36.206Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c8d5a7837aa58daa8c65",
+      "name": "Admin Audit",
+      "email": "admin.20260805105333@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:23:33.883Z",
+      "updatedAt": "2026-08-05T05:23:33.883Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c936a7837aa58daa8c75",
+      "name": "User Audit",
+      "email": "user.20260805105510@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:25:10.550Z",
+      "updatedAt": "2026-08-05T05:25:13.253Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c936a7837aa58daa8c78",
+      "name": "Admin Audit",
+      "email": "admin.20260805105510@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:25:10.938Z",
+      "updatedAt": "2026-08-05T05:25:10.938Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c94da7837aa58daa8c88",
+      "name": "User Audit",
+      "email": "user.20260805105533@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:25:33.508Z",
+      "updatedAt": "2026-08-05T05:25:36.236Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c94da7837aa58daa8c8b",
+      "name": "Admin Audit",
+      "email": "admin.20260805105533@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:25:33.897Z",
+      "updatedAt": "2026-08-05T05:25:33.897Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72c98ca7837aa58daa8caa",
+      "name": "Admin Audit",
+      "email": "admin.20260805105636@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T05:26:36.025Z",
+      "updatedAt": "2026-08-05T05:26:36.025Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2accfce6250a662abf2",
+      "name": "Audit User",
+      "email": "audit_1785909932365@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:05:32.399Z",
+      "updatedAt": "2026-08-05T06:05:32.399Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2accfce6250a662abfd",
+      "name": "Audit Admin",
+      "email": "admin_1785909932365@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:05:32.906Z",
+      "updatedAt": "2026-08-05T06:05:32.906Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2bdcfce6250a662ac16",
+      "name": "Audit User",
+      "email": "audit_1785909949868@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:05:49.874Z",
+      "updatedAt": "2026-08-05T06:05:49.874Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2becfce6250a662ac21",
+      "name": "Audit Admin",
+      "email": "admin_1785909949868@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:05:50.339Z",
+      "updatedAt": "2026-08-05T06:05:50.339Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2e7cfce6250a662ac3a",
+      "name": "Audit User",
+      "email": "audit_1785909991816@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:06:31.820Z",
+      "updatedAt": "2026-08-05T06:06:31.820Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2e8cfce6250a662ac45",
+      "name": "Audit Admin",
+      "email": "admin_1785909991816@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:06:32.287Z",
+      "updatedAt": "2026-08-05T06:06:32.287Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2fe4818b1d8e30c31a5",
+      "name": "Audit User",
+      "email": "audit_1785910014691@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:06:54.727Z",
+      "updatedAt": "2026-08-05T06:06:54.727Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d2ff4818b1d8e30c31b0",
+      "name": "Audit Admin",
+      "email": "admin_1785910014691@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:06:55.227Z",
+      "updatedAt": "2026-08-05T06:06:55.227Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d30ce2e05e4d6bb44fc8",
+      "name": "Audit User",
+      "email": "audit_1785910027965@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:08.006Z",
+      "updatedAt": "2026-08-05T06:07:08.006Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d30ce2e05e4d6bb44fd3",
+      "name": "Audit Admin",
+      "email": "admin_1785910027965@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:08.509Z",
+      "updatedAt": "2026-08-05T06:07:08.509Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d31858165f5054449f21",
+      "name": "Audit User",
+      "email": "audit_1785910040837@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:20.871Z",
+      "updatedAt": "2026-08-05T06:07:20.871Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d31958165f5054449f2c",
+      "name": "Audit Admin",
+      "email": "admin_1785910040837@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:21.377Z",
+      "updatedAt": "2026-08-05T06:07:21.377Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d32258165f5054449f45",
+      "name": "Audit User",
+      "email": "audit_1785910050784@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:30.791Z",
+      "updatedAt": "2026-08-05T06:07:30.791Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d32358165f5054449f50",
+      "name": "Audit Admin",
+      "email": "admin_1785910050784@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:31.272Z",
+      "updatedAt": "2026-08-05T06:07:31.272Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d32f58165f5054449f69",
+      "name": "Audit User",
+      "email": "audit_1785910063050@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:43.055Z",
+      "updatedAt": "2026-08-05T06:07:43.055Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d32f58165f5054449f76",
+      "name": "Audit Admin",
+      "email": "admin_1785910063050@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:07:43.840Z",
+      "updatedAt": "2026-08-05T06:07:43.840Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d34f58165f5054449f8f",
+      "name": "Audit User",
+      "email": "audit_1785910095532@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:08:15.537Z",
+      "updatedAt": "2026-08-05T06:08:15.537Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d35058165f5054449f9c",
+      "name": "Audit Admin",
+      "email": "admin_1785910095532@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:08:16.058Z",
+      "updatedAt": "2026-08-05T06:08:16.058Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d36c58165f5054449fb5",
+      "name": "Audit User",
+      "email": "audit_1785910124804@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:08:44.810Z",
+      "updatedAt": "2026-08-05T06:08:44.810Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d36d58165f5054449fc3",
+      "name": "Audit Admin",
+      "email": "admin_1785910124804@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:08:45.304Z",
+      "updatedAt": "2026-08-05T06:08:45.304Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d37dd70f00fef183499f",
+      "name": "Audit User",
+      "email": "audit_1785910141456@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:09:01.496Z",
+      "updatedAt": "2026-08-05T06:09:01.496Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d37ed70f00fef18349ae",
+      "name": "Audit Admin",
+      "email": "admin_1785910141456@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:09:02.072Z",
+      "updatedAt": "2026-08-05T06:09:02.072Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72d583ef235638d058e17b",
+      "name": "isha",
+      "email": "23it046@charusat.edu.in",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:17:39.217Z",
+      "updatedAt": "2026-08-05T06:17:39.217Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72daeeec89d2b6a2143b0a",
+      "name": "Audit User",
+      "email": "audit_1785912046603@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:40:46.672Z",
+      "updatedAt": "2026-08-05T06:40:46.672Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72daefec89d2b6a2143b19",
+      "name": "Audit Admin",
+      "email": "admin_1785912046603@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:40:47.674Z",
+      "updatedAt": "2026-08-05T06:40:47.674Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72daf8ec89d2b6a2143b32",
+      "name": "Audit User",
+      "email": "audit_1785912056292@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:40:56.300Z",
+      "updatedAt": "2026-08-05T06:40:56.300Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72daf9ec89d2b6a2143b44",
+      "name": "Audit Admin",
+      "email": "admin_1785912056292@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:40:57.220Z",
+      "updatedAt": "2026-08-05T06:40:57.220Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72dcf82d9a780951506aa1",
+      "name": "Audit User",
+      "email": "audit_1785912568502@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:49:28.564Z",
+      "updatedAt": "2026-08-05T06:49:28.564Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72dcf92d9a780951506ab3",
+      "name": "Audit Admin",
+      "email": "admin_1785912568502@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:49:29.549Z",
+      "updatedAt": "2026-08-05T06:49:29.549Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df0f10b45a5cd90d4cc3",
+      "name": "Audit User",
+      "email": "audit_1785913103072@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:23.143Z",
+      "updatedAt": "2026-08-05T06:58:23.143Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df1010b45a5cd90d4cd5",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785913103072@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:24.159Z",
+      "updatedAt": "2026-08-05T06:58:24.159Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df1010b45a5cd90d4cd8",
+      "name": "Audit Admin",
+      "email": "admin_1785913103072@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:24.542Z",
+      "updatedAt": "2026-08-05T06:58:24.542Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df1a10b45a5cd90d4cf2",
+      "name": "Audit User",
+      "email": "audit_1785913114440@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:34.448Z",
+      "updatedAt": "2026-08-05T06:58:34.448Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df1b10b45a5cd90d4d04",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785913114440@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:35.357Z",
+      "updatedAt": "2026-08-05T06:58:35.357Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df1b10b45a5cd90d4d0d",
+      "name": "Audit Admin",
+      "email": "admin_1785913114440@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:35.777Z",
+      "updatedAt": "2026-08-05T06:58:35.777Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df28f517e8f6cf155d10",
+      "name": "Audit User",
+      "email": "audit_1785913128806@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:48.862Z",
+      "updatedAt": "2026-08-05T06:58:48.862Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df29f517e8f6cf155d22",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785913128806@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:49.834Z",
+      "updatedAt": "2026-08-05T06:58:49.834Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72df2af517e8f6cf155d3b",
+      "name": "Audit Admin",
+      "email": "admin_1785913128806@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T06:58:50.330Z",
+      "updatedAt": "2026-08-05T06:58:50.330Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72e0b00ebcdcea81171862",
+      "name": "Audit User",
+      "email": "audit_1785913520887@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T07:05:20.946Z",
+      "updatedAt": "2026-08-05T07:05:20.946Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72e0b10ebcdcea81171874",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785913520887@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T07:05:21.995Z",
+      "updatedAt": "2026-08-05T07:05:21.995Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a72e0b20ebcdcea8117188d",
+      "name": "Audit Admin",
+      "email": "admin_1785913520887@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T07:05:22.485Z",
+      "updatedAt": "2026-08-05T07:05:22.485Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73580408319ccae388afaf",
+      "name": "Audit User",
+      "email": "audit_1785944068349@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:34:28.539Z",
+      "updatedAt": "2026-08-05T15:34:28.539Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73580508319ccae388afc1",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785944068349@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:34:29.608Z",
+      "updatedAt": "2026-08-05T15:34:29.608Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73580508319ccae388afda",
+      "name": "Audit Admin",
+      "email": "admin_1785944068349@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:34:29.972Z",
+      "updatedAt": "2026-08-05T15:34:29.972Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a735b434952166acda85132",
+      "name": "Audit User",
+      "email": "audit_1785944899034@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:48:19.053Z",
+      "updatedAt": "2026-08-05T15:48:19.053Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a735b444952166acda85144",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785944899034@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:48:20.027Z",
+      "updatedAt": "2026-08-05T15:48:20.027Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a735b444952166acda8515d",
+      "name": "Audit Admin",
+      "email": "admin_1785944899034@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T15:48:20.500Z",
+      "updatedAt": "2026-08-05T15:48:20.500Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73733ac493a585a85c2547",
+      "name": "Audit User",
+      "email": "audit_1785951034191@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T17:30:34.261Z",
+      "updatedAt": "2026-08-05T17:30:34.261Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73733ac493a585a85c2559",
+      "name": "Audit NGO Org",
+      "email": "ngo_1785951034191@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T17:30:34.951Z",
+      "updatedAt": "2026-08-05T17:30:34.951Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a73733bc493a585a85c2572",
+      "name": "Audit Admin",
+      "email": "admin_1785951034191@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-05T17:30:35.250Z",
+      "updatedAt": "2026-08-05T17:30:35.250Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7568725ab7e5407bcf143a",
+      "name": "Audit Test User",
+      "email": "audit_tester_1786079346827@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-07T05:09:06.944Z",
+      "updatedAt": "2026-08-07T05:09:06.944Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79661af2588b35cbbe5169",
+      "name": "E2E Donor Test",
+      "email": "donor.1786340889566@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T05:48:10.017Z",
+      "updatedAt": "2026-08-10T05:48:10.017Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696cf10756a0889d1d62",
+      "name": "Test Donor",
+      "email": "donor.notif.1786341740442@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:20.620Z",
+      "updatedAt": "2026-08-10T06:02:20.620Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696df10756a0889d1d65",
+      "name": "Test NGO",
+      "email": "ngo.notif.1786341740442@example.com",
+      "role": "ngo",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:21.071Z",
+      "updatedAt": "2026-08-10T06:02:21.071Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696df10756a0889d1d68",
+      "name": "Test Admin",
+      "email": "admin.notif.1786341740442@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:21.458Z",
+      "updatedAt": "2026-08-10T06:02:21.458Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697af10756a0889d1da0",
+      "name": "Test Donor",
+      "email": "donor.notif.1786341754775@example.com",
+      "role": "user",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:34.834Z",
+      "updatedAt": "2026-08-10T06:02:34.834Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697bf10756a0889d1da3",
+      "name": "Test NGO",
+      "email": "ngo.notif.1786341754775@example.com",
+      "role": "ngo",
+      "isVerified": true,
+      "verificationStatus": "APPROVED",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:35.229Z",
+      "updatedAt": "2026-08-10T06:02:36.262Z",
+      "__v": 0,
+      "verifiedAt": "2026-08-10T06:02:36.261Z",
+      "verifiedBy": "6a79697bf10756a0889d1da6"
+    },
+    {
+      "_id": "6a79697bf10756a0889d1da6",
+      "name": "Test Admin",
+      "email": "admin.notif.1786341754775@example.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-10T06:02:35.622Z",
+      "updatedAt": "2026-08-10T06:02:35.622Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b5ee69979bb2b42f60349",
+      "name": "Admin",
+      "email": "varmijivani5291@gmail.com",
+      "role": "admin",
+      "isVerified": false,
+      "verificationStatus": "PENDING",
+      "status": "ACTIVE",
+      "createdAt": "2026-08-11T17:41:58.313Z",
+      "updatedAt": "2026-08-11T17:41:58.313Z",
+      "__v": 0
+    }
+  ],
+  "totalDonations": 5,
+  "donations": [
+    {
+      "_id": "6a79661af2588b35cbbe516c",
+      "donorId": "6a79661af2588b35cbbe5169",
+      "foodName": "Fresh E2E Paneer Curry & Rice",
+      "category": "Cooked Meals",
+      "quantity": 25,
+      "unit": "servings",
+      "description": "Freshly prepared vegetarian meal package.",
+      "cookedTime": "2026-08-10T05:48:10.328Z",
+      "expiryTime": "2026-08-11T05:48:10.329Z",
+      "pickupAddress": "789 E2E Test Boulevard, Sector 5",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.209,
+          28.6139
+        ]
+      },
+      "foodImage": {
+        "publicId": "default_food",
+        "url": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop"
+      },
+      "status": "AVAILABLE",
+      "createdAt": "2026-08-10T05:48:10.354Z",
+      "updatedAt": "2026-08-10T05:48:10.354Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696df10756a0889d1d6b",
+      "donorId": "6a79696cf10756a0889d1d62",
+      "foodName": "Notification Test Biryani",
+      "category": "Cooked Meals",
+      "quantity": 15,
+      "unit": "servings",
+      "description": "",
+      "cookedTime": "2026-08-10T06:02:21.838Z",
+      "expiryTime": "2026-08-11T06:02:21.840Z",
+      "pickupAddress": "100 Notification Way",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.209,
+          28.6139
+        ]
+      },
+      "foodImage": {
+        "publicId": "default_food",
+        "url": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop"
+      },
+      "status": "AVAILABLE",
+      "createdAt": "2026-08-10T06:02:21.882Z",
+      "updatedAt": "2026-08-10T06:02:21.882Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1da9",
+      "donorId": "6a79697af10756a0889d1da0",
+      "foodName": "Notification Test Biryani",
+      "category": "Cooked Meals",
+      "quantity": 15,
+      "unit": "servings",
+      "description": "",
+      "cookedTime": "2026-08-10T06:02:36.017Z",
+      "expiryTime": "2026-08-11T06:02:36.019Z",
+      "pickupAddress": "100 Notification Way",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.209,
+          28.6139
+        ]
+      },
+      "foodImage": {
+        "publicId": "default_food",
+        "url": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop"
+      },
+      "status": "ACCEPTED",
+      "createdAt": "2026-08-10T06:02:36.033Z",
+      "updatedAt": "2026-08-10T06:02:36.203Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e3b",
+      "donorId": "6a72d583ef235638d058e17b",
+      "foodName": "fries",
+      "category": "Cooked Meals",
+      "quantity": 22,
+      "unit": "servings",
+      "description": "qwertyuiogfdfghjkgfdfghjk",
+      "cookedTime": "2026-08-10T00:34:00.000Z",
+      "expiryTime": "2026-08-11T00:34:00.000Z",
+      "pickupAddress": "6,bhavnapark,yogichowk",
+      "latitude": 22.680074,
+      "longitude": 72.846471,
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          72.846471,
+          22.680074
+        ]
+      },
+      "foodImage": {
+        "publicId": "default_food",
+        "url": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop"
+      },
+      "status": "ACCEPTED",
+      "createdAt": "2026-08-10T06:06:06.106Z",
+      "updatedAt": "2026-08-10T06:09:03.962Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010780c",
+      "donorId": "6a72d583ef235638d058e17b",
+      "foodName": "asda",
+      "category": "General",
+      "quantity": 10,
+      "unit": "servings",
+      "description": "yyu",
+      "cookedTime": "2026-08-11T12:39:00.000Z",
+      "expiryTime": "2026-08-12T12:39:00.000Z",
+      "pickupAddress": "dfghjklkljjbbhj",
+      "latitude": 28.6139,
+      "longitude": 77.209,
+      "location": {
+        "type": "Point",
+        "coordinates": [
+          77.209,
+          28.6139
+        ]
+      },
+      "foodImage": {
+        "publicId": "default_food",
+        "url": "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop"
+      },
+      "status": "AVAILABLE",
+      "createdAt": "2026-08-11T18:09:35.880Z",
+      "updatedAt": "2026-08-11T18:09:35.880Z",
+      "__v": 0
+    }
+  ],
+  "totalRequests": 6,
+  "requests": [
+    {
+      "_id": "6a72e1240ebcdcea811718e2",
+      "foodId": "6a72dba8ec89d2b6a2143bd0",
+      "donorId": "6a72d583ef235638d058e17b",
+      "ngoId": "6a660523c4216dc1717d320a",
+      "status": "ACCEPTED",
+      "requestMessage": "thank you for the food we have sortage of worker so thanks to giva us food [Contact: satkarm (9574431370), Beneficiaries: 23, Transport: Two Wheeler / Bike]",
+      "pickupDate": "2026-08-05T12:30:00.000Z",
+      "pickupTime": "18:00",
+      "createdAt": "2026-08-05T07:07:16.106Z",
+      "updatedAt": "2026-08-05T07:07:46.636Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a756b895ab7e5407bcf1522",
+      "foodId": "6a756b125ab7e5407bcf14b4",
+      "donorId": "6a72d583ef235638d058e17b",
+      "ngoId": "6a660523c4216dc1717d320a",
+      "status": "ACCEPTED",
+      "requestMessage": "We would like to request this food item for community distribution. [Contact: satkarm (9574431370), Beneficiaries: 20]",
+      "pickupDate": "2026-08-07T12:30:00.000Z",
+      "pickupTime": "18:00",
+      "createdAt": "2026-08-07T05:22:17.034Z",
+      "updatedAt": "2026-08-10T06:06:41.306Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696ef10756a0889d1d8e",
+      "foodId": "6a79696df10756a0889d1d6b",
+      "donorId": "6a79696cf10756a0889d1d62",
+      "ngoId": "6a79696df10756a0889d1d65",
+      "status": "PENDING",
+      "requestMessage": "Requesting food for community center",
+      "pickupDate": "2026-08-10T06:02:22.094Z",
+      "createdAt": "2026-08-10T06:02:22.109Z",
+      "updatedAt": "2026-08-10T06:02:22.109Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dcd",
+      "foodId": "6a79697cf10756a0889d1da9",
+      "donorId": "6a79697af10756a0889d1da0",
+      "ngoId": "6a79697bf10756a0889d1da3",
+      "status": "ACCEPTED",
+      "requestMessage": "Requesting food for community center",
+      "pickupDate": "2026-08-10T06:02:36.115Z",
+      "createdAt": "2026-08-10T06:02:36.130Z",
+      "updatedAt": "2026-08-10T06:02:36.188Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796abaf10756a0889d1ed6",
+      "foodId": "6a796a4ef10756a0889d1e3b",
+      "donorId": "6a72d583ef235638d058e17b",
+      "ngoId": "6a660523c4216dc1717d320a",
+      "status": "ACCEPTED",
+      "requestMessage": "We request this food donation for community distribution and shelter support. [Contact: satkarm (9574431370), Beneficiaries: 25, Transport: Standard Vehicle]",
+      "pickupDate": "2026-08-10T12:30:00.000Z",
+      "pickupTime": "18:00",
+      "createdAt": "2026-08-10T06:07:54.417Z",
+      "updatedAt": "2026-08-10T06:09:03.960Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b661cc3d09ad200107a04",
+      "foodId": "6a7b655fc3d09ad20010780c",
+      "donorId": "6a72d583ef235638d058e17b",
+      "ngoId": "6a660523c4216dc1717d320a",
+      "status": "REJECTED",
+      "requestMessage": "We would like to request this food item for community distribution. [Contact: satkarm (9574431370), Beneficiaries: 20]",
+      "pickupDate": "2026-08-11T12:30:00.000Z",
+      "pickupTime": "18:00",
+      "createdAt": "2026-08-11T18:12:44.931Z",
+      "updatedAt": "2026-08-11T18:13:56.991Z",
+      "__v": 0,
+      "rejectionReason": ""
+    }
+  ],
+  "totalNotifications": 68,
+  "notifications": [
+    {
+      "_id": "6a79696df10756a0889d1d6d",
+      "recipientType": "USER",
+      "recipient": "6a79696cf10756a0889d1d62",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "Food Donation Created",
+      "message": "Your food donation \"Notification Test Biryani\" has been posted successfully.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "createdAt": "2026-08-10T06:02:21.900Z",
+      "updatedAt": "2026-08-10T06:02:21.900Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696df10756a0889d1d70",
+      "recipientType": "USER",
+      "recipient": "6a66048c18381a731c76f07e",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.919Z",
+      "updatedAt": "2026-08-10T06:02:21.919Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d71",
+      "recipientType": "USER",
+      "recipient": "6a6604a818381a731c76f085",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.919Z",
+      "updatedAt": "2026-08-10T06:02:21.919Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d72",
+      "recipientType": "USER",
+      "recipient": "6a6604b8c4216dc1717d3206",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.919Z",
+      "updatedAt": "2026-08-10T06:02:21.919Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d73",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": true,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.919Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d74",
+      "recipientType": "USER",
+      "recipient": "6a72df1010b45a5cd90d4cd5",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d75",
+      "recipientType": "USER",
+      "recipient": "6a72df1b10b45a5cd90d4d04",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d76",
+      "recipientType": "USER",
+      "recipient": "6a72df29f517e8f6cf155d22",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d77",
+      "recipientType": "USER",
+      "recipient": "6a72e0b10ebcdcea81171874",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d78",
+      "recipientType": "USER",
+      "recipient": "6a73580508319ccae388afc1",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d79",
+      "recipientType": "USER",
+      "recipient": "6a735b444952166acda85144",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d7a",
+      "recipientType": "USER",
+      "recipient": "6a73733ac493a585a85c2559",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696df10756a0889d1d7b",
+      "recipientType": "USER",
+      "recipient": "6a79696df10756a0889d1d65",
+      "sender": "6a79696cf10756a0889d1d62",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696cf10756a0889d1d62",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:21.920Z",
+      "updatedAt": "2026-08-10T06:02:21.920Z"
+    },
+    {
+      "_id": "6a79696ef10756a0889d1d93",
+      "recipientType": "USER",
+      "recipient": "6a79696cf10756a0889d1d62",
+      "sender": "6a79696df10756a0889d1d65",
+      "title": "New Food Pickup Request",
+      "message": "An NGO partner requested your food donation \"Notification Test Biryani\".",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a79696ef10756a0889d1d8e",
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696df10756a0889d1d65",
+      "createdAt": "2026-08-10T06:02:22.124Z",
+      "updatedAt": "2026-08-10T06:02:22.124Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79696ef10756a0889d1d95",
+      "recipientType": "USER",
+      "recipient": "6a79696df10756a0889d1d65",
+      "sender": "6a79696df10756a0889d1d65",
+      "title": "Food Request Submitted",
+      "message": "Your request for \"Notification Test Biryani\" has been submitted to the donor.",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a79696ef10756a0889d1d8e",
+        "donationId": "6a79696df10756a0889d1d6b"
+      },
+      "isRead": false,
+      "createdBy": "6a79696df10756a0889d1d65",
+      "createdAt": "2026-08-10T06:02:22.126Z",
+      "updatedAt": "2026-08-10T06:02:22.126Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dab",
+      "recipientType": "USER",
+      "recipient": "6a79697af10756a0889d1da0",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "Food Donation Created",
+      "message": "Your food donation \"Notification Test Biryani\" has been posted successfully.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "createdAt": "2026-08-10T06:02:36.038Z",
+      "updatedAt": "2026-08-10T06:02:36.038Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dae",
+      "recipientType": "USER",
+      "recipient": "6a66048c18381a731c76f07e",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.049Z",
+      "updatedAt": "2026-08-10T06:02:36.049Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1daf",
+      "recipientType": "USER",
+      "recipient": "6a6604a818381a731c76f085",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db0",
+      "recipientType": "USER",
+      "recipient": "6a6604b8c4216dc1717d3206",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db1",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": true,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db2",
+      "recipientType": "USER",
+      "recipient": "6a72df1010b45a5cd90d4cd5",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db3",
+      "recipientType": "USER",
+      "recipient": "6a72df1b10b45a5cd90d4d04",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db4",
+      "recipientType": "USER",
+      "recipient": "6a72df29f517e8f6cf155d22",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db5",
+      "recipientType": "USER",
+      "recipient": "6a72e0b10ebcdcea81171874",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db6",
+      "recipientType": "USER",
+      "recipient": "6a73580508319ccae388afc1",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db7",
+      "recipientType": "USER",
+      "recipient": "6a735b444952166acda85144",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db8",
+      "recipientType": "USER",
+      "recipient": "6a73733ac493a585a85c2559",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1db9",
+      "recipientType": "USER",
+      "recipient": "6a79696df10756a0889d1d65",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dba",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"Notification Test Biryani\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:02:36.050Z",
+      "updatedAt": "2026-08-10T06:02:36.050Z"
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dd2",
+      "recipientType": "USER",
+      "recipient": "6a79697af10756a0889d1da0",
+      "sender": "6a79697bf10756a0889d1da3",
+      "title": "New Food Pickup Request",
+      "message": "An NGO partner requested your food donation \"Notification Test Biryani\".",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a79697cf10756a0889d1dcd",
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697bf10756a0889d1da3",
+      "createdAt": "2026-08-10T06:02:36.138Z",
+      "updatedAt": "2026-08-10T06:02:36.138Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1dd4",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a79697bf10756a0889d1da3",
+      "title": "Food Request Submitted",
+      "message": "Your request for \"Notification Test Biryani\" has been submitted to the donor.",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a79697cf10756a0889d1dcd",
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697bf10756a0889d1da3",
+      "createdAt": "2026-08-10T06:02:36.141Z",
+      "updatedAt": "2026-08-10T06:02:36.141Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1de6",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a79697af10756a0889d1da0",
+      "title": "Food Request Accepted!",
+      "message": "The donor has accepted your request for \"Notification Test Biryani\".",
+      "type": "FOOD_REQUEST_ACCEPTED",
+      "data": {
+        "requestId": "6a79697cf10756a0889d1dcd",
+        "donationId": "6a79697cf10756a0889d1da9"
+      },
+      "isRead": false,
+      "createdBy": "6a79697af10756a0889d1da0",
+      "createdAt": "2026-08-10T06:02:36.221Z",
+      "updatedAt": "2026-08-10T06:02:36.221Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a79697cf10756a0889d1df4",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a79697bf10756a0889d1da6",
+      "title": "NGO Verification Approved",
+      "message": "Congratulations! Your NGO profile has been verified and approved by the platform admin.",
+      "type": "NGO_VERIFIED",
+      "data": {
+        "ngoId": "6a79697bf10756a0889d1da3"
+      },
+      "isRead": false,
+      "createdBy": "6a79697bf10756a0889d1da6",
+      "createdAt": "2026-08-10T06:02:36.268Z",
+      "updatedAt": "2026-08-10T06:02:36.268Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e3d",
+      "recipientType": "USER",
+      "recipient": "6a72d583ef235638d058e17b",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "Food Donation Created",
+      "message": "Your food donation \"fries\" has been posted successfully.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": true,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "createdAt": "2026-08-10T06:06:06.116Z",
+      "updatedAt": "2026-08-10T06:08:57.977Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e40",
+      "recipientType": "USER",
+      "recipient": "6a66048c18381a731c76f07e",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e41",
+      "recipientType": "USER",
+      "recipient": "6a6604a818381a731c76f085",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e42",
+      "recipientType": "USER",
+      "recipient": "6a6604b8c4216dc1717d3206",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e43",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": true,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e44",
+      "recipientType": "USER",
+      "recipient": "6a72df1010b45a5cd90d4cd5",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e45",
+      "recipientType": "USER",
+      "recipient": "6a72df1b10b45a5cd90d4d04",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e46",
+      "recipientType": "USER",
+      "recipient": "6a72df29f517e8f6cf155d22",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e47",
+      "recipientType": "USER",
+      "recipient": "6a72e0b10ebcdcea81171874",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.132Z",
+      "updatedAt": "2026-08-10T06:06:06.132Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e48",
+      "recipientType": "USER",
+      "recipient": "6a73580508319ccae388afc1",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.133Z",
+      "updatedAt": "2026-08-10T06:06:06.133Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e49",
+      "recipientType": "USER",
+      "recipient": "6a735b444952166acda85144",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.133Z",
+      "updatedAt": "2026-08-10T06:06:06.133Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e4a",
+      "recipientType": "USER",
+      "recipient": "6a73733ac493a585a85c2559",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.133Z",
+      "updatedAt": "2026-08-10T06:06:06.133Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e4b",
+      "recipientType": "USER",
+      "recipient": "6a79696df10756a0889d1d65",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.133Z",
+      "updatedAt": "2026-08-10T06:06:06.133Z"
+    },
+    {
+      "_id": "6a796a4ef10756a0889d1e4c",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"fries\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-10T06:06:06.133Z",
+      "updatedAt": "2026-08-10T06:06:06.133Z"
+    },
+    {
+      "_id": "6a796a71f10756a0889d1e75",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "Food Request Accepted!",
+      "message": "The donor has accepted your request for \"pasta\".",
+      "type": "FOOD_REQUEST_ACCEPTED",
+      "data": {
+        "requestId": "6a756b895ab7e5407bcf1522",
+        "donationId": "6a756b125ab7e5407bcf14b4"
+      },
+      "isRead": true,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "createdAt": "2026-08-10T06:06:41.319Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796abaf10756a0889d1edb",
+      "recipientType": "USER",
+      "recipient": "6a72d583ef235638d058e17b",
+      "sender": "6a660523c4216dc1717d320a",
+      "title": "New Food Pickup Request",
+      "message": "An NGO partner requested your food donation \"fries\".",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a796abaf10756a0889d1ed6",
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": true,
+      "createdBy": "6a660523c4216dc1717d320a",
+      "createdAt": "2026-08-10T06:07:54.439Z",
+      "updatedAt": "2026-08-10T06:08:56.882Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796abaf10756a0889d1edd",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a660523c4216dc1717d320a",
+      "title": "Food Request Submitted",
+      "message": "Your request for \"fries\" has been submitted to the donor.",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a796abaf10756a0889d1ed6",
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": true,
+      "createdBy": "6a660523c4216dc1717d320a",
+      "createdAt": "2026-08-10T06:07:54.444Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a796afff10756a0889d1f7a",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "Food Request Accepted!",
+      "message": "The donor has accepted your request for \"fries\".",
+      "type": "FOOD_REQUEST_ACCEPTED",
+      "data": {
+        "requestId": "6a796abaf10756a0889d1ed6",
+        "donationId": "6a796a4ef10756a0889d1e3b"
+      },
+      "isRead": true,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "createdAt": "2026-08-10T06:09:03.969Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010780e",
+      "recipientType": "USER",
+      "recipient": "6a72d583ef235638d058e17b",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "Food Donation Created",
+      "message": "Your food donation \"asda\" has been posted successfully.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "createdAt": "2026-08-11T18:09:35.938Z",
+      "updatedAt": "2026-08-11T18:09:35.938Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107811",
+      "recipientType": "USER",
+      "recipient": "6a66048c18381a731c76f07e",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.956Z",
+      "updatedAt": "2026-08-11T18:09:35.956Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107812",
+      "recipientType": "USER",
+      "recipient": "6a6604a818381a731c76f085",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.956Z",
+      "updatedAt": "2026-08-11T18:09:35.956Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107813",
+      "recipientType": "USER",
+      "recipient": "6a6604b8c4216dc1717d3206",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.956Z",
+      "updatedAt": "2026-08-11T18:09:35.956Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107814",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": true,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107815",
+      "recipientType": "USER",
+      "recipient": "6a72df1010b45a5cd90d4cd5",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107816",
+      "recipientType": "USER",
+      "recipient": "6a72df1b10b45a5cd90d4d04",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107817",
+      "recipientType": "USER",
+      "recipient": "6a72df29f517e8f6cf155d22",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107818",
+      "recipientType": "USER",
+      "recipient": "6a72e0b10ebcdcea81171874",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad200107819",
+      "recipientType": "USER",
+      "recipient": "6a73580508319ccae388afc1",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010781a",
+      "recipientType": "USER",
+      "recipient": "6a735b444952166acda85144",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010781b",
+      "recipientType": "USER",
+      "recipient": "6a73733ac493a585a85c2559",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.957Z",
+      "updatedAt": "2026-08-11T18:09:35.957Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010781c",
+      "recipientType": "USER",
+      "recipient": "6a79696df10756a0889d1d65",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.958Z",
+      "updatedAt": "2026-08-11T18:09:35.958Z"
+    },
+    {
+      "_id": "6a7b655fc3d09ad20010781d",
+      "recipientType": "USER",
+      "recipient": "6a79697bf10756a0889d1da3",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "New Food Donation Available",
+      "message": "A new food donation \"asda\" is available for pickup.",
+      "type": "NEW_DONATION",
+      "data": {
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "__v": 0,
+      "createdAt": "2026-08-11T18:09:35.958Z",
+      "updatedAt": "2026-08-11T18:09:35.958Z"
+    },
+    {
+      "_id": "6a7b661cc3d09ad200107a09",
+      "recipientType": "USER",
+      "recipient": "6a72d583ef235638d058e17b",
+      "sender": "6a660523c4216dc1717d320a",
+      "title": "New Food Pickup Request",
+      "message": "An NGO partner requested your food donation \"asda\".",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a7b661cc3d09ad200107a04",
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a660523c4216dc1717d320a",
+      "createdAt": "2026-08-11T18:12:44.947Z",
+      "updatedAt": "2026-08-11T18:12:44.947Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b661cc3d09ad200107a0b",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a660523c4216dc1717d320a",
+      "title": "Food Request Submitted",
+      "message": "Your request for \"asda\" has been submitted to the donor.",
+      "type": "FOOD_REQUEST_CREATED",
+      "data": {
+        "requestId": "6a7b661cc3d09ad200107a04",
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": true,
+      "createdBy": "6a660523c4216dc1717d320a",
+      "createdAt": "2026-08-11T18:12:44.950Z",
+      "updatedAt": "2026-08-11T18:13:02.941Z",
+      "__v": 0
+    },
+    {
+      "_id": "6a7b6665c3d09ad200107aea",
+      "recipientType": "USER",
+      "recipient": "6a660523c4216dc1717d320a",
+      "sender": "6a72d583ef235638d058e17b",
+      "title": "Food Request Declined",
+      "message": "Your request for \"asda\" was declined by the donor.",
+      "type": "FOOD_REQUEST_REJECTED",
+      "data": {
+        "requestId": "6a7b661cc3d09ad200107a04",
+        "donationId": "6a7b655fc3d09ad20010780c"
+      },
+      "isRead": false,
+      "createdBy": "6a72d583ef235638d058e17b",
+      "createdAt": "2026-08-11T18:13:57.007Z",
+      "updatedAt": "2026-08-11T18:13:57.007Z",
+      "__v": 0
+    }
+  ],
+  "totalAuditLogs": 1,
+  "auditLogs": [
+    {
+      "_id": "6a79697cf10756a0889d1df2",
+      "adminId": "6a79697bf10756a0889d1da6",
+      "action": "APPROVE_NGO",
+      "resourceType": "User",
+      "targetId": "6a79697bf10756a0889d1da3",
+      "details": {
+        "verificationStatus": "APPROVED"
+      },
+      "ipAddress": "::1",
+      "createdAt": "2026-08-10T06:02:36.266Z",
+      "updatedAt": "2026-08-10T06:02:36.266Z",
+      "__v": 0
+    }
+  ]
+}

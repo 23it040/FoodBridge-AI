@@ -1,0 +1,64 @@
+{
+  "auditName": "Step 14 Priority Model Training & Promotion Zero Fake Data Audit",
+  "auditTimestamp": "2026-08-14T11:48:00Z",
+  "syntheticTrainingRows": 0,
+  "fakePriorityPredictions": 0,
+  "hardcodedPriorityScores": 0,
+  "fakeTargets": 0,
+  "fakePickupTimes": 0,
+  "fakeNGOs": 0,
+  "fakeCoordinates": 0,
+  "defaultAIInputs": 0,
+  "auditStatus": "PASSED",
+  "totalFindings": 6,
+  "findings": [
+    {
+      "file": "ai-service\\tests\\test_step10_decision_engine.py",
+      "line": 33,
+      "matchedPattern": "SYNTHETIC_TRAINING_ROWS",
+      "lineContent": "assert audit[\"syntheticTrainingRows\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step12_data_pipeline.py",
+      "line": 75,
+      "matchedPattern": "FAKE_TARGET",
+      "lineContent": "assert audit[\"fakeTargets\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step13_data_collection.py",
+      "line": 49,
+      "matchedPattern": "FAKE_PICKUP_TIME",
+      "lineContent": "assert audit[\"fakePickupTimestamps\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "ai-service\\tests\\test_step9_operational_intelligence.py",
+      "line": 33,
+      "matchedPattern": "SYNTHETIC_TRAINING_ROWS",
+      "lineContent": "assert audit[\"syntheticTrainingRows\"] == 0",
+      "classification": "TEST_ONLY",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "backend\\services\\ngo.service.js",
+      "line": 20,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "password: Math.random().toString(36).slice(-8),",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    },
+    {
+      "file": "server\\src\\utils\\helpers.js",
+      "line": 4,
+      "matchedPattern": "MATH_RANDOM",
+      "lineContent": "return String(Math.floor(min + Math.random() * (max - min + 1)));",
+      "classification": "LEGITIMATE_CONSTANT",
+      "reason": "Audit scan found matching suspicious pattern"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "modelName": "FoodBridge Donation Priority Model",
+  "modelVersion": "1.0.0",
+  "modelStatus": "INSUFFICIENT_DATA",
+  "lastAuditAt": "2026-08-14T11:14:00Z",
+  "monitoringMetrics": {
+    "totalInferenceRequests": 0,
+    "successfulPredictions": 0,
+    "insufficientDataResponses": 0,
+    "modelFailures": 0,
+    "lastPredictionAt": null
+  },
+  "driftIndicators": {
+    "featureDriftDetected": false,
+    "conceptDriftDetected": false,
+    "groundTruthAvailable": false
+  }
+}
