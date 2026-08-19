@@ -1,0 +1,44 @@
+{
+  "demand": {
+    "modelName": "Demand Prediction Model",
+    "version": "1.0.0",
+    "status": "EXTERNAL_DATA_MODEL",
+    "foodBridgeTrained": false,
+    "dataset": "Kaggle Food Demand Forecasting",
+    "algorithm": "gradient_boosting",
+    "testMetrics": {
+      "MAE": 92.1543,
+      "RMSE": 224.9484,
+      "R2": 0.5874,
+      "WAPE": 38.2215,
+      "sMAPE": 45.3712
+    },
+    "modelFile": "ai-service/saved_models/demand_model.joblib"
+  },
+  "risk": {
+    "modelName": "Milk Quality Risk Model",
+    "version": "1.0.0",
+    "status": "EXTERNAL_DATA_MODEL",
+    "foodBridgeTrained": false,
+    "scope": "Milk quality classification",
+    "algorithm": "random_forest",
+    "testMetrics": {
+      "accuracy": 0.9874,
+      "f1_macro": 0.9862
+    },
+    "modelFile": "ai-service/saved_models/risk_model.joblib"
+  },
+  "priority": {
+    "modelName": "FoodBridge Donation Priority Model",
+    "version": "1.0.0",
+    "status": "INSUFFICIENT_DATA",
+    "foodBridgeTrained": false,
+    "scope": "FoodBridge operational pickup priority",
+    "algorithm": "None (Training Blocked)",
+    "recordsAvailable": 0,
+    "minimumRequired": 500,
+    "weeksAvailable": 0,
+    "minimumWeeksRequired": 12,
+    "lastUpdated": "2026-08-14T11:00:00"
+  }
+}

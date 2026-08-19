@@ -1,0 +1,15 @@
+{
+  "modelName": "priority",
+  "status": "insufficient_data",
+  "trainingSamples": 0,
+  "validationSamples": 0,
+  "testSamples": 0,
+  "metrics": {
+    "MAE": null,
+    "RMSE": null,
+    "R2": null
+  },
+  "dataSource": "MongoDB",
+  "syntheticData": false,
+  "message": "Model training blocked due to insufficient real historical outcome records."
+}

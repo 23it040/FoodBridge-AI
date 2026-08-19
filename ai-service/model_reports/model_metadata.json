@@ -1,0 +1,38 @@
+{
+  "project": "FoodBridge-AI",
+  "auditTimestamp": "2026-08-13T10:42:00Z",
+  "dataSource": "MongoDB",
+  "syntheticData": false,
+  "models": {
+    "demand": {
+      "modelName": "demand",
+      "version": null,
+      "status": "insufficient_data",
+      "trainingSamples": 0,
+      "validationSamples": 0,
+      "testSamples": 0,
+      "features": ["day_of_week", "month", "food_category", "historical_demand"],
+      "metrics": {}
+    },
+    "risk": {
+      "modelName": "risk",
+      "version": null,
+      "status": "insufficient_data",
+      "trainingSamples": 0,
+      "validationSamples": 0,
+      "testSamples": 0,
+      "features": ["food_category", "cooked_time", "expiry_time", "temperature_c"],
+      "metrics": {}
+    },
+    "priority": {
+      "modelName": "priority",
+      "version": null,
+      "status": "insufficient_data",
+      "trainingSamples": 0,
+      "validationSamples": 0,
+      "testSamples": 0,
+      "features": ["expiry_hours", "quantity", "distance_km", "demand", "ngo_capacity"],
+      "metrics": {}
+    }
+  }
+}

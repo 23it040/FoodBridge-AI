@@ -1,0 +1,16 @@
+{
+  "modelName": "FoodBridge Donation Priority Model",
+  "version": "1.0.0",
+  "status": "INSUFFICIENT_DATA",
+  "foodBridgeTrained": false,
+  "trainingDataSource": "FoodBridge MongoDB",
+  "trainingRecordCount": 0,
+  "requiredRecordCount": 500,
+  "weekRange": 0,
+  "requiredWeeks": 12,
+  "algorithm": "None (Training Blocked)",
+  "metrics": null,
+  "baselineMetrics": null,
+  "trainingGateResult": "BLOCKED_INSUFFICIENT_DATA",
+  "reason": "FoodBridge does not yet have sufficient real historical data."
+}

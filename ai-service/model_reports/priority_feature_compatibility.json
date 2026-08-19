@@ -1,0 +1,48 @@
+{
+  "modelScope": "FoodBridge Donation Priority Prediction",
+  "dataStatus": "INSUFFICIENT_REAL_FOODBRIDGE_DATA",
+  "features": {
+    "expiry_hours_remaining": {
+      "status": "MAPPABLE",
+      "foodBridgeField": "FoodDonation.expiryTime",
+      "reason": "Calculable from FoodDonation expiryTime minus current timestamp when donation is posted."
+    },
+    "food_quantity": {
+      "status": "COMPATIBLE",
+      "foodBridgeField": "FoodDonation.quantity",
+      "reason": "Directly available in FoodDonation.quantity."
+    },
+    "food_category": {
+      "status": "COMPATIBLE",
+      "foodBridgeField": "FoodDonation.category",
+      "reason": "Directly available in FoodDonation.category."
+    },
+    "donation_age_hours": {
+      "status": "MAPPABLE",
+      "foodBridgeField": "FoodDonation.createdAt",
+      "reason": "Calculable from current timestamp minus FoodDonation.createdAt."
+    },
+    "historical_request_count": {
+      "status": "INSUFFICIENT_DATA",
+      "foodBridgeField": "FoodRequest.foodId",
+      "reason": "Requires accumulating historical FoodRequest records per donation."
+    },
+    "historical_pickup_time": {
+      "status": "INSUFFICIENT_DATA",
+      "foodBridgeField": "FoodRequest.completedAt",
+      "reason": "Requires completed pickup transaction history."
+    },
+    "ngo_distance": {
+      "status": "MAPPABLE",
+      "foodBridgeField": "FoodDonation.location & User.location",
+      "reason": "Calculable via Haversine distance from donor and NGO coordinates."
+    }
+  },
+  "summary": {
+    "compatibleCount": 2,
+    "mappableCount": 3,
+    "insufficientDataCount": 2,
+    "incompatibleCount": 0,
+    "conclusion": "Feature schema is designed for FoodBridge database fields, but operational transaction volume is currently below the 500-record threshold."
+  }
+}

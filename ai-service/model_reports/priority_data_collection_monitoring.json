@@ -1,0 +1,19 @@
+{
+  "reportName": "Priority Data Collection Real-Time Monitoring",
+  "auditTimestamp": "2026-08-14T11:38:00Z",
+  "totalDonations": 0,
+  "totalRequests": 0,
+  "totalLifecycleEvents": 0,
+  "completedPickups": 0,
+  "validTrainingRecords": 0,
+  "validTargets": 0,
+  "weeksAvailable": 0,
+  "duplicateEvents": 0,
+  "invalidReferences": 0,
+  "leakageViolations": 0,
+  "firstEventTimestamp": null,
+  "latestEventTimestamp": null,
+  "lastAuditTimestamp": "2026-08-14T11:38:00Z",
+  "readinessStatus": "INSUFFICIENT_DATA",
+  "conclusion": "Production data collection is active and clean. MongoDB current volume is 0 records."
+}
