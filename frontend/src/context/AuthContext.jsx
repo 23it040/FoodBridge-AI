@@ -29,6 +29,8 @@ const AuthProvider = ({ children }) => {
         setUser(JSON.parse(storedUser));
       } catch (error) {
         console.error('Failed to parse stored user', error);
+        localStorage.removeItem(STORAGE_TOKEN);
+        localStorage.removeItem(STORAGE_USER);
       }
     }
 
@@ -71,7 +73,7 @@ const AuthProvider = ({ children }) => {
       register,
       logout
     }),
-    [token, user, loading]
+    [token, user, loading, login, register, logout]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

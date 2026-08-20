@@ -10,7 +10,6 @@ const ROLES_OPTIONS = [
   { value: 'user', label: 'User / Food Donor' },
   { value: 'ngo', label: 'NGO / Non-Profit' },
   { value: 'partner', label: 'Partner Organization' },
-  { value: 'admin', label: 'Administrator' }
 ];
 
 const RegisterPage = () => {
