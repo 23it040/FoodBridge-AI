@@ -272,7 +272,11 @@ const DonateFood = () => {
               <input
                 type="number"
                 min={1}
-                {...register('quantity', { required: 'Quantity is required', min: 1 })}
+                {...register('quantity', {
+                  required: 'Quantity is required',
+                  valueAsNumber: true,
+                  min: { value: 1, message: 'Quantity must be at least 1' }
+                })}
                 className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
               />
             </div>
@@ -305,10 +309,11 @@ const DonateFood = () => {
               </Button>
             </div>
             <input
-              {...register('pickupAddress')}
+              {...register('pickupAddress', { required: 'Pickup address is required' })}
               placeholder="e.g. Community Kitchen #4, Connaught Place"
               className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
             />
+            {errors.pickupAddress && <p className="mt-1 text-xs font-semibold text-red-600">{errors.pickupAddress.message}</p>}
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
@@ -317,9 +322,14 @@ const DonateFood = () => {
               <input
                 type="number"
                 step="any"
-                {...register('latitude', { valueAsNumber: true })}
+                {...register('latitude', {
+                  valueAsNumber: true,
+                  min: { value: -90, message: 'Latitude must be between -90 and 90' },
+                  max: { value: 90, message: 'Latitude must be between -90 and 90' }
+                })}
                 className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
               />
+              {errors.latitude && <p className="mt-1 text-xs font-semibold text-red-600">{errors.latitude.message}</p>}
             </div>
 
             <div>
@@ -327,9 +337,14 @@ const DonateFood = () => {
               <input
                 type="number"
                 step="any"
-                {...register('longitude', { valueAsNumber: true })}
+                {...register('longitude', {
+                  valueAsNumber: true,
+                  min: { value: -180, message: 'Longitude must be between -180 and 180' },
+                  max: { value: 180, message: 'Longitude must be between -180 and 180' }
+                })}
                 className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
               />
+              {errors.longitude && <p className="mt-1 text-xs font-semibold text-red-600">{errors.longitude.message}</p>}
             </div>
           </div>
 
@@ -378,7 +393,10 @@ const DonateFood = () => {
               </label>
               <input
                 type="datetime-local"
-                {...register('expiryTime', { required: 'Expiry time is required' })}
+                {...register('expiryTime', {
+                  required: 'Expiry time is required',
+                  validate: (value, values) => new Date(value) > new Date(values.cookedTime) || 'Expiry must be after cooked time'
+                })}
                 className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
               />
               {errors.expiryTime && <p className="mt-1 text-xs font-semibold text-red-600">{errors.expiryTime.message}</p>}

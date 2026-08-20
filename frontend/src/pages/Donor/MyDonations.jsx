@@ -13,16 +13,20 @@ import { FiPlusCircle, FiEye, FiTrash2 } from 'react-icons/fi';
 const MyDonations = () => {
   const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState([]);
+  const [error, setError] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
   const navigate = useNavigate();
 
   const load = async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await donationService.getMyDonations({ page: 1, limit: 50 });
       const list = Array.isArray(res) ? res : Array.isArray(res?.data) ? res.data : [];
       setDonations(list);
     } catch (error) {
       console.error(error);
+      setError('Failed to load your donations.');
     } finally {
       setLoading(false);
     }
@@ -33,12 +37,17 @@ const MyDonations = () => {
   const handleView = (row) => navigate(`/donor/donations/${row._id || row.id}`);
 
   const handleDelete = async (row) => {
+    const donationId = row._id || row.id;
+    if (!donationId || !window.confirm('Remove this donation listing?')) return;
+    setDeletingId(donationId);
     try {
-      await donationService.deleteDonation(row._id || row.id);
+      await donationService.deleteDonation(donationId);
       toast.success('Donation removed successfully');
       load();
     } catch (error) {
       toast.error(error?.response?.data?.message || 'Failed to delete donation');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -77,7 +86,7 @@ const MyDonations = () => {
             <FiEye className="h-3.5 w-3.5" />
             <span>Details</span>
           </Button>
-          <Button size="sm" variant="ghost" onClick={() => handleDelete(row)} className="text-red-600 hover:bg-red-50">
+          <Button size="sm" variant="ghost" loading={deletingId === (row._id || row.id)} disabled={Boolean(deletingId)} onClick={() => handleDelete(row)} className="text-red-600 hover:bg-red-50">
             <FiTrash2 className="h-4 w-4" />
           </Button>
         </div>
@@ -100,6 +109,11 @@ const MyDonations = () => {
       <Card>
         {loading ? (
           <div className="py-12 text-center"><Spinner size={44} /></div>
+        ) : error ? (
+          <div className="py-12 text-center text-sm text-red-600">
+            <p>{error}</p>
+            <Button variant="outline" className="mt-3" onClick={load}>Retry</Button>
+          </div>
         ) : (
           <DataTable columns={columns} data={donations} loading={loading} rowsPerPage={10} searchPlaceholder="Search donations by name or category..." />
         )}

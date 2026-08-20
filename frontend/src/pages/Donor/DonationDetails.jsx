@@ -24,6 +24,7 @@ const DonationDetails = () => {
   const [loading, setLoading] = useState(true);
   const [decision, setDecision] = useState(null);
   const [selectedNgo, setSelectedNgo] = useState(null);
+  const [respondingTo, setRespondingTo] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -60,6 +61,8 @@ const DonationDetails = () => {
   }, [id]);
 
   const handleRespond = async (requestId, action) => {
+    if (respondingTo) return;
+    setRespondingTo(requestId);
     try {
       await requestService.updateRequestStatus(requestId, action === 'accept' ? 'ACCEPTED' : 'REJECTED');
       toast.success(`Request ${action === 'accept' ? 'accepted' : 'rejected'}`);
@@ -68,6 +71,8 @@ const DonationDetails = () => {
     } catch (err) {
       console.error(err);
       toast.error('Failed to update request');
+    } finally {
+      setRespondingTo(null);
     }
   };
 
@@ -120,8 +125,8 @@ const DonationDetails = () => {
                     <div className="text-xs text-slate-400">Distance: {r.distance || '—'}</div>
                   </div>
                   <div className="flex gap-2">
-                    <Button onClick={() => handleRespond(r._id || r.id, 'accept')}>Accept</Button>
-                    <Button onClick={() => handleRespond(r._id || r.id, 'reject')} className="bg-white text-red-600">Reject</Button>
+                    <Button loading={respondingTo === (r._id || r.id)} disabled={Boolean(respondingTo)} onClick={() => handleRespond(r._id || r.id, 'accept')}>Accept</Button>
+                    <Button disabled={Boolean(respondingTo)} onClick={() => handleRespond(r._id || r.id, 'reject')} className="bg-white text-red-600">Reject</Button>
                   </div>
                 </div>
               ))}
