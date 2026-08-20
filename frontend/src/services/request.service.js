@@ -59,6 +59,18 @@ const normalizeRequestPayload = (payload = {}) => {
     normalized.pickupTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
 
+  if (normalized.requestMessage) {
+    normalized.requestMessage = normalized.requestMessage.trim();
+  }
+
+  if (normalized.contactNumber) {
+    normalized.contactNumber = normalized.contactNumber.trim();
+  }
+
+  if (normalized.beneficiaries !== undefined) {
+    normalized.beneficiaries = Math.max(1, Number(normalized.beneficiaries) || 1);
+  }
+
   return normalized;
 };
 

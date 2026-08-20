@@ -226,7 +226,10 @@ const RequestFood = ({ donationId: propDonationId }) => {
               </label>
               <input
                 type="date"
-                {...register('pickupDate', { required: 'Pickup date is required' })}
+                {...register('pickupDate', {
+                  required: 'Pickup date is required',
+                  validate: (value) => value >= new Date().toISOString().slice(0, 10) || 'Pickup date cannot be in the past'
+                })}
                 className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
               />
               {errors.pickupDate && <p className="mt-1 text-xs font-semibold text-red-600">{errors.pickupDate.message}</p>}
@@ -266,7 +269,10 @@ const RequestFood = ({ donationId: propDonationId }) => {
               </label>
               <input
                 type="tel"
-                {...register('contactNumber', { required: 'Contact phone number is required' })}
+                {...register('contactNumber', {
+                  required: 'Contact phone number is required',
+                  pattern: { value: /^[+\d][\d\s()-]{7,}$/, message: 'Enter a valid contact number' }
+                })}
                 placeholder="+91 9876543210"
                 className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
               />
@@ -282,9 +288,13 @@ const RequestFood = ({ donationId: propDonationId }) => {
               <input
                 type="number"
                 min={1}
-                {...register('beneficiaries', { valueAsNumber: true })}
+                {...register('beneficiaries', {
+                  valueAsNumber: true,
+                  min: { value: 1, message: 'At least one beneficiary is required' }
+                })}
                 className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
               />
+              {errors.beneficiaries && <p className="mt-1 text-xs font-semibold text-red-600">{errors.beneficiaries.message}</p>}
             </div>
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">

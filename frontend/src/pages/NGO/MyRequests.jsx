@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import requestService from '../../services/request.service';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
@@ -51,6 +52,18 @@ const MyRequests = () => {
 
   useEffect(() => { load(); }, []);
 
+  const handleCancel = async (row) => {
+    const requestId = row._id || row.id;
+    if (!requestId || !window.confirm('Cancel this pickup request?')) return;
+    try {
+      await requestService.respondToRequest(requestId, { status: 'CANCELLED' });
+      toast.success('Pickup request cancelled');
+      load();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || 'Failed to cancel request');
+    }
+  };
+
   const columns = useMemo(() => [
     {
       key: 'foodName',
@@ -96,9 +109,16 @@ const MyRequests = () => {
       key: 'actions',
       title: 'Actions',
       render: (row) => (
-        <Button size="sm" variant="outline" onClick={() => navigate(`/ngo/food/${row.foodId?._id || row.foodId}`)}>
-          View Food
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button size="sm" variant="outline" onClick={() => navigate(`/ngo/food/${row.foodId?._id || row.foodId}`)}>
+            View Food
+          </Button>
+          {String(row.status || 'PENDING').toUpperCase() === 'PENDING' && (
+            <Button size="sm" variant="ghost" className="text-red-600" onClick={() => handleCancel(row)}>
+              Cancel
+            </Button>
+          )}
+        </div>
       )
     }
   ], [navigate]);
