@@ -103,11 +103,15 @@ const LeafletMap = ({
   const layerGroupRef = useRef(null);
   const markerMapRef = useRef(new Map());
   const hasNotifiedGeoError = useRef(false);
+  const searchAbortRef = useRef(null);
 
   const [userLocation, setUserLocation] = useState(normalizePos(propUserLocation));
   const [hasError, setHasError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => () => searchAbortRef.current?.abort(), []);
 
   // Sync propUserLocation if passed
   useEffect(() => {
@@ -402,27 +406,41 @@ const LeafletMap = ({
   };
 
   // Manual Address Search Handler
-  const handleManualSearch = (e) => {
+  const handleManualSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return;
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const lat = parseFloat(data[0].lat);
-          const lon = parseFloat(data[0].lon);
-          const coords = [lat, lon];
-          setUserLocation(coords);
-          if (mapInstanceRef.current) {
-            mapInstanceRef.current.flyTo(coords, 14, { duration: 1.2 });
-          }
-          toast.success(`Location set to ${data[0].display_name.split(',')[0]}`);
-          setShowSearch(false);
-        } else {
-          toast.error('Location not found');
+    const query = searchQuery.trim();
+    if (!query || searching) return;
+    searchAbortRef.current?.abort();
+    const controller = new AbortController();
+    searchAbortRef.current = controller;
+    setSearching(true);
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=${encodeURIComponent(query)}`, {
+        signal: controller.signal,
+        headers: { Accept: 'application/json' }
+      });
+      if (!response.ok) throw new Error('Search request failed');
+      const data = await response.json();
+      if (Array.isArray(data) && data.length > 0) {
+        const lat = parseFloat(data[0].lat);
+        const lon = parseFloat(data[0].lon);
+        const coords = [lat, lon];
+        setUserLocation(coords);
+        onUserLocationChange?.(coords);
+        onLocationSelect?.({ lat, lng: lon });
+        if (mapInstanceRef.current) {
+          mapInstanceRef.current.flyTo(coords, 14, { duration: 1.2 });
         }
-      })
-      .catch(() => toast.error('Address search failed'));
+        toast.success(`Location set to ${data[0].display_name.split(',')[0]}`);
+        setShowSearch(false);
+      } else {
+        toast.error('Location not found');
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') toast.error('Address search failed');
+    } finally {
+      if (searchAbortRef.current === controller) setSearching(false);
+    }
   };
 
   if (hasError) {
@@ -470,7 +488,7 @@ const LeafletMap = ({
               type="submit"
               className="rounded-xl bg-[#428475] px-3 py-1.5 text-xs font-bold text-white shadow-xs hover:bg-[#1A312C]"
             >
-              Go
+              {searching ? 'Searching...' : 'Go'}
             </button>
           </form>
         </div>
