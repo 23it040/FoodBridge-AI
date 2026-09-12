@@ -40,6 +40,11 @@ const respondToRequest = async (id, payload) => {
   return response.data;
 };
 
+const updateRequestStatus = async (id, status, extra = {}) => {
+  const payload = typeof status === 'object' ? status : { status, ...extra };
+  return respondToRequest(id, payload);
+};
+
 const normalizeRequestPayload = (payload = {}) => {
   const normalized = { ...payload };
 
@@ -91,6 +96,7 @@ export default {
   listRequests,
   getRequest,
   respondToRequest,
+  updateRequestStatus,
   createRequest,
   createDemandRequest,
   createPickupRequest

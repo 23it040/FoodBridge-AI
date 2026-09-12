@@ -17,7 +17,7 @@ const normalizeDonationItem = (item) => {
     category: item.category || 'General',
     quantity: item.quantity ?? 1,
     unit: item.unit || 'servings',
-    imageUrl: item.foodImage?.url || item.imageUrl || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop',
+    imageUrl: item.foodImage?.url || item.imageUrl || null,
     expiryTime: item.expiryTime ? new Date(item.expiryTime).toLocaleDateString() : 'N/A',
     pickupAddress: item.pickupAddress || 'Address not specified'
   };

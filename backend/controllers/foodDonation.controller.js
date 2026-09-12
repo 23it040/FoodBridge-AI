@@ -5,15 +5,15 @@ const ApiResponse = require('../utils/ApiResponse');
 
 const createDonation = async (req, res) => {
   let foodImage = {
-    publicId: 'default_food',
-    url: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop'
+    publicId: null,
+    url: null
   };
 
   if (req.file) {
-    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer, 'foodbridge/donations');
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer, 'foodbridge/donations', req.file.originalname);
     foodImage = {
-      publicId: uploadResult.public_id || 'default_food',
-      url: uploadResult.secure_url || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop'
+      publicId: uploadResult.public_id || null,
+      url: uploadResult.secure_url || null
     };
   }
 
@@ -114,10 +114,10 @@ const updateDonation = async (req, res) => {
   if (typeof req.body.status === 'string') updateData.status = req.body.status;
 
   if (req.file) {
-    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer, 'foodbridge/donations');
+    const uploadResult = await cloudinaryService.uploadImage(req.file.buffer, 'foodbridge/donations', req.file.originalname);
     updateData.foodImage = {
-      publicId: uploadResult.public_id,
-      url: uploadResult.secure_url
+      publicId: uploadResult.public_id || null,
+      url: uploadResult.secure_url || null
     };
   }
 

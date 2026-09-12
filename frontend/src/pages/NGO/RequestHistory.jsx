@@ -13,14 +13,10 @@ import { FiClock, FiEye } from 'react-icons/fi';
 const renderStatusBadge = (status) => {
   const s = String(status || 'PENDING').toUpperCase();
   switch (s) {
-    case 'COMPLETED':
-      return <Badge variant="success">Completed</Badge>;
-    case 'REJECTED':
-      return <Badge variant="danger">Rejected</Badge>;
     case 'ACCEPTED':
       return <Badge variant="success">Accepted</Badge>;
-    case 'PICKED_UP':
-      return <Badge variant="secondary">Picked Up</Badge>;
+    case 'REJECTED':
+      return <Badge variant="danger">Rejected</Badge>;
     default:
       return <Badge variant="warning">{status}</Badge>;
   }
@@ -51,10 +47,18 @@ const RequestHistory = () => {
 
   useEffect(() => { load(); }, []);
 
+  // Historical records represent requests that have received a decision (ACCEPTED or REJECTED)
+  const historicalRequests = useMemo(() => {
+    return requests.filter((r) => {
+      const s = String(r.status || '').toUpperCase();
+      return s === 'ACCEPTED' || s === 'REJECTED';
+    });
+  }, [requests]);
+
   const filteredRequests = useMemo(() => {
-    if (statusFilter === 'ALL') return requests;
-    return requests.filter((r) => String(r.status).toUpperCase() === statusFilter);
-  }, [requests, statusFilter]);
+    if (statusFilter === 'ALL') return historicalRequests;
+    return historicalRequests.filter((r) => String(r.status || '').toUpperCase() === statusFilter);
+  }, [historicalRequests, statusFilter]);
 
   const columns = useMemo(() => [
     {
@@ -68,9 +72,18 @@ const RequestHistory = () => {
       )
     },
     {
+      key: 'quantity',
+      title: 'Quantity',
+      render: (row) => (
+        <span className="font-extrabold text-[#428475] text-xs">
+          {row.quantity || row.foodId?.quantity || 1} {row.unit || row.foodId?.unit || 'servings'}
+        </span>
+      )
+    },
+    {
       key: 'donorName',
       title: 'Donor',
-      render: (row) => <span className="font-semibold text-slate-700">{row.donorName || row.donorId?.name || 'Donor'}</span>
+      render: (row) => <span className="font-semibold text-slate-700 text-xs">{row.donorName || row.donorId?.name || 'Donor'}</span>
     },
     {
       key: 'message',
@@ -103,14 +116,14 @@ const RequestHistory = () => {
     <section className="py-6 space-y-6">
       <PageHeader
         title="Request History Logs"
-        subtitle="Complete log of your fulfilled, accepted, and closed food requests"
+        subtitle="Complete log of your accepted and rejected food requests"
       />
 
       <Card icon={<FiClock className="h-5 w-5" />} title="Historical Records">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-[#FFF4E1]/40 p-3 rounded-2xl border border-[#89D7B7]">
           <div className="text-xs font-bold uppercase tracking-wider text-[#1A312C]">Filter by Status</div>
           <div className="flex flex-wrap gap-1.5">
-            {['ALL', 'COMPLETED', 'ACCEPTED', 'REJECTED'].map((st) => (
+            {['ALL', 'ACCEPTED', 'REJECTED'].map((st) => (
               <button
                 key={st}
                 onClick={() => setStatusFilter(st)}

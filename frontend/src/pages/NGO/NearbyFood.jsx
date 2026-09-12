@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import donationService from '../../services/donation.service';
+import { getFoodImageUrl } from '../../utils/image';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import DataTable from '../../components/ui/data/DataTable';
@@ -10,7 +11,7 @@ import LeafletMap from '../../components/maps/LeafletMap';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
 import { useForm } from 'react-hook-form';
-import { FiSearch, FiFilter, FiMapPin, FiEye } from 'react-icons/fi';
+import { FiSearch, FiFilter, FiMapPin, FiEye, FiBox } from 'react-icons/fi';
 
 const NearbyFood = () => {
   const [loading, setLoading] = useState(true);
@@ -58,22 +59,31 @@ const NearbyFood = () => {
     {
       key: 'image',
       title: 'Food Listing',
-      render: (row) => (
-        <div className="flex items-center gap-3">
-          <img
-            src={row.foodImage?.url || row.imageUrl || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop'}
-            alt={row.foodName || row.name}
-            className="h-12 w-12 rounded-xl object-cover border border-[#89D7B7]/60 shadow-xs"
-          />
-          <div>
-            <div className="font-extrabold text-[#1A312C] text-sm">{row.foodName || row.name}</div>
-            <div className="text-xs text-slate-500 flex items-center gap-1">
-              <FiMapPin className="h-3 w-3 text-[#428475]" />
-              <span>{row.pickupAddress || 'Local Area'}</span>
+      render: (row) => {
+        const imgUrl = getFoodImageUrl(row);
+        return (
+          <div className="flex items-center gap-3">
+            {imgUrl ? (
+              <img
+                src={imgUrl}
+                alt={row.foodName || row.name || 'Food'}
+                className="h-12 w-12 rounded-xl object-cover border border-[#89D7B7]/60 shadow-xs shrink-0"
+              />
+            ) : (
+              <div className="h-12 w-12 rounded-xl border border-[#89D7B7]/60 bg-[#FFF4E1]/50 flex items-center justify-center text-[#428475] shrink-0">
+                <FiBox className="h-5 w-5" />
+              </div>
+            )}
+            <div>
+              <div className="font-extrabold text-[#1A312C] text-sm">{row.foodName || row.name}</div>
+              <div className="text-xs text-slate-500 flex items-center gap-1">
+                <FiMapPin className="h-3 w-3 text-[#428475]" />
+                <span>{row.pickupAddress || 'Local Area'}</span>
+              </div>
             </div>
           </div>
-        </div>
-      )
+        );
+      }
     },
     {
       key: 'category',

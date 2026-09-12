@@ -5,6 +5,7 @@ import donationService from '../../services/donation.service';
 import requestService from '../../services/request.service';
 import aiService from '../../services/ai.service';
 import { useAuth } from '../../context/AuthContext';
+import { getFoodImageUrl } from '../../utils/image';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
@@ -13,7 +14,7 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import LeafletMap from '../../components/maps/LeafletMap';
 import toast from 'react-hot-toast';
-import { FiBox, FiMapPin, FiCalendar, FiSend, FiUser, FiPhone, FiTruck, FiShield, FiInfo } from 'react-icons/fi';
+import { FiBox, FiMapPin, FiCalendar, FiSend, FiUser, FiPhone, FiTruck, FiShield, FiInfo, FiImage } from 'react-icons/fi';
 
 const FoodDetails = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const FoodDetails = () => {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [riskAssessment, setRiskAssessment] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
@@ -113,11 +115,20 @@ const FoodDetails = () => {
         <div className="lg:col-span-2 space-y-6">
           <Card title="Donation Overview" icon={<FiBox className="h-5 w-5" />}>
             <div className="flex flex-col md:flex-row gap-6">
-              <img
-                src={donation.foodImage?.url || donation.imageUrl || 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800&auto=format&fit=crop'}
-                alt={donation.foodName || donation.name}
-                className="h-56 w-full md:w-72 rounded-2xl object-cover border border-[#89D7B7] shadow-sm"
-              />
+              {(!imageError && getFoodImageUrl(donation)) ? (
+                <img
+                  src={getFoodImageUrl(donation)}
+                  alt={donation.foodName || donation.name || 'Food Item'}
+                  onError={() => setImageError(true)}
+                  className="h-56 w-full md:w-72 rounded-2xl object-cover border border-[#89D7B7] shadow-sm"
+                />
+              ) : (
+                <div className="h-56 w-full md:w-72 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 flex flex-col items-center justify-center gap-2 text-slate-500 shadow-xs p-4 text-center shrink-0">
+                  <FiImage className="h-10 w-10 text-[#428475]/60" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-600">No image uploaded</span>
+                  <span className="text-[11px] text-slate-400 font-medium">Donor did not attach a food photo</span>
+                </div>
+              )}
               <div className="space-y-3.5 text-xs font-medium flex-1 text-[#1A312C]">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">{donation.category || 'General'}</Badge>

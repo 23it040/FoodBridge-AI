@@ -254,16 +254,8 @@ const findNearbyFood = async (user, query) => {
 const getHistory = async (user) => {
   const match = user.role === 'admin' ? {} : { ngoId: user._id };
 
-  const [completed, rejected, pending, cancelled] = await Promise.all([
-    FoodRequest.find({ ...match, status: 'COMPLETED' })
-      .populate('foodId')
-      .populate('donorId', 'name email')
-      .populate('ngoId', 'name email'),
-    FoodRequest.find({ ...match, status: 'REJECTED' })
-      .populate('foodId')
-      .populate('donorId', 'name email')
-      .populate('ngoId', 'name email'),
-    FoodRequest.find({ ...match, status: 'PENDING' })
+  const [accepted, rejected] = await Promise.all([
+    FoodRequest.find({ ...match, status: 'ACCEPTED' })
       .populate('foodId')
       .populate('donorId', 'name email')
       .populate('ngoId', 'name email'),
@@ -274,10 +266,9 @@ const getHistory = async (user) => {
   ]);
 
   return {
-    completedDonations: completed,
+    acceptedRequests: accepted,
     rejectedRequests: rejected,
-    pendingRequests: pending,
-    cancelledRequests: cancelled
+    history: [...accepted, ...rejected]
   };
 };
 

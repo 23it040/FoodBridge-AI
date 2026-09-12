@@ -4,6 +4,7 @@ import donationService from '../../services/donation.service';
 import requestService from '../../services/request.service';
 import aiService from '../../services/ai.service';
 import { getDirectionsUrl } from '../../services/maps.service';
+import { getFoodImageUrl } from '../../utils/image';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import Badge from '../../components/ui/Badge';
@@ -14,7 +15,7 @@ import AIStatusBadge from '../../components/ai/AIStatusBadge';
 import AIExplanation from '../../components/ai/AIExplanation';
 import LeafletMap from '../../components/maps/LeafletMap';
 import toast from 'react-hot-toast';
-import { FiCpu, FiMapPin, FiAward, FiShield, FiInfo, FiTrendingUp, FiNavigation } from 'react-icons/fi';
+import { FiCpu, FiMapPin, FiAward, FiShield, FiInfo, FiTrendingUp, FiNavigation, FiBox, FiImage } from 'react-icons/fi';
 
 const DonationDetails = () => {
   const { id } = useParams();
@@ -25,6 +26,8 @@ const DonationDetails = () => {
   const [decision, setDecision] = useState(null);
   const [selectedNgo, setSelectedNgo] = useState(null);
   const [respondingTo, setRespondingTo] = useState(null);
+  const [imageError, setImageError] = useState(false);
+  const [respondingId, setRespondingId] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -61,7 +64,8 @@ const DonationDetails = () => {
   }, [id]);
 
   const handleRespond = async (requestId, action) => {
-    if (respondingTo) return;
+    if (!requestId || respondingId || respondingTo) return;
+    setRespondingId(requestId);
     setRespondingTo(requestId);
     try {
       await requestService.updateRequestStatus(requestId, action === 'accept' ? 'ACCEPTED' : 'REJECTED');
@@ -69,9 +73,11 @@ const DonationDetails = () => {
       const reqs = await requestService.listRequests({ donationId: id });
       setRequests(Array.isArray(reqs) ? reqs : Array.isArray(reqs?.data) ? reqs.data : []);
     } catch (err) {
-      console.error(err);
-      toast.error('Failed to update request');
+      console.error('Request update failure:', err);
+      const errMsg = err?.response?.data?.message || err?.message || 'Failed to update request';
+      toast.error(errMsg);
     } finally {
+      setRespondingId(null);
       setRespondingTo(null);
     }
   };
@@ -102,13 +108,34 @@ const DonationDetails = () => {
       <PageHeader title={donation.foodName || donation.name || 'Donation Details'} subtitle="Review donation status, incoming requests, and AI analytics" />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <Card title="Details">
-          <div className="space-y-2 text-sm">
-            <div><strong>Category:</strong> {donation.category}</div>
-            <div><strong>Quantity:</strong> {donation.quantity} {donation.unit}</div>
-            <div><strong>Pickup Address:</strong> {donation.pickupAddress}</div>
-            <div><strong>Expiry:</strong> {donation.expiryTime}</div>
-            <div className="mt-3 text-xs text-slate-600">{donation.description}</div>
+        <Card title="Donation Overview" icon={<FiBox className="h-5 w-5" />}>
+          <div className="flex flex-col gap-4">
+            {(!imageError && getFoodImageUrl(donation)) ? (
+              <img
+                src={getFoodImageUrl(donation)}
+                alt={donation.foodName || donation.name || 'Food Donation'}
+                onError={() => setImageError(true)}
+                className="h-56 w-full rounded-2xl object-cover border border-[#89D7B7] shadow-sm"
+              />
+            ) : (
+              <div className="h-56 w-full rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 flex flex-col items-center justify-center gap-2 text-slate-500 shadow-xs p-4 text-center">
+                <FiImage className="h-10 w-10 text-[#428475]/60" />
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">No image uploaded</span>
+                <span className="text-[11px] text-slate-400 font-medium">Donor did not attach a food photo</span>
+              </div>
+            )}
+            <div className="space-y-2 text-xs font-medium text-[#1A312C]">
+              <div className="flex items-center gap-2 mb-1">
+                <Badge variant="secondary">{donation.category || 'General'}</Badge>
+                <Badge variant="success">{donation.status || 'AVAILABLE'}</Badge>
+              </div>
+              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Quantity</span> <span className="text-sm font-extrabold text-[#428475]">{donation.quantity} {donation.unit || 'servings'}</span></div>
+              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Pickup Address</span> <span className="font-semibold text-slate-800">{donation.pickupAddress || 'Address not specified'}</span></div>
+              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Expiry</span> <span className="text-amber-700 font-bold">{donation.expiryTime || 'N/A'}</span></div>
+              {donation.description && (
+                <div className="pt-2 border-t border-slate-100 text-slate-600 leading-relaxed text-[11px]">{donation.description}</div>
+              )}
+            </div>
           </div>
         </Card>
 
@@ -125,8 +152,21 @@ const DonationDetails = () => {
                     <div className="text-xs text-slate-400">Distance: {r.distance || '—'}</div>
                   </div>
                   <div className="flex gap-2">
-                    <Button loading={respondingTo === (r._id || r.id)} disabled={Boolean(respondingTo)} onClick={() => handleRespond(r._id || r.id, 'accept')}>Accept</Button>
-                    <Button disabled={Boolean(respondingTo)} onClick={() => handleRespond(r._id || r.id, 'reject')} className="bg-white text-red-600">Reject</Button>
+                    <Button
+                      onClick={() => handleRespond(r._id || r.id, 'accept')}
+                      loading={respondingId === (r._id || r.id) || respondingTo === (r._id || r.id)}
+                      disabled={respondingId !== null || respondingTo !== null}
+                    >
+                      Accept
+                    </Button>
+                    <Button
+                      onClick={() => handleRespond(r._id || r.id, 'reject')}
+                      loading={respondingId === (r._id || r.id) || respondingTo === (r._id || r.id)}
+                      disabled={respondingId !== null || respondingTo !== null}
+                      className="bg-white text-red-600 border border-slate-200"
+                    >
+                      Reject
+                    </Button>
                   </div>
                 </div>
               ))}
