@@ -7,7 +7,7 @@ import Card from '../../components/ui/Card';
 import DataTable from '../../components/ui/data/DataTable';
 import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
-import LeafletMap from '../../components/maps/LeafletMap';
+import NGOMap from '../../components/maps/NGOMap';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
 import { useForm } from 'react-hook-form';
@@ -161,20 +161,10 @@ const NearbyFood = () => {
         <div>
           <Card title="Donation Locations Map" icon={<FiMapPin className="h-5 w-5" />}>
             <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
-              <LeafletMap
+              <NGOMap
                 key={`nearby-food-map-${donations.length}`}
-                markers={(donations || [])
-                  .filter((d) => d.latitude || d.longitude)
-                  .map((d) => ({
-                    id: d._id || d.id,
-                    type: 'donation',
-                    position: [Number(d.latitude || 28.6139), Number(d.longitude || 77.2090)],
-                    foodName: d.foodName || d.name,
-                    quantity: d.quantity,
-                    unit: d.unit,
-                    expiryTime: d.expiryTime,
-                    detailsUrl: `/ngo/food/${d._id || d.id}`
-                  }))}
+                foodDonations={donations}
+                className="h-[380px]"
               />
             </div>
           </Card>

@@ -32,6 +32,12 @@ router.get('/nearby', asyncHandler(ngoController.getNearbyNgos));
 router.get('/nearby-ngos', asyncHandler(ngoController.getNearbyNgos));
 
 /**
+ * GET /api/ngos/map or /api/v1/ngos/map
+ * Public route to fetch verified active FoodBridge NGOs for map visualization
+ */
+router.get('/map', asyncHandler(ngoController.getNgosForMap));
+
+/**
  * Authenticated routes
  */
 router.use(authenticate);

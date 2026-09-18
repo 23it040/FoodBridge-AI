@@ -76,19 +76,19 @@ const NotificationsPage = () => {
                 <div
                   key={n._id || n.id}
                   className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl p-4 transition-all ${
-                    isUnread ? 'bg-[#FFF4E1]/50 border border-[#89D7B7] shadow-xs' : 'bg-white border border-slate-200'
+                    isUnread ? 'bg-[#E8F6F0]/60 border border-[#79D6B2] shadow-xs' : 'bg-white border border-[#DDE5E1]'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#428475] text-white' : 'bg-slate-100 text-slate-500'}`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#2F8F72] text-white' : 'bg-[#F6F7F4] text-[#687370]'}`}>
                       <FiBell className="h-5 w-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-extrabold text-[#1A312C] text-sm">{n.title || n.message}</h4>
+                        <h4 className="font-extrabold text-[#102A2A] text-sm">{n.title || n.message}</h4>
                         {isUnread && <Badge variant="primary">New</Badge>}
                       </div>
-                      <p className="mt-0.5 text-xs font-medium text-slate-600">{n.message || n.body}</p>
+                      <p className="mt-0.5 text-xs font-medium text-[#687370]">{n.message || n.body}</p>
                       <span className="mt-1 block text-[10px] font-semibold text-slate-400">
                         {n.createdAt ? new Date(n.createdAt).toLocaleString() : 'Recent'}
                       </span>

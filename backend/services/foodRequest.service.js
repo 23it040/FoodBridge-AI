@@ -12,8 +12,13 @@ const createRequest = async ({ foodId, ngoId, requestMessage, pickupDate, pickup
     throw new ApiError(400, 'Donors cannot request their own food');
   }
 
-  if (donation.status !== 'AVAILABLE') {
-    throw new ApiError(400, 'Only available food donations can be requested');
+  const now = new Date();
+  if (donation.status !== 'AVAILABLE' || (donation.expiryTime && new Date(donation.expiryTime) <= now)) {
+    if (donation.status === 'AVAILABLE' && donation.expiryTime && new Date(donation.expiryTime) <= now) {
+      donation.status = 'EXPIRED';
+      await donation.save();
+    }
+    throw new ApiError(400, 'This food donation has expired and is no longer available.');
   }
 
   const existing = await FoodRequest.findOne({ foodId, ngoId });
@@ -89,6 +94,23 @@ const updateRequestStatus = async (id, user, { status, rejectionReason, complete
 
   if (!isDonor && !isNgo && !isAdmin) {
     throw new ApiError(403, 'Access denied to this request');
+  }
+
+  const donation = request.foodId;
+  const now = new Date();
+  if (
+    !donation ||
+    donation.status === 'EXPIRED' ||
+    (donation.expiryTime && new Date(donation.expiryTime) <= now)
+  ) {
+    if (donation && donation.status !== 'EXPIRED') {
+      donation.status = 'EXPIRED';
+      await donation.save();
+    }
+    request.status = 'EXPIRED';
+    request.rejectionReason = 'This food donation has expired and can no longer be processed.';
+    await request.save();
+    throw new ApiError(400, 'This food donation has expired and can no longer be processed.');
   }
 
   const validTransitions = {

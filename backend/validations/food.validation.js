@@ -38,6 +38,12 @@ const createFoodDonationValidator = [
     .withMessage('Longitude is required')
     .isFloat({ min: -180, max: 180 })
     .withMessage('Longitude must be between -180 and 180'),
+  body('foodImage').custom((value, { req }) => {
+    if (!req.file) {
+      throw new Error('Food image is required.');
+    }
+    return true;
+  }),
   body('status')
     .optional()
     .isIn(statusOptions)

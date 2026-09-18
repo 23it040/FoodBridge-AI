@@ -37,18 +37,18 @@ const ChangePassword = () => {
       <Card title="Security Credentials" icon={<FiLock className="h-5 w-5" />}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Current Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">Current Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.current ? 'text' : 'password'}
                 {...register('currentPassword', { required: 'Current password is required' })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, current: !s.current }))}
-                className="absolute right-3.5 top-3.5 text-slate-400 hover:text-[#428475]"
+                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
               >
                 {show.current ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>
@@ -57,7 +57,7 @@ const ChangePassword = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">New Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">New Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.new ? 'text' : 'password'}
@@ -66,12 +66,12 @@ const ChangePassword = () => {
                   minLength: { value: 8, message: 'Password must be at least 8 characters' }
                 })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, new: !s.new }))}
-                className="absolute right-3.5 top-3.5 text-slate-400 hover:text-[#428475]"
+                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
               >
                 {show.new ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>
@@ -80,7 +80,7 @@ const ChangePassword = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Confirm New Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">Confirm New Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.confirm ? 'text' : 'password'}
@@ -89,12 +89,12 @@ const ChangePassword = () => {
                   validate: (v) => v === newPass || 'Passwords do not match'
                 })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, confirm: !s.confirm }))}
-                className="absolute right-3.5 top-3.5 text-slate-400 hover:text-[#428475]"
+                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
               >
                 {show.confirm ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>

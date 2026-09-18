@@ -21,6 +21,7 @@ router.post(
   asyncHandler(foodDonationController.createDonation)
 );
 router.get('/', asyncHandler(foodDonationController.listDonations));
+router.get('/:id/matches', asyncHandler(foodDonationController.getDonationMatches));
 router.get('/:id', asyncHandler(foodDonationController.getDonation));
 router.put(
   '/:id',

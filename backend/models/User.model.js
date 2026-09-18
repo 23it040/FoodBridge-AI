@@ -61,6 +61,25 @@ const userSchema = new mongoose.Schema(
     longitude: {
       type: Number
     },
+    location: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        default: 'Point'
+      },
+      coordinates: {
+        type: [Number],
+        default: undefined
+      }
+    },
+    foodTypesAccepted: {
+      type: [String],
+      default: ['cooked', 'packaged']
+    },
+    capacity: {
+      type: Number,
+      default: 150
+    },
     profileImage: {
       publicId: String,
       url: String
@@ -135,6 +154,8 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.comparePassword = function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
+
+userSchema.index({ location: '2dsphere' });
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

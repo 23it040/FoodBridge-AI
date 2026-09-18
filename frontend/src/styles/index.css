@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  background-color: #FFF4E1;
-  color: #1A312C;
+  color-scheme: dark light;
+  font-family: 'Inter', 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  background-color: #0A1A1A;
+  color: #FFFFFF;
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #FFF4E1;
+  background-color: #0A1A1A;
 }
 
 body {
   min-height: 100vh;
-  background-color: #FFF4E1;
-  color: #1A312C;
+  background-color: #0A1A1A;
+  color: #FFFFFF;
 }
 
 button,
@@ -28,12 +28,117 @@ select {
 }
 
 ::selection {
-  background-color: #428475;
-  color: #ffffff;
+  background-color: #79D6B2;
+  color: #102A2A;
+}
+
+/* ============================================================
+   FOODBRIDGE GOOGLE MAPS CURSOR INTERACTION STYLING
+   ============================================================ */
+
+/* Base map container cursor state when idle inside map */
+.foodbridge-map-container {
+  cursor: grab !important;
+  cursor: -webkit-grab !important;
+}
+
+/* Map container cursor state when active/dragging */
+.foodbridge-map-container:active,
+.foodbridge-map-container.is-dragging {
+  cursor: grabbing !important;
+  cursor: -webkit-grabbing !important;
+}
+
+/* Override inner Google Maps JS API canvas & container elements when idle */
+.foodbridge-map-container .gm-style,
+.foodbridge-map-container .gm-style canvas,
+.foodbridge-map-container .gm-style > div {
+  cursor: grab !important;
+  cursor: -webkit-grab !important;
+}
+
+/* Override inner Google Maps JS API canvas & container elements when dragging */
+.foodbridge-map-container:active .gm-style,
+.foodbridge-map-container:active .gm-style canvas,
+.foodbridge-map-container:active .gm-style > div,
+.foodbridge-map-container.is-dragging .gm-style,
+.foodbridge-map-container.is-dragging .gm-style canvas,
+.foodbridge-map-container.is-dragging .gm-style > div {
+  cursor: grabbing !important;
+  cursor: -webkit-grabbing !important;
+}
+
+/* Clickable controls, markers, buttons, popups, and inputs use pointer cursor */
+.foodbridge-map-container button,
+.foodbridge-map-container a,
+.foodbridge-map-container input,
+.foodbridge-map-container select,
+.foodbridge-map-container [role="button"],
+.foodbridge-map-container .gm-ui-hover-effect,
+.foodbridge-map-container .gm-style-iw,
+.foodbridge-map-container .gm-style-iw-c,
+.foodbridge-map-container [gmp-clickable="true"] {
+  cursor: pointer !important;
 }
 
 @layer components {
   .card {
-    @apply rounded-[24px] bg-white p-6 shadow-card border border-[#89D7B7] transition-all duration-200 hover:shadow-elevated;
+    @apply rounded-2xl bg-white/5 backdrop-blur-md p-6 shadow-card border border-white/10 transition-all duration-200 hover:shadow-elevated hover:border-[#79D6B2]/40;
+  }
+
+  .glass-panel {
+    background: rgba(16, 42, 42, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .glass-nav {
+    background: rgba(10, 26, 26, 0.78);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+
+  .glass-btn-primary {
+    background: rgba(121, 214, 178, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(121, 214, 178, 0.45);
+    color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(121, 214, 178, 0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-btn-primary:hover {
+    background: rgba(121, 214, 178, 0.38);
+    border-color: rgba(121, 214, 178, 0.7);
+    box-shadow: 0 6px 25px rgba(121, 214, 178, 0.38);
+    transform: translateY(-2px);
+  }
+
+  .glass-btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
   }
 }

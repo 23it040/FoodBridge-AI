@@ -1,12 +1,12 @@
-# 🍲 FoodBridge AI - Intelligent Food Waste Redistribution Platform
+# 🍲 FoodBridge - Food Waste Redistribution Platform
 
-> FoodBridge AI is a MERN-stack web application and AI matching engine designed to connect food donors (restaurants, events, individuals) with NGOs and community kitchens to optimize food waste redistribution and combat local food insecurity.
+> FoodBridge is a MERN-stack web application designed to connect food donors (restaurants, events, individuals) with NGOs and community kitchens to optimize food waste redistribution and combat local food insecurity.
 
 ---
 
 ## 🌟 Overview
 
-FoodBridge AI bridges the gap between surplus food generators and verified social organizations. Donors can list extra food items along with pickup details and food photos, while nearby NGOs can discover available donations on an interactive map, submit pickup requests, and track request outcomes. An integrated Python FastAPI microservice provides predictive analytics for food demand, food safety decay risk, and donation priority scoring.
+FoodBridge bridges the gap between surplus food generators and verified social organizations. Donors can list extra food items along with pickup details and food photos, while nearby NGOs can discover available donations on an interactive map, submit pickup requests, and track request outcomes.
 
 ---
 
@@ -27,17 +27,11 @@ FoodBridge AI bridges the gap between surplus food generators and verified socia
 - **Submit Requests**: Submit food pickup requests with estimated beneficiary counts, contact information, and preferred pickup times.
 - **Historical Records**: Review finalized request logs filtered by `ALL`, `ACCEPTED`, and `REJECTED`.
 
-### 🧠 AI Redistribution Engine (FastAPI Service)
-- **Demand Forecasting**: Predicts expected local meal demand based on historical donation patterns.
-- **Food Safety Risk Assessment**: Evaluates food safety grade and risk level for perishable categories.
-- **Donation Priority Scoring**: Calculates priority scores to match urgent donations with nearby high-need recipients.
-- **Route Optimization**: Computes optimal pickup and delivery routing using Geopy & distance matrix algorithms.
-
 ---
 
 ## 🔄 Request Lifecycle & Workflow
 
-FoodBridge AI enforces a clean, decision-driven request lifecycle:
+FoodBridge enforces a clean, decision-driven request lifecycle:
 
 ```text
                   DONOR
@@ -69,7 +63,7 @@ FoodBridge AI enforces a clean, decision-driven request lifecycle:
 - **Framework**: React 19, Vite 5
 - **Styling**: Tailwind CSS 3, PostCSS, Autoprefixer
 - **Routing**: React Router DOM 6
-- **Mapping**: Leaflet.js 1.9, React-Leaflet, OpenStreetMap
+- **Mapping**: Google Maps Platform (`@vis.gl/react-google-maps`)
 - **State & Forms**: React Hook Form, React Context API
 - **UI Components**: React Icons, React Hot Toast, Recharts 2
 - **HTTP Client**: Axios (with custom multipart FormData interceptor)
@@ -81,11 +75,6 @@ FoodBridge AI enforces a clean, decision-driven request lifecycle:
 - **File Uploads**: Multer (memory storage & local disk persistence)
 - **Logging & Utils**: Morgan, Streamifier, Cloudinary SDK
 
-### AI / ML Microservice
-- **Framework**: Python 3.12+, FastAPI, Uvicorn
-- **Machine Learning**: Scikit-Learn, Pandas, NumPy, Joblib
-- **Geospatial & HTTP**: Geopy, HTTPX, Pydantic v2
-
 ---
 
 ## 📁 Project Structure
@@ -94,10 +83,10 @@ FoodBridge AI enforces a clean, decision-driven request lifecycle:
 FoodBridge-AI/
 ├── frontend/                   # React 19 + Vite User Interface
 │   ├── src/
-│   │   ├── components/         # Common UI, Card, Modal, LeafletMap, Charts, AI badges
+│   │   ├── components/         # Common UI, Card, Modal, LeafletMap, Charts
 │   │   ├── context/            # AuthContext (user session management)
-│   │   ├── pages/              # Donor, NGO, Admin, Auth, and AI pages
-│   │   ├── services/           # Axios API services (donation, request, auth, ai)
+│   │   ├── pages/              # Donor, NGO, Admin, and Auth pages
+│   │   ├── services/           # Axios API services (donation, request, auth)
 │   │   ├── utils/              # Image URL resolver & helper functions
 │   │   └── routes/             # AppRoutes, ProtectedRoute, RoleRoute
 │   ├── package.json
@@ -105,21 +94,14 @@ FoodBridge-AI/
 │
 ├── backend/                    # Node.js + Express REST API
 │   ├── config/                 # MongoDB database & Cloudinary connections
-│   ├── controllers/            # Route controllers (food, request, user, admin, ai)
+│   ├── controllers/            # Route controllers (food, request, user, admin)
 │   ├── middleware/             # Auth, Multer upload, Validation, Error handler
 │   ├── models/                 # Mongoose models (User, FoodDonation, FoodRequest, etc.)
 │   ├── routes/                 # Express API routes
-│   ├── services/               # Business logic & AI HTTP integration
+│   ├── services/               # Business logic
 │   ├── uploads/                # Local disk storage for donor-uploaded images
 │   ├── server.js               # Server entry point
 │   └── package.json
-│
-├── ai-service/                 # Python FastAPI ML Engine
-│   ├── ai_service/
-│   │   ├── app/                # FastAPI application & route endpoints
-│   │   ├── saved_models/       # Trained ML joblib binaries
-│   │   └── training/           # Model training scripts
-│   └── requirements.txt
 │
 ├── data/                       # Local MongoDB data directory (`db/`)
 └── README.md                   # Root Project Documentation
@@ -147,22 +129,14 @@ CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 
 CLIENT_URL=http://localhost:5173
-AI_SERVICE_URL=http://127.0.0.1:8000
 BCRYPT_SALT_ROUNDS=12
 ```
 
 ### Frontend Configuration (`frontend/.env`)
 ```env
 VITE_API_BASE_URL=http://localhost:5000
-VITE_MAP_TILE_URL=https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png
-VITE_APP_NAME=FoodBridge AI
-```
-
-### AI Service Configuration (`ai-service/.env`)
-```env
-PORT=8000
-MODEL_DIR=./saved_models
-DEFAULT_SPEED_KMPH=30
+VITE_GOOGLE_MAPS_API_KEY=YOUR_RESTRICTED_GOOGLE_MAPS_API_KEY
+VITE_APP_NAME=FoodBridge
 ```
 
 > **Security Note**: Never commit actual production API keys or credentials to public repositories.
@@ -174,7 +148,6 @@ DEFAULT_SPEED_KMPH=30
 ### Prerequisites
 - **Node.js**: `v18.0.0` or higher
 - **MongoDB**: Local MongoDB instance (`mongodb://127.0.0.1:27017`) or MongoDB Atlas URI
-- **Python**: `3.12+` (for AI Service)
 
 ---
 
@@ -196,24 +169,7 @@ Backend will run on **http://localhost:5000**.
 
 ---
 
-### Step 3: Start AI Microservice
-```bash
-cd ai-service
-python -m venv .venv
-
-# On Windows:
-.venv\Scripts\activate
-# On macOS/Linux:
-source .venv/bin/activate
-
-pip install -r requirements.txt
-uvicorn ai_service.app.main:app --host 127.0.0.1 --port 8000
-```
-AI Service will run on **http://127.0.0.1:8000**.
-
----
-
-### Step 4: Start Frontend UI
+### Step 3: Start Frontend UI
 ```bash
 cd frontend
 npm install
@@ -259,13 +215,6 @@ Frontend application will run on **http://localhost:5173**.
 - `GET /nearby`: Search nearby food donations using spatial query & OpenStreetMap Overpass API.
 - `GET /dashboard`: Fetch NGO summary metrics & status breakdown.
 - `GET /history`: Fetch accepted and rejected request history.
-
-### AI Integration Routes (`/api/ai` or `/api/v1/ai`)
-- `POST /predict-demand`: Fetch predicted meal demand.
-- `POST /risk-score`: Fetch food decay risk assessment.
-- `POST /priority-score`: Calculate priority matching score.
-- `POST /recommend-ngos`: Rank nearby NGO candidates.
-- `POST /optimize-route`: Compute route coordinates and distance matrix.
 
 ---
 

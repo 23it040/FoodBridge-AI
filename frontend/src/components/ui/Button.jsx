@@ -1,11 +1,11 @@
 import { memo } from 'react';
 
 const variantStyles = {
-  primary: 'bg-[#428475] text-white hover:bg-[#1A312C] active:bg-[#1A312C] shadow-sm',
-  secondary: 'bg-[#89D7B7] text-[#1A312C] hover:bg-[#428475] hover:text-white shadow-sm',
-  outline: 'bg-white border-2 border-[#428475] text-[#428475] hover:bg-[#428475] hover:text-white',
-  ghost: 'bg-transparent text-[#428475] hover:bg-[#89D7B7]/20',
-  danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-sm'
+  primary: 'bg-[#2F8F72] text-white hover:bg-[#102A2A] active:bg-[#102A2A] shadow-md',
+  secondary: 'bg-[#E8F6F0] text-[#102A2A] border border-[#79D6B2]/40 hover:bg-[#79D6B2]/30 hover:border-[#79D6B2] shadow-sm',
+  outline: 'bg-white border-2 border-[#2F8F72] text-[#2F8F72] hover:bg-[#2F8F72] hover:text-white',
+  ghost: 'bg-transparent text-[#2F8F72] hover:bg-[#E8F6F0] hover:text-[#102A2A]',
+  danger: 'bg-red-600 text-white hover:bg-red-700 active:bg-red-800 shadow-md'
 };
 
 const sizeStyles = {

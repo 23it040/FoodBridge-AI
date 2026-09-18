@@ -29,9 +29,12 @@ const ensureAdminExists = async () => {
   }
 };
 
+const { startExpiryCleanup } = require('./services/expiryCleanup.service');
+
 connectDatabase()
   .then(async () => {
     await ensureAdminExists();
+    startExpiryCleanup();
     app.listen(PORT, () => {
       console.log(`FoodBridge AI backend listening on port ${PORT}`);
     });

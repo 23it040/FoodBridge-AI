@@ -13,7 +13,6 @@ const foodRequestRoutes = require('./routes/foodRequest.routes');
 const ngoRoutes = require('./routes/ngo.routes');
 const adminRoutes = require('./routes/admin.routes');
 const notificationRoutes = require('./routes/notification.routes');
-const aiRoutes = require('./routes/ai.routes');
 const errorMiddleware = require('./middleware/error.middleware');
 
 const app = express();
@@ -35,7 +34,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.get('/', (req, res) => {
   res.status(200).json({
     success: true,
-    service: 'FoodBridge AI Backend',
+    service: 'FoodBridge Backend',
     status: 'Running'
   });
 });
@@ -59,7 +58,6 @@ app.use('/api/v1/ngo', ngoRoutes);
 app.use('/api/v1/ngos', ngoRoutes);
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/notifications', notificationRoutes);
-app.use('/api/v1/ai', aiRoutes);
 app.use('/api/v1/analytics', adminRoutes);
 app.use('/api/v1/audit', adminRoutes);
 app.use('/api/v1/reports', adminRoutes);
@@ -74,7 +72,6 @@ app.use('/api/ngo', ngoRoutes);
 app.use('/api/ngos', ngoRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
-app.use('/api/ai', aiRoutes);
 
 app.use(errorMiddleware);
 

@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import adminService from '../../services/admin.service';
-import aiService from '../../services/ai.service';
 import { normalizeListResponse, normalizeObjectResponse } from '../../utils/normalizeApiResponse';
 import PageHeader from '../../components/layout/PageHeader';
 import StatCard from '../../components/ui/StatCard';
@@ -12,7 +11,7 @@ import PieChart from '../../components/charts/PieChart';
 import Spinner from '../../components/ui/Spinner';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
-import { FiUsers, FiShield, FiHeart, FiCheckCircle, FiAlertCircle, FiAlertTriangle, FiRefreshCw, FiCpu, FiDatabase } from 'react-icons/fi';
+import { FiUsers, FiShield, FiHeart, FiCheckCircle, FiAlertCircle, FiAlertTriangle, FiRefreshCw } from 'react-icons/fi';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
@@ -20,18 +19,16 @@ const Dashboard = () => {
   const [stats, setStats] = useState({});
   const [recentDonations, setRecentDonations] = useState([]);
   const [recentRequests, setRecentRequests] = useState([]);
-  const [aiModelRegistry, setAiModelRegistry] = useState([]);
   const navigate = useNavigate();
 
   const loadDashboard = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const [dashRes, donRes, reqRes, aiStatusRes] = await Promise.all([
+      const [dashRes, donRes, reqRes] = await Promise.all([
         adminService.getDashboard(),
         adminService.listDonationsAdmin({ limit: 5 }),
-        adminService.listRequestsAdmin({ limit: 5 }),
-        aiService.getModelStatus().catch(() => null)
+        adminService.listRequestsAdmin({ limit: 5 })
       ]);
 
       const normalizedStats = normalizeObjectResponse(dashRes);
@@ -42,11 +39,6 @@ const Dashboard = () => {
 
       const requests = normalizeListResponse(reqRes, ['requests', 'items']);
       setRecentRequests(requests);
-
-      if (aiStatusRes) {
-        const aiData = normalizeObjectResponse(aiStatusRes);
-        setAiModelRegistry(aiData.models || []);
-      }
     } catch (err) {
       console.error('Failed to load admin dashboard:', err);
       setError(err?.response?.data?.message || err?.message || 'Unable to load admin control center');
@@ -84,13 +76,9 @@ const Dashboard = () => {
     <section className="space-y-6 py-6">
       <PageHeader
         title="Admin Control Center"
-        subtitle="Platform metrics, user governance, NGO verifications, and AI model governance"
+        subtitle="Platform metrics, user governance, NGO verifications, and operational analytics"
         actions={
           <div className="flex gap-2">
-            <Button onClick={() => navigate('/admin/ai-readiness')} className="gap-2 text-xs">
-              <FiDatabase className="h-4 w-4" />
-              <span>AI Data Readiness</span>
-            </Button>
             <Button onClick={() => navigate('/admin/ngo-verification')} variant="outline" className="gap-2 text-xs">
               <FiShield className="h-4 w-4" />
               <span>Verify NGOs</span>
@@ -182,35 +170,6 @@ const Dashboard = () => {
               </div>
             </Card>
           </div>
-
-          {/* AI Model Status Governance Section */}
-          <Card
-            icon={<FiCpu className="h-5 w-5" />}
-            title="AI Model Status & Governance Registry"
-            action={
-              <Button size="sm" variant="ghost" onClick={() => navigate('/admin/ai-readiness')}>
-                View Data Readiness Audit
-              </Button>
-            }
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-1">
-              {aiModelRegistry.map((m) => (
-                <div key={m.name} className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs space-y-2">
-                  <div className="flex justify-between items-start">
-                    <h4 className="font-extrabold text-[#1A312C] text-sm">{m.name}</h4>
-                    <Badge variant={m.status === 'INSUFFICIENT_DATA' ? 'warning' : m.status.includes('LIVE') ? 'success' : 'default'}>
-                      {m.status}
-                    </Badge>
-                  </div>
-                  <div className="space-y-1 text-slate-600 text-[11px] pt-2 border-t border-slate-200">
-                    <div><span className="font-semibold">Version:</span> {m.version}</div>
-                    <div><span className="font-semibold">Dataset Source:</span> {m.dataSource}</div>
-                    <div><span className="font-semibold">FoodBridge-Trained:</span> {m.foodBridgeTrained ? 'True' : 'False'}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
         </>
       )}
     </section>

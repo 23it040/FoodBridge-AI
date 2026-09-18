@@ -36,19 +36,20 @@ const ForgotPasswordPage = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-slate-900">Forgot password</h2>
-        <p className="mt-3 text-sm text-slate-600">
+        <h2 className="text-xl font-extrabold text-[#102A2A] text-center">Forgot Password</h2>
+        <p className="mt-1 text-xs font-semibold text-[#687370] text-center">
           Enter the email address associated with your account, and we will send password recovery instructions.
         </p>
       </div>
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-            Email address
+          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#687370]">
+            Email Address
           </label>
           <input
             id="email"
             type="email"
+            placeholder="you@example.com"
             {...register('email', {
               required: 'Email is required',
               pattern: {
@@ -56,20 +57,20 @@ const ForgotPasswordPage = () => {
                 message: 'Enter a valid email'
               }
             })}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-secondary focus:ring-2 focus:ring-secondary/20"
+            className="mt-1.5 w-full rounded-xl border border-[#DDE5E1] bg-white px-4 py-3 text-sm text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
           />
-          {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>}
+          {errors.email && <p className="mt-1.5 text-xs font-semibold text-red-600">{errors.email.message}</p>}
         </div>
         <button
           type="submit"
           disabled={loading}
-          className="inline-flex w-full items-center justify-center rounded-full bg-secondary px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-70"
+          className="inline-flex w-full items-center justify-center rounded-full bg-[#2F8F72] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#102A2A] shadow-md disabled:cursor-not-allowed disabled:opacity-70"
         >
-          {loading ? 'Sending...' : submitted ? 'Request sent' : 'Send reset link'}
+          {loading ? 'Sending...' : submitted ? 'Request Sent' : 'Send Reset Link'}
         </button>
 
-        <div className="mt-4 text-center text-sm text-slate-600">
-          <Link to="/auth/login" className="font-semibold text-secondary hover:underline">
+        <div className="mt-4 text-center text-xs font-medium text-[#687370]">
+          <Link to="/auth/login" className="font-bold text-[#2F8F72] hover:underline">
             Remembered your password? Back to Login
           </Link>
         </div>

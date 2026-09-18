@@ -41,14 +41,14 @@ const Settings = () => {
       <PageHeader title="Account Settings" subtitle="Preferences, active sessions, and security governance" />
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card title="Account Overview" icon={<FiSettings className="h-5 w-5" />}>
-          <div className="space-y-3 text-xs font-medium text-[#1A312C]">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-slate-500 font-semibold uppercase tracking-wider">Signed in as</span>
-              <span className="font-extrabold text-[#1A312C] text-sm">{user?.email || 'User'}</span>
+          <div className="space-y-3 text-xs font-medium text-[#102A2A]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
+              <span className="text-[#687370] font-semibold uppercase tracking-wider">Signed in as</span>
+              <span className="font-extrabold text-[#102A2A] text-sm">{user?.email || 'User'}</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-slate-500 font-semibold uppercase tracking-wider">Platform Role</span>
-              <span className="font-extrabold text-[#428475] uppercase text-xs px-2.5 py-1 rounded-full bg-[#89D7B7]/25 border border-[#89D7B7]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
+              <span className="text-[#687370] font-semibold uppercase tracking-wider">Platform Role</span>
+              <span className="font-extrabold text-[#2F8F72] uppercase text-xs px-2.5 py-1 rounded-full bg-[#E8F6F0] border border-[#79D6B2]">
                 {user?.role || 'user'}
               </span>
             </div>
@@ -66,13 +66,13 @@ const Settings = () => {
         </Card>
 
         <Card title="Security & Sessions" icon={<FiShield className="h-5 w-5" />}>
-          <div className="space-y-3 text-xs font-medium text-slate-600">
-            <div className="p-3 rounded-xl bg-[#FFF4E1]/40 border border-[#89D7B7]">
-              <strong className="text-[#1A312C] block font-extrabold">Active Authentication Session</strong>
+          <div className="space-y-3 text-xs font-medium text-[#687370]">
+            <div className="p-3 rounded-xl bg-[#E8F6F0]/50 border border-[#79D6B2]">
+              <strong className="text-[#102A2A] block font-extrabold">Active Authentication Session</strong>
               JWT Bearer Token active. Session auto-renews upon API requests.
             </div>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-              <strong className="text-[#1A312C] block font-extrabold">Data Protection & Privacy</strong>
+            <div className="p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
+              <strong className="text-[#102A2A] block font-extrabold">Data Protection & Privacy</strong>
               All donor and NGO records are encrypted and stored in secure MongoDB clusters.
             </div>
           </div>

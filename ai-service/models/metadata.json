@@ -1,0 +1,67 @@
+{
+  "model_name": "FoodBridge NGO Donation Matching Model",
+  "model_version": "1.0.0",
+  "algorithm": "RandomForestClassifier",
+  "dataset_name": "FoodGo External Redistribution Dataset",
+  "training_samples": 37,
+  "test_samples": 13,
+  "features": {
+    "numerical": [
+      "quantity_meals",
+      "perishability_score",
+      "distance_km",
+      "time_urgency_hours",
+      "capacity_ratio"
+    ],
+    "categorical": [
+      "food_category"
+    ]
+  },
+  "metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "roc_auc": 1.0
+  },
+  "description": "Initial matching model trained on external public redistribution logistics data. Outputs non-probabilistic candidate compatibility match scores.",
+  "evaluation_details": {
+    "classification_report": {
+      "0": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 13.0
+      },
+      "1": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 37.0
+      },
+      "accuracy": 1.0,
+      "macro avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 50.0
+      },
+      "weighted avg": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 50.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        13,
+        0
+      ],
+      [
+        0,
+        37
+      ]
+    ]
+  }
+}

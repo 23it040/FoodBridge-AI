@@ -40,7 +40,7 @@ app.use(
 );
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customSiteTitle: 'FoodBridge AI API Docs',
+  customSiteTitle: 'FoodBridge API Docs',
   customCss: '.swagger-ui .topbar { display: none }',
 }));
 

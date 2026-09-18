@@ -30,18 +30,18 @@ const ProfileView = () => {
       <PageHeader title="My Profile" subtitle="Manage your account information and preferences" />
 
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-[24px] bg-[#1A312C] p-8 text-white shadow-elevated border border-[#89D7B7]">
-        <div className="absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-[#428475]/30 blur-2xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[24px] bg-[#102A2A] p-8 text-white shadow-elevated border border-[#DDE5E1]">
+        <div className="absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-[#2F8F72]/30 blur-2xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-center gap-6">
           <div className="relative">
-            <Avatar src={profile.avatar || profile.photo || ''} size="lg" className="border-4 border-[#89D7B7]" />
+            <Avatar src={profile.avatar || profile.photo || ''} size="lg" className="border-4 border-[#79D6B2]" />
           </div>
           <div className="text-center md:text-left flex-1 space-y-1">
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
               <h2 className="text-2xl font-extrabold text-white">{profile.name || profile.fullName || 'User'}</h2>
               <Badge variant="secondary">{role}</Badge>
             </div>
-            <p className="text-xs text-[#89D7B7] font-medium">{profile.email}</p>
+            <p className="text-xs text-[#79D6B2] font-medium">{profile.email}</p>
             {profile.organizationName && <p className="text-xs text-slate-300 font-semibold">{profile.organizationName}</p>}
           </div>
           <div className="flex flex-wrap gap-2">
@@ -58,50 +58,50 @@ const ProfileView = () => {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <Card title="Account Details" className="lg:col-span-2">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-sm">
-            <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Phone Number</div>
-              <div className="mt-1 font-semibold text-[#1A312C]">{profile.phone || 'Not provided'}</div>
+            <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+              <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Phone Number</div>
+              <div className="mt-1 font-semibold text-[#102A2A]">{profile.phone || 'Not provided'}</div>
             </div>
-            <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Address</div>
-              <div className="mt-1 font-semibold text-[#1A312C]">{address}</div>
+            <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+              <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Address</div>
+              <div className="mt-1 font-semibold text-[#102A2A]">{address}</div>
             </div>
 
             {String(role).toLowerCase() === 'ngo' && (
               <>
-                <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Organization</div>
-                  <div className="mt-1 font-semibold text-[#1A312C]">{profile.organizationName || '—'}</div>
+                <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+                  <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Organization</div>
+                  <div className="mt-1 font-semibold text-[#102A2A]">{profile.organizationName || '—'}</div>
                 </div>
-                <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-                  <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Contact Person</div>
-                  <div className="mt-1 font-semibold text-[#1A312C]">{profile.contactPerson || '—'}</div>
+                <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+                  <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Contact Person</div>
+                  <div className="mt-1 font-semibold text-[#102A2A]">{profile.contactPerson || '—'}</div>
                 </div>
               </>
             )}
 
-            <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Account Status</div>
-              <div className="mt-1 flex items-center gap-2 font-semibold text-emerald-700">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+            <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+              <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Account Status</div>
+              <div className="mt-1 flex items-center gap-2 font-semibold text-[#2F8F72]">
+                <span className="h-2 w-2 rounded-full bg-[#2F8F72]" />
                 {profile.status || 'Active'}
               </div>
             </div>
-            <div className="rounded-2xl border border-slate-100 bg-[#FFF4E1]/30 p-4">
-              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Member Since</div>
-              <div className="mt-1 font-semibold text-[#1A312C]">{profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : 'Recent'}</div>
+            <div className="rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/30 p-4">
+              <div className="text-xs font-bold text-[#687370] uppercase tracking-wider">Member Since</div>
+              <div className="mt-1 font-semibold text-[#102A2A]">{profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : 'Recent'}</div>
             </div>
           </div>
         </Card>
 
         <Card title="Quick Security">
-          <div className="space-y-3 text-xs font-medium text-slate-600">
-            <div className="p-3 rounded-xl border border-slate-100 bg-slate-50">
-              <strong className="text-[#1A312C] block">Role Permissions</strong>
-              Assigned as <span className="text-[#428475] font-bold">{role}</span> in FoodBridge AI network.
+          <div className="space-y-3 text-xs font-medium text-[#687370]">
+            <div className="p-3 rounded-xl border border-[#DDE5E1] bg-[#F6F7F4]">
+              <strong className="text-[#102A2A] block">Role Permissions</strong>
+              Assigned as <span className="text-[#2F8F72] font-bold">{role}</span> in FoodBridge AI network.
             </div>
-            <div className="p-3 rounded-xl border border-slate-100 bg-slate-50">
-              <strong className="text-[#1A312C] block">Password Policy</strong>
+            <div className="p-3 rounded-xl border border-[#DDE5E1] bg-[#F6F7F4]">
+              <strong className="text-[#102A2A] block">Password Policy</strong>
               Protected by JWT session token.
             </div>
             <Button onClick={() => navigate('/settings')} variant="outline" className="w-full justify-center">

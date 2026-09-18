@@ -7,6 +7,12 @@ const getNearbyNgos = async (lat, lng, radius = 10000) => {
   return response.data;
 };
 
+const getNgosForMap = async (params = {}) => {
+  const response = await api.get('/api/ngos/map', { params });
+  return response.data;
+};
+
 export default {
-  getNearbyNgos
+  getNearbyNgos,
+  getNgosForMap
 };

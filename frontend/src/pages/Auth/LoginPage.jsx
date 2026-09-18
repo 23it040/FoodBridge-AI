@@ -42,13 +42,13 @@ const LoginPage = () => {
   return (
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
-        <h2 className="text-xl font-extrabold text-[#1A312C] text-center">Welcome Back</h2>
-        <p className="text-xs font-medium text-slate-500 text-center mt-1">Sign in to your FoodBridge AI account</p>
+        <h2 className="text-xl font-extrabold text-[#102A2A] text-center">Welcome Back</h2>
+        <p className="text-xs font-semibold text-[#687370] text-center mt-1">Sign in to your FoodBridge account</p>
       </div>
 
       <div className="space-y-4">
         <div>
-          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#687370]">
             Email Address
           </label>
           <input
@@ -62,17 +62,17 @@ const LoginPage = () => {
                 message: 'Enter a valid email address'
               }
             })}
-            className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+            className="mt-1.5 w-full rounded-xl border border-[#DDE5E1] bg-white px-4 py-3 text-sm text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
           />
           {errors.email && <p className="mt-1.5 text-xs font-semibold text-red-600">{errors.email.message}</p>}
         </div>
 
         <div>
           <div className="flex items-center justify-between">
-            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#687370]">
               Password
             </label>
-            <Link to="/auth/forgot-password" className="text-xs font-semibold text-[#428475] hover:text-[#1A312C]">
+            <Link to="/auth/forgot-password" className="text-xs font-bold text-[#2F8F72] hover:text-[#102A2A]">
               Forgot password?
             </Link>
           </div>
@@ -84,7 +84,7 @@ const LoginPage = () => {
               required: 'Password is required',
               minLength: { value: 8, message: 'Password must be at least 8 characters' }
             })}
-            className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+            className="mt-1.5 w-full rounded-xl border border-[#DDE5E1] bg-white px-4 py-3 text-sm text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
           />
           {errors.password && <p className="mt-1.5 text-xs font-semibold text-red-600">{errors.password.message}</p>}
         </div>
@@ -94,15 +94,15 @@ const LoginPage = () => {
         <Button
           type="submit"
           loading={submitting}
-          className="w-full justify-center py-3 text-sm"
+          className="w-full justify-center py-3 text-sm font-bold shadow-md"
         >
           Sign In
         </Button>
       </div>
 
-      <div className="pt-2 text-center text-xs font-medium text-slate-600">
+      <div className="pt-2 text-center text-xs font-medium text-[#687370]">
         New user?{' '}
-        <Link to="/auth/register" className="font-bold text-[#428475] hover:underline">
+        <Link to="/auth/register" className="font-bold text-[#2F8F72] hover:underline">
           Create an Account
         </Link>
       </div>

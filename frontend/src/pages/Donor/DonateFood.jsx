@@ -1,20 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import donationService from '../../services/donation.service';
-import aiService from '../../services/ai.service';
+import ngoService from '../../services/ngo.service';
+import useAuth from '../../hooks/useAuth';
+import useGeolocation from '../../hooks/useGeolocation';
+import { normalizeCoordinates } from '../../services/map.service';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-import LeafletMap from '../../components/maps/LeafletMap';
-import AIStatusBadge from '../../components/ai/AIStatusBadge';
-import AIExplanation from '../../components/ai/AIExplanation';
-import { FiBox, FiMapPin, FiCalendar, FiUpload, FiNavigation, FiTrendingUp, FiInfo, FiShield, FiAward } from 'react-icons/fi';
+import GoogleMap from '../../components/maps/GoogleMap';
+import PickupMarker from '../../components/maps/PickupMarker';
+import DonorMarker from '../../components/maps/DonorMarker';
+import NGOMarker from '../../components/maps/NGOMarker';
+import { FiBox, FiMapPin, FiCalendar, FiUpload, FiNavigation, FiX } from 'react-icons/fi';
+
+const DEFAULT_CENTER = { lat: 21.1702, lng: 72.8311 }; // Surat
 
 const DonateFood = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const nowISO = new Date().toISOString().slice(0, 16);
   const defaultExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16);
+
+  const initialCoords = useMemo(() => {
+    if (user) {
+      const norm = normalizeCoordinates(user);
+      if (norm) return norm;
+    }
+    return DEFAULT_CENTER;
+  }, [user]);
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
@@ -23,98 +40,149 @@ const DonateFood = () => {
       mealType: 'Cooked',
       quantity: 10,
       unit: 'servings',
-      pickupAddress: '',
-      latitude: 28.6139,
-      longitude: 77.2090,
+      pickupAddress: user?.address || '',
+      latitude: initialCoords.lat,
+      longitude: initialCoords.lng,
       description: '',
       cookedTime: nowISO,
       expiryTime: defaultExpiry
     }
   });
-  const [submitting, setSubmitting] = useState(false);
-  const [locating, setLocating] = useState(false);
-  const [demandInsight, setDemandInsight] = useState(null);
-  const [demandLoading, setDemandLoading] = useState(false);
-  const [riskInsight, setRiskInsight] = useState(null);
-  const [priorityInsight, setPriorityInsight] = useState(null);
-  const fileRef = useRef(null);
-  const navigate = useNavigate();
 
-  const lat = Number(watch('latitude') || 28.6139);
-  const lng = Number(watch('longitude') || 77.2090);
-  const foodNameVal = watch('name');
-  const quantityVal = watch('quantity');
-  const categoryVal = watch('category');
+  const [submitting, setSubmitting] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageError, setImageError] = useState('');
+  const [nearbyNgos, setNearbyNgos] = useState([]);
+  const fileRef = useRef(null);
+
+  const {
+    location: deviceLocation,
+    loading: locating,
+    requestLocation
+  } = useGeolocation(false);
+
+  const latValue = watch('latitude');
+  const lngValue = watch('longitude');
+
+  const validPickupLocation = useMemo(() => {
+    const latNum = Number(latValue);
+    const lngNum = Number(lngValue);
+    if (isNaN(latNum) || isNaN(lngNum)) return null;
+    if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) return null;
+    if (latNum === 0 && lngNum === 0) return null;
+    return { lat: latNum, lng: lngNum };
+  }, [latValue, lngValue]);
 
   useEffect(() => {
     let mounted = true;
-    const fetchInsights = async () => {
-      if (!categoryVal) return;
-      setDemandLoading(true);
-      try {
-        const dRes = await aiService.predictDemand({
-          food_category: categoryVal,
-          center_type: 'TYPE_A',
-          op_area: 5.0,
-          previous_donations: 150
-        });
-        if (mounted) setDemandInsight(dRes?.data || dRes);
-      } catch (e) {
-        if (mounted) setDemandInsight({ insufficientData: true, message: 'Demand insight unavailable because there is insufficient real historical data.' });
-      } finally {
-        if (mounted) setDemandLoading(false);
-      }
-
-      try {
-        const rRes = await aiService.riskScore({
-          food_category: categoryVal
-        });
-        if (mounted) setRiskInsight(rRes?.data || rRes);
-      } catch (e) {
-        if (mounted) setRiskInsight({ insufficientData: true, message: 'AI assessment unavailable — required food quality measurements were not provided.' });
-      }
-
-      try {
-        const pRes = await aiService.priorityScore({ food_category: categoryVal });
-        if (mounted) setPriorityInsight(pRes?.data || pRes);
-      } catch (e) {
-        if (mounted) setPriorityInsight({ insufficientData: true, message: 'AI priority prediction unavailable because sufficient FoodBridge historical data has not yet been collected.' });
-      }
-    };
-    fetchInsights();
+    ngoService.getNgosForMap({ includeDemo: true })
+      .then((res) => {
+        if (!mounted) return;
+        const list = Array.isArray(res) ? res : Array.isArray(res?.data) ? res.data : [];
+        setNearbyNgos(list);
+      })
+      .catch((err) => console.warn('Failed to load nearby NGOs for donation map:', err));
     return () => (mounted = false);
-  }, [categoryVal]);
+  }, []);
 
-  const handleLocationSelect = ({ lat: selectedLat, lng: selectedLng }) => {
-    setValue('latitude', Number(selectedLat.toFixed(6)));
-    setValue('longitude', Number(selectedLng.toFixed(6)));
+  const updateCoordinates = useCallback((lat, lng) => {
+    const latNum = Number(Number(lat).toFixed(6));
+    const lngNum = Number(Number(lng).toFixed(6));
+    if (isNaN(latNum) || isNaN(lngNum)) return;
+    if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) return;
+
+    setValue('latitude', latNum, { shouldValidate: true, shouldDirty: true });
+    setValue('longitude', lngNum, { shouldValidate: true, shouldDirty: true });
+  }, [setValue]);
+
+  const handleMapClick = useCallback((e) => {
+    let clickLat, clickLng;
+    if (e.detail?.latLng) {
+      clickLat = e.detail.latLng.lat;
+      clickLng = e.detail.latLng.lng;
+    } else if (e.latLng) {
+      clickLat = typeof e.latLng.lat === 'function' ? e.latLng.lat() : e.latLng.lat;
+      clickLng = typeof e.latLng.lng === 'function' ? e.latLng.lng() : e.latLng.lng;
+    }
+
+    if (typeof clickLat === 'number' && typeof clickLng === 'number' && !isNaN(clickLat) && !isNaN(clickLng)) {
+      updateCoordinates(clickLat, clickLng);
+    }
+  }, [updateCoordinates]);
+
+  const handleMarkerDragEnd = useCallback((newPos) => {
+    if (newPos && typeof newPos.lat === 'number' && typeof newPos.lng === 'number') {
+      updateCoordinates(newPos.lat, newPos.lng);
+    }
+  }, [updateCoordinates]);
+
+  const handleUseCurrentLocation = async () => {
+    try {
+      const pos = await requestLocation();
+      if (pos && typeof pos.lat === 'number' && typeof pos.lng === 'number') {
+        updateCoordinates(pos.lat, pos.lng);
+        toast.success('Pickup location updated to current GPS position!');
+      }
+    } catch (err) {
+      toast.error(err?.message || 'Unable to fetch current GPS location.');
+    }
   };
 
-  const handleUseCurrentLocation = () => {
-    if ('geolocation' in navigator) {
-      setLocating(true);
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          const currentLat = Number(pos.coords.latitude.toFixed(6));
-          const currentLng = Number(pos.coords.longitude.toFixed(6));
-          setValue('latitude', currentLat);
-          setValue('longitude', currentLng);
-          toast.success('Location updated to current GPS position!');
-          setLocating(false);
-        },
-        (err) => {
-          console.warn('Geolocation error:', err);
-          toast.error('Unable to fetch GPS position. Please select location on map or type manually.');
-          setLocating(false);
-        },
-        { enableHighAccuracy: true, timeout: 10000 }
-      );
-    } else {
-      toast.error('Geolocation is not supported by your browser');
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setSelectedImage(null);
+      setImagePreview(null);
+      setImageError('Food image is required.');
+      return;
+    }
+
+    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    if (!validTypes.includes(file.type.toLowerCase())) {
+      setSelectedImage(null);
+      setImagePreview(null);
+      setImageError('Please upload a valid food image (JPG, PNG, WebP).');
+      if (fileRef.current) fileRef.current.value = '';
+      return;
+    }
+
+    const maxSize = 2 * 1024 * 1024; // 2 MB
+    if (file.size > maxSize) {
+      setSelectedImage(null);
+      setImagePreview(null);
+      setImageError('Image size must be 2 MB or less.');
+      if (fileRef.current) fileRef.current.value = '';
+      return;
+    }
+
+    setSelectedImage(file);
+    setImageError('');
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
+    setImageError('Food image is required.');
+    if (fileRef.current) {
+      fileRef.current.value = '';
     }
   };
 
   const onSubmit = async (values) => {
+    const file = selectedImage || fileRef.current?.files?.[0];
+    if (!file) {
+      setImageError('Food image is required.');
+      return;
+    }
+
+    if (imageError) return;
+
     setSubmitting(true);
     try {
       const payload = new FormData();
@@ -130,13 +198,9 @@ const DonateFood = () => {
       payload.append('cookedTime', cookedIso);
       payload.append('expiryTime', expiryIso);
       payload.append('pickupAddress', values.pickupAddress || '');
-      payload.append('latitude', String(values.latitude ?? 28.6139));
-      payload.append('longitude', String(values.longitude ?? 77.2090));
-
-      const file = fileRef.current?.files?.[0];
-      if (file) {
-        payload.append('foodImage', file);
-      }
+      payload.append('latitude', String(values.latitude ?? DEFAULT_CENTER.lat));
+      payload.append('longitude', String(values.longitude ?? DEFAULT_CENTER.lng));
+      payload.append('foodImage', file);
 
       await donationService.createDonation(payload);
       toast.success('Food donation posted successfully!');
@@ -200,72 +264,6 @@ const DonateFood = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* AI Demand Insight Panel (Optional, non-blocking) */}
-            <div className="p-4 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 space-y-2">
-              <div className="flex items-center justify-between font-bold text-xs text-[#1A312C]">
-                <span className="flex items-center gap-1.5"><FiTrendingUp className="h-4 w-4 text-[#428475]" /> Demand Preview</span>
-                <AIStatusBadge status={demandInsight?.modelStatus || 'EXTERNAL_DATA_MODEL'} />
-              </div>
-              {demandLoading ? (
-                <p className="text-xs text-slate-500">Checking demand model...</p>
-              ) : demandInsight?.insufficientData ? (
-                <p className="text-xs text-slate-600">Demand prediction unavailable because required features are not available.</p>
-              ) : (
-                <div className="text-xs text-slate-700 space-y-1">
-                  <div>Predicted Demand: <span className="font-extrabold text-[#428475]">{Math.round(demandInsight?.prediction ?? demandInsight?.expected_meals ?? 0)} meals</span></div>
-                </div>
-              )}
-              <AIExplanation
-                modelName="Demand Forecast Model"
-                status={demandInsight?.modelStatus || 'EXTERNAL_DATA_MODEL'}
-                dataSource="Kaggle Food Demand Forecasting"
-                foodBridgeTrained={false}
-                limitations="External benchmark model; not trained on FoodBridge historical records."
-              />
-            </div>
-
-            {/* AI Food Quality Assessment Panel (Optional, non-blocking) */}
-            <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-2">
-              <div className="flex items-center justify-between font-bold text-xs text-[#1A312C]">
-                <span className="flex items-center gap-1.5"><FiShield className="h-4 w-4 text-[#428475]" /> Food Quality Risk</span>
-                <AIStatusBadge status={riskInsight?.modelStatus || 'EXTERNAL_DATA_MODEL'} />
-              </div>
-              {!categoryVal || !categoryVal.toLowerCase().includes('milk') ? (
-                <p className="text-xs text-slate-600">Current AI risk model supports milk quality only.</p>
-              ) : riskInsight?.insufficientData ? (
-                <p className="text-xs text-slate-600">Milk quality risk prediction requires actual sensor measurements.</p>
-              ) : (
-                <div className="text-xs text-slate-700 space-y-1">
-                  <div>Assessed Grade: <span className="font-extrabold text-[#428475] uppercase">{riskInsight?.prediction} Grade</span></div>
-                </div>
-              )}
-              <AIExplanation
-                modelName="Milk Quality Risk Model"
-                status={riskInsight?.modelStatus || 'EXTERNAL_DATA_MODEL'}
-                dataSource="Public Milk Quality Dataset"
-                foodBridgeTrained={false}
-                limitations="Scope limited strictly to milk quality with required physical sensor inputs."
-              />
-            </div>
-
-            {/* AI Priority Insight Panel (Optional, non-blocking) */}
-            <div className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-2">
-              <div className="flex items-center justify-between font-bold text-xs text-[#1A312C]">
-                <span className="flex items-center gap-1.5"><FiAward className="h-4 w-4 text-[#428475]" /> Priority Status</span>
-                <AIStatusBadge status={priorityInsight?.modelStatus || 'INSUFFICIENT_DATA'} />
-              </div>
-              <p className="text-xs text-slate-600">FoodBridge Priority Model is currently collecting operational data (0 / 500 records).</p>
-              <AIExplanation
-                modelName="FoodBridge Priority Model"
-                status={priorityInsight?.modelStatus || 'INSUFFICIENT_DATA'}
-                dataSource="FoodBridge MongoDB"
-                foodBridgeTrained={false}
-                limitations="Priority model is awaiting sufficient real FoodBridge historical transaction volume."
-              />
-            </div>
-          </div>
-
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Quantity *</label>
@@ -304,7 +302,7 @@ const DonateFood = () => {
                 loading={locating}
                 className="gap-1.5 text-xs py-1 px-3"
               >
-                <FiNavigation className="h-3.5 w-3.5" />
+                <FiNavigation className="h-3.5 w-3.5 text-[#428475]" />
                 <span>Use Current Location</span>
               </Button>
             </div>
@@ -349,17 +347,61 @@ const DonateFood = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center gap-1.5">
-              <FiMapPin className="h-4 w-4 text-[#428475]" />
-              <span>Pickup Location Map (Click map to adjust pin)</span>
-            </label>
+            <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                <FiMapPin className="h-4 w-4 text-[#428475]" />
+                <span>Pickup Location Map (Click map to adjust pin)</span>
+              </label>
+
+              {/* Marker Legend */}
+              <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold text-slate-600">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-600 shadow-xs" />
+                  <span>Pickup Location (Draggable)</span>
+                </div>
+                {deviceLocation && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-blue-600 shadow-xs" />
+                    <span>Your Location</span>
+                  </div>
+                )}
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-xs" />
+                  <span>Verified NGO</span>
+                </div>
+              </div>
+            </div>
+
             <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
-              <LeafletMap
-                key={`donate-food-map-${lat}-${lng}`}
-                center={[lat, lng]}
-                markers={[{ id: 'pickup-loc', type: 'donation', position: [lat, lng], foodName: foodNameVal || 'Pickup Location', quantity: quantityVal }]}
-                onLocationSelect={handleLocationSelect}
-              />
+              <GoogleMap
+                center={validPickupLocation || DEFAULT_CENTER}
+                zoom={14}
+                onClick={handleMapClick}
+                className="h-[380px]"
+              >
+                {/* Red Draggable Pickup Marker */}
+                {validPickupLocation && (
+                  <PickupMarker
+                    location={validPickupLocation}
+                    onDragEnd={handleMarkerDragEnd}
+                    title="Pickup Location (Click map or drag pin to adjust)"
+                  />
+                )}
+
+                {/* Blue Current Location Marker */}
+                {deviceLocation && (
+                  <DonorMarker
+                    location={deviceLocation}
+                    title="Your Current Location"
+                    variant="current"
+                  />
+                )}
+
+                {/* Green Verified NGO Markers */}
+                {nearbyNgos.map((ngo) => (
+                  <NGOMarker key={ngo.id || ngo._id} ngo={ngo} />
+                ))}
+              </GoogleMap>
             </div>
           </div>
 
@@ -406,9 +448,34 @@ const DonateFood = () => {
           <div className="p-4 rounded-2xl border border-dashed border-[#89D7B7] bg-[#FFF4E1]/30">
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1.5">
               <FiUpload className="h-4 w-4 text-[#428475]" />
-              <span>Food Image Upload (Optional)</span>
+              <span>FOOD IMAGE UPLOAD *</span>
             </label>
-            <input ref={fileRef} type="file" accept="image/*" className="text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#428475] file:text-white hover:file:bg-[#1A312C]" />
+            <p className="text-[11px] font-medium text-slate-500 mb-2">Upload a clear photo of the food.</p>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/jpg"
+              onChange={handleImageChange}
+              className="text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#428475] file:text-white hover:file:bg-[#1A312C]"
+            />
+            {imageError && <p className="mt-1.5 text-xs font-semibold text-red-600">{imageError}</p>}
+            {imagePreview && (
+              <div className="mt-3 relative inline-block">
+                <img
+                  src={imagePreview}
+                  alt="Food preview"
+                  className="h-28 w-28 object-cover rounded-xl border border-slate-200 shadow-sm"
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow hover:bg-red-600 transition"
+                  title="Remove image"
+                >
+                  <FiX className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-3 pt-2">

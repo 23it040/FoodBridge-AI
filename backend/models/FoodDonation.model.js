@@ -94,6 +94,7 @@ foodDonationSchema.pre('save', function (next) {
 });
 
 foodDonationSchema.index({ location: '2dsphere' });
+foodDonationSchema.index({ expiryTime: 1, status: 1 });
 
 const FoodDonation = mongoose.model('FoodDonation', foodDonationSchema);
 module.exports = FoodDonation;

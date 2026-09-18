@@ -1,5 +1,4 @@
 const ngoService = require('../services/ngo.service');
-const overpassService = require('../services/overpass.service');
 const cloudinaryService = require('../services/cloudinary.service');
 const ApiError = require('../utils/ApiError');
 const ApiResponse = require('../utils/ApiResponse');
@@ -151,12 +150,25 @@ const getNearbyNgos = async (req, res) => {
     throw new ApiError(400, 'Latitude (lat) and longitude (lng) query parameters are required.');
   }
 
-  const ngos = await overpassService.getNearbyNgosFromOverpass(lat, lng, radius);
+  const excludeId = req.user?._id || null;
+  const ngos = await ngoService.getNearbyNgos(lat, lng, radius, excludeId);
   res.status(200).json(
     new ApiResponse({
       success: true,
       statusCode: 200,
-      message: 'Nearby NGOs fetched successfully from Overpass API',
+      message: 'Nearby verified FoodBridge NGOs fetched successfully',
+      data: ngos
+    })
+  );
+};
+
+const getNgosForMap = async (req, res) => {
+  const ngos = await ngoService.getNgosForMap(req.query);
+  res.status(200).json(
+    new ApiResponse({
+      success: true,
+      statusCode: 200,
+      message: 'NGOs for map fetched successfully',
       data: ngos
     })
   );
@@ -170,5 +182,6 @@ module.exports = {
   getDashboard,
   getNearbyFood,
   getHistory,
-  getNearbyNgos
+  getNearbyNgos,
+  getNgosForMap
 };

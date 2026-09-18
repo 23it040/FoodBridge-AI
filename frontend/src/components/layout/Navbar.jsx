@@ -8,24 +8,24 @@ const Navbar = ({
   onMobileMenuToggle,
   className = ''
 }) => (
-  <nav className={`bg-white border-b border-[#89D7B7]/40 px-6 py-3.5 shadow-card ${className}`}>
+  <nav className={`bg-white border-b border-[#DDE5E1] px-6 py-3.5 shadow-sm ${className}`}>
     <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
       <div className="flex items-center gap-3">
         {onMobileMenuToggle && (
           <button
             type="button"
             onClick={onMobileMenuToggle}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-[#1A312C] transition hover:border-[#428475] hover:text-[#428475]"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#DDE5E1] bg-white text-[#102A2A] transition hover:border-[#2F8F72] hover:text-[#2F8F72]"
           >
             <FiMenu className="h-5 w-5" />
           </button>
         )}
         <NavLink to="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#428475] text-white shadow-sm">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#2F8F72] text-white shadow-sm">
             <FiHeart className="h-5 w-5" />
           </div>
-          <span className="text-xl font-extrabold tracking-tight text-[#1A312C]">
-            FoodBridge <span className="text-[#428475]">AI</span>
+          <span className="text-xl font-extrabold tracking-tight text-[#102A2A]">
+            FoodBridge <span className="text-[#2F8F72]">AI</span>
           </span>
         </NavLink>
       </div>
@@ -37,7 +37,7 @@ const Navbar = ({
             to={link.to}
             className={({ isActive }) =>
               `text-sm font-semibold transition-colors duration-200 ${
-                isActive ? 'text-[#428475] border-b-2 border-[#428475] pb-1' : 'text-slate-600 hover:text-[#428475]'
+                isActive ? 'text-[#2F8F72] border-b-2 border-[#2F8F72] pb-1' : 'text-[#687370] hover:text-[#2F8F72]'
               }`
             }
           >

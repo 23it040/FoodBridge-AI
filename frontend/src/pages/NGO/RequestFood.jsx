@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom';
 import requestService from '../../services/request.service';
 import donationService from '../../services/donation.service';
-import aiService from '../../services/ai.service';
 import { useAuth } from '../../context/AuthContext';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
@@ -11,7 +10,7 @@ import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import Badge from '../../components/ui/Badge';
 import toast from 'react-hot-toast';
-import { FiSend, FiBox, FiCalendar, FiUser, FiPhone, FiTruck, FiTrendingUp, FiInfo } from 'react-icons/fi';
+import { FiSend, FiBox, FiCalendar, FiUser, FiPhone, FiTruck } from 'react-icons/fi';
 
 const RequestFood = ({ donationId: propDonationId }) => {
   const params = useParams();
@@ -35,7 +34,6 @@ const RequestFood = ({ donationId: propDonationId }) => {
   const [donations, setDonations] = useState([]);
   const [loadingDonations, setLoadingDonations] = useState(false);
   const [sending, setSending] = useState(false);
-  const [demandContext, setDemandContext] = useState(null);
 
   const {
     register,
@@ -75,20 +73,6 @@ const RequestFood = ({ donationId: propDonationId }) => {
         const dObj = item?.data || item || null;
         setSelectedDonation(dObj);
         setValue('foodId', activeId);
-
-        if (dObj) {
-          try {
-            const res = await aiService.predictDemand({
-              food_category: dObj.category || 'Rice Bowl',
-              center_type: 'TYPE_A',
-              op_area: 5.0,
-              previous_donations: 150
-            });
-            if (mounted) setDemandContext(res?.data || res);
-          } catch (err) {
-            if (mounted) setDemandContext({ insufficientData: true, message: 'Demand context unavailable.' });
-          }
-        }
       } catch (err) {
         console.error(err);
         if (mounted) setSelectedDonation(null);
@@ -174,20 +158,6 @@ const RequestFood = ({ donationId: propDonationId }) => {
               <div><strong className="text-slate-500 uppercase tracking-wider block">Meal Type</strong> {selectedDonation.mealType || 'Cooked'}</div>
               <div><strong className="text-slate-500 uppercase tracking-wider block">Pickup Address</strong> {selectedDonation.pickupAddress || 'Address specified upon confirmation'}</div>
             </div>
-
-            {demandContext && !demandContext.insufficientData && (
-              <div className="p-3 bg-white rounded-xl border border-slate-200 text-xs space-y-1 mt-2">
-                <div className="font-bold flex items-center gap-1 text-[#1A312C]">
-                  <FiTrendingUp className="h-4 w-4 text-[#428475]" />
-                  <span>Regional Demand Context</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 text-slate-700 text-[11px] pt-1">
-                  <div>Estimated Regional Demand: <span className="font-extrabold text-[#428475]">{Math.round(demandContext.prediction ?? demandContext.expected_meals ?? 0)} meals</span></div>
-                  <div>Requested Quantity: <span className="font-bold text-slate-800">{selectedDonation.quantity} {selectedDonation.unit || 'servings'}</span></div>
-                </div>
-                <div className="text-[10px] text-slate-500 italic">Model: {demandContext.modelStatus || 'EXTERNAL_DATA_MODEL'} | Source: Kaggle</div>
-              </div>
-            )}
           </div>
         </Card>
       ) : null}

@@ -1,17 +1,17 @@
 const StatCard = ({ label, value, change, icon, className = '' }) => (
-  <div className={`rounded-[24px] bg-white p-6 shadow-card border border-[#89D7B7] transition-all duration-300 hover:shadow-elevated hover:-translate-y-0.5 ${className}`}>
+  <div className={`rounded-[24px] bg-white p-6 shadow-card border border-[#DDE5E1] transition-all duration-300 hover:shadow-elevated hover:border-[#79D6B2]/60 hover:-translate-y-0.5 ${className}`}>
     <div className="flex items-center justify-between gap-4">
       <div>
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">{label}</p>
-        <p className="mt-2 text-3xl font-extrabold text-[#1A312C]">{value}</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-[#687370]">{label}</p>
+        <p className="mt-2 text-3xl font-extrabold text-[#102A2A]">{value}</p>
       </div>
       {icon ? (
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#89D7B7]/25 text-[#428475] shadow-sm">
+        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E8F6F0] text-[#2F8F72] shadow-sm">
           {icon}
         </div>
       ) : (
-        <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[#89D7B7]/20 text-[#428475]">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#428475]" />
+        <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F6F0] text-[#2F8F72]">
+          <span className="h-2.5 w-2.5 rounded-full bg-[#2F8F72]" />
         </div>
       )}
     </div>

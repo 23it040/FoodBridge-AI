@@ -5,12 +5,12 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'FoodBridge AI API',
+      title: 'FoodBridge API',
       version: '1.0.0',
       description:
-        'Production REST API for FoodBridge AI — a platform connecting food donors with NGOs to reduce food waste.',
+        'Production REST API for FoodBridge — a platform connecting food donors with NGOs to reduce food waste.',
       contact: {
-        name: 'FoodBridge AI Team',
+        name: 'FoodBridge Team',
       },
     },
     servers: [
@@ -95,7 +95,6 @@ const options = {
       { name: 'Notifications', description: 'In-app notifications' },
       { name: 'Reviews', description: 'Post-pickup reviews' },
       { name: 'Analytics', description: 'Dashboard metrics' },
-      { name: 'AI', description: 'AI recommendations & uploads' },
     ],
     paths: {
       '/health': {
@@ -197,24 +196,6 @@ const options = {
           security: [{ bearerAuth: [] }],
           responses: {
             201: { description: 'Pickup request created' },
-          },
-        },
-      },
-      '/ai/recommendations/{donationId}': {
-        get: {
-          tags: ['AI'],
-          summary: 'Get AI NGO recommendations for a donation',
-          security: [{ bearerAuth: [] }],
-          parameters: [
-            {
-              name: 'donationId',
-              in: 'path',
-              required: true,
-              schema: { type: 'string' },
-            },
-          ],
-          responses: {
-            200: { description: 'Recommendations generated' },
           },
         },
       },

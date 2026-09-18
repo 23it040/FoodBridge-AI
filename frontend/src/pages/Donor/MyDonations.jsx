@@ -8,13 +8,15 @@ import DataTable from '../../components/ui/data/DataTable';
 import Spinner from '../../components/ui/Spinner';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
-import { FiPlusCircle, FiEye, FiTrash2 } from 'react-icons/fi';
+import ConfirmationDialog from '../../components/ui/ConfirmationDialog';
+import { FiPlusCircle, FiEye, FiTrash2, FiAlertCircle } from 'react-icons/fi';
 
 const MyDonations = () => {
   const [loading, setLoading] = useState(true);
   const [donations, setDonations] = useState([]);
   const [error, setError] = useState(null);
-  const [deletingId, setDeletingId] = useState(null);
+  const [deletingDonation, setDeletingDonation] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
 
   const load = async () => {
@@ -32,22 +34,38 @@ const MyDonations = () => {
     }
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const handleView = (row) => navigate(`/donor/donations/${row._id || row.id}`);
 
-  const handleDelete = async (row) => {
-    const donationId = row._id || row.id;
-    if (!donationId || !window.confirm('Remove this donation listing?')) return;
-    setDeletingId(donationId);
+  const handleOpenDeleteModal = (row) => {
+    setDeletingDonation(row);
+  };
+
+  const handleCloseDeleteModal = () => {
+    if (isDeleting) return;
+    setDeletingDonation(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deletingDonation || isDeleting) return;
+    const donationId = deletingDonation._id || deletingDonation.id;
+    if (!donationId) return;
+
+    setIsDeleting(true);
     try {
       await donationService.deleteDonation(donationId);
-      toast.success('Donation removed successfully');
+      toast.success('Donation deleted successfully');
+      setDeletingDonation(null);
       load();
     } catch (error) {
-      toast.error(error?.response?.data?.message || 'Failed to delete donation');
+      console.error('Delete donation error:', error);
+      const errMsg = error?.response?.data?.message || 'Unable to delete this donation. Please try again.';
+      toast.error(errMsg);
     } finally {
-      setDeletingId(null);
+      setIsDeleting(false);
     }
   };
 
@@ -57,20 +75,20 @@ const MyDonations = () => {
       title: 'Food Item',
       render: (row) => (
         <div>
-          <div className="font-extrabold text-[#1A312C]">{row.foodName || row.name || row.title || 'Food Item'}</div>
-          <div className="text-xs text-slate-500">{row.pickupAddress || 'Address N/A'}</div>
+          <div className="font-extrabold text-[#102A2A]">{row.foodName || row.name || row.title || 'Food Item'}</div>
+          <div className="text-xs text-[#687370]">{row.pickupAddress || 'Address N/A'}</div>
         </div>
       )
     },
     {
       key: 'category',
       title: 'Category',
-      render: (row) => <span className="font-semibold text-slate-700">{row.category || 'General'}</span>
+      render: (row) => <span className="font-semibold text-[#102A2A]">{row.category || 'General'}</span>
     },
     {
       key: 'quantity',
       title: 'Quantity',
-      render: (row) => <span className="font-bold text-[#428475]">{row.quantity} {row.unit || 'servings'}</span>
+      render: (row) => <span className="font-bold text-[#2F8F72]">{row.quantity} {row.unit || 'servings'}</span>
     },
     {
       key: 'status',
@@ -86,7 +104,13 @@ const MyDonations = () => {
             <FiEye className="h-3.5 w-3.5" />
             <span>Details</span>
           </Button>
-          <Button size="sm" variant="ghost" loading={deletingId === (row._id || row.id)} disabled={Boolean(deletingId)} onClick={() => handleDelete(row)} className="text-red-600 hover:bg-red-50">
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => handleOpenDeleteModal(row)}
+            className="text-red-600 hover:bg-red-50"
+            title="Delete Donation"
+          >
             <FiTrash2 className="h-4 w-4" />
           </Button>
         </div>
@@ -118,6 +142,41 @@ const MyDonations = () => {
           <DataTable columns={columns} data={donations} loading={loading} rowsPerPage={10} searchPlaceholder="Search donations by name or category..." />
         )}
       </Card>
+
+      {/* Custom FoodBridge Delete Confirmation Modal */}
+      <ConfirmationDialog
+        open={Boolean(deletingDonation)}
+        title="Delete Donation?"
+        description="Are you sure you want to delete this food donation? This action cannot be undone."
+        confirmLabel="Delete Donation"
+        cancelLabel="Cancel"
+        variant="danger"
+        loading={isDeleting}
+        onConfirm={handleConfirmDelete}
+        onCancel={handleCloseDeleteModal}
+      >
+        {deletingDonation && (
+          <div className="mt-3 rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/40 p-3.5 space-y-1.5 text-xs text-[#102A2A] font-sans">
+            <div className="flex items-center justify-between border-b border-[#DDE5E1] pb-1.5">
+              <span className="font-extrabold text-sm text-[#102A2A]">
+                {deletingDonation.foodName || deletingDonation.name || deletingDonation.title || 'Food Item'}
+              </span>
+              <Badge variant={deletingDonation.status === 'AVAILABLE' || deletingDonation.status === 'available' ? 'success' : 'default'}>
+                {deletingDonation.status || 'AVAILABLE'}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between pt-1 text-[#687370] font-medium">
+              <span>Category: <strong>{deletingDonation.category || 'General'}</strong></span>
+              <span>Quantity: <strong className="text-[#2F8F72]">{deletingDonation.quantity} {deletingDonation.unit || 'servings'}</strong></span>
+            </div>
+            {deletingDonation.pickupAddress && (
+              <p className="text-[11px] text-[#687370] truncate pt-1">
+                Pickup: {deletingDonation.pickupAddress}
+              </p>
+            )}
+          </div>
+        )}
+      </ConfirmationDialog>
     </section>
   );
 };

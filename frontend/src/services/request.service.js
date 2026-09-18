@@ -9,17 +9,24 @@ const extractArray = (res) => {
 
 const normalizeRequestItem = (item) => {
   if (!item || typeof item !== 'object') return item;
+  const foodObj = (item.foodId && typeof item.foodId === 'object') ? item.foodId : null;
+  const donorObj = (item.donorId && typeof item.donorId === 'object') ? item.donorId : null;
+  const ngoObj = (item.ngoId && typeof item.ngoId === 'object') ? item.ngoId : null;
+  const itemId = item._id ? String(item._id) : (item.id ? String(item.id) : undefined);
+
   return {
     ...item,
-    foodName: item.foodId?.foodName || item.foodId?.name || item.foodName || item.donationName || 'Food Item',
-    donationName: item.foodId?.foodName || item.foodId?.name || item.foodName || item.donationName || 'Food Item',
-    donorName: item.donorId?.name || item.donorName || item.donorId?.email || 'Donor',
-    ngoName: item.ngoId?.name || item.ngoName || item.ngoId?.email || 'NGO',
-    category: item.foodId?.category || item.category || 'General',
-    quantity: item.foodId?.quantity ?? item.quantity ?? 1,
-    unit: item.foodId?.unit || item.unit || 'servings',
-    pickupAddress: item.foodId?.pickupAddress || item.pickupAddress || 'Address not specified',
-    message: item.requestMessage || item.message || 'No message provided'
+    _id: itemId || item._id,
+    id: itemId || item.id,
+    foodName: foodObj?.foodName || foodObj?.name || item.foodName || item.donationName || null,
+    donationName: foodObj?.foodName || foodObj?.name || item.foodName || item.donationName || null,
+    donorName: donorObj?.name || item.donorName || donorObj?.email || null,
+    ngoName: ngoObj?.name || item.ngoName || ngoObj?.email || null,
+    category: foodObj?.category || item.category || null,
+    quantity: foodObj?.quantity ?? item.quantity ?? null,
+    unit: foodObj?.unit || item.unit || '',
+    pickupAddress: foodObj?.pickupAddress || item.pickupAddress || null,
+    message: item.requestMessage || item.message || ''
   };
 };
 

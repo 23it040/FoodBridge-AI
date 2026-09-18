@@ -90,29 +90,29 @@ const DataTable = ({
   return (
     <div className={className}>
       {showSearch && (
-        <div className="mb-4 rounded-2xl border border-[#89D7B7] bg-white px-4 py-3 shadow-card">
+        <div className="mb-4 rounded-2xl border border-[#DDE5E1] bg-white px-4 py-3 shadow-card">
           <input
             type="search"
             placeholder={searchPlaceholder}
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/30 px-4 py-2.5 text-sm text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+            className="w-full rounded-xl border border-[#DDE5E1] bg-white px-4 py-2.5 text-sm text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
             aria-label="Search table"
           />
         </div>
       )}
 
-      <div className="overflow-hidden rounded-[24px] border border-[#89D7B7] bg-white shadow-card">
+      <div className="overflow-hidden rounded-[24px] border border-[#DDE5E1] bg-white shadow-card">
         <div className="max-h-[600px] overflow-auto">
-          <table className="min-w-full divide-y divide-[#89D7B7]/30 text-left">
-            <thead className="sticky top-0 z-10 bg-[#1A312C] text-white shadow-sm">
+          <table className="min-w-full divide-y divide-[#DDE5E1]/60 text-left">
+            <thead className="sticky top-0 z-10 bg-[#102A2A] text-white shadow-sm">
               <tr>
                 {columns.map((column) => {
                   const isActiveSort = sortConfig?.key === column.key;
                   return (
                     <th
                       key={column.key}
-                      className={`px-5 py-4 text-xs font-bold uppercase tracking-wider text-[#89D7B7] ${column.sortable ? 'cursor-pointer select-none' : ''}`}
+                      className={`px-5 py-4 text-xs font-bold uppercase tracking-wider text-[#79D6B2] ${column.sortable ? 'cursor-pointer select-none' : ''}`}
                       onClick={() => toggleSort(column)}
                       scope="col"
                       aria-sort={isActiveSort ? (sortConfig.order === 'asc' ? 'ascending' : 'descending') : 'none'}
@@ -120,7 +120,7 @@ const DataTable = ({
                       <div className="flex items-center gap-2">
                         <span>{column.title}</span>
                         {column.sortable && (
-                          <span className="text-xs text-[#89D7B7]/70">{isActiveSort ? (sortConfig.order === 'asc' ? '↑' : '↓') : '↕'}</span>
+                          <span className="text-xs text-[#79D6B2]/70">{isActiveSort ? (sortConfig.order === 'asc' ? '↑' : '↓') : '↕'}</span>
                         )}
                       </div>
                     </th>
@@ -143,9 +143,9 @@ const DataTable = ({
                 </tr>
               ) : (
                 currentData.map((row, rowIndex) => (
-                  <tr key={rowIndex} className="transition-colors hover:bg-[#89D7B7]/10">
+                  <tr key={rowIndex} className="transition-colors hover:bg-[#E8F6F0]/50">
                     {columns.map((column) => (
-                      <td key={column.key} className="px-5 py-4 text-sm font-medium text-[#1A312C]">
+                      <td key={column.key} className="px-5 py-4 text-sm font-medium text-[#102A2A]">
                         {column.render ? column.render(row) : row[column.key]}
                       </td>
                     ))}
@@ -158,8 +158,8 @@ const DataTable = ({
       </div>
 
       {showPagination && !loading && sortedData.length > rowsPerPage && (
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#89D7B7] bg-white px-5 py-3 text-sm text-[#1A312C] shadow-card">
-          <div className="font-semibold text-xs text-slate-600">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#DDE5E1] bg-white px-5 py-3 text-sm text-[#102A2A] shadow-card">
+          <div className="font-semibold text-xs text-[#687370]">
             Page {currentPage} of {totalPages} ({sortedData.length} records)
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
@@ -167,7 +167,7 @@ const DataTable = ({
               type="button"
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
-              className="rounded-full border border-[#428475] px-3.5 py-1.5 text-xs font-semibold text-[#428475] transition hover:bg-[#428475] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full border border-[#2F8F72] px-3.5 py-1.5 text-xs font-semibold text-[#2F8F72] transition hover:bg-[#2F8F72] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               Previous
             </button>
@@ -178,8 +178,8 @@ const DataTable = ({
                 onClick={() => handlePageChange(page)}
                 className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${
                   page === currentPage
-                    ? 'bg-[#428475] text-white shadow-sm'
-                    : 'border border-slate-200 bg-white text-slate-700 hover:bg-[#89D7B7]/20'
+                    ? 'bg-[#2F8F72] text-white shadow-sm'
+                    : 'border border-[#DDE5E1] bg-white text-slate-700 hover:bg-[#E8F6F0]'
                 }`}
               >
                 {page}
@@ -189,7 +189,7 @@ const DataTable = ({
               type="button"
               onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
-              className="rounded-full border border-[#428475] px-3.5 py-1.5 text-xs font-semibold text-[#428475] transition hover:bg-[#428475] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-full border border-[#2F8F72] px-3.5 py-1.5 text-xs font-semibold text-[#2F8F72] transition hover:bg-[#2F8F72] hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
             >
               Next
             </button>

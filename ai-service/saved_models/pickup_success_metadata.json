@@ -1,0 +1,9 @@
+{
+  "status": "INSUFFICIENT_DATA",
+  "model_version": "1.0.0-pending",
+  "total_outcomes": 0,
+  "completed_outcomes": 0,
+  "failed_outcomes": 0,
+  "minimum_required": 20,
+  "message": "Prediction unavailable because there is not enough historical pickup data."
+}

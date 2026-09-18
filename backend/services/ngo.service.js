@@ -272,6 +272,187 @@ const getHistory = async (user) => {
   };
 };
 
+const DEMO_NGOS = [
+  {
+    id: 'ngo_demo_1',
+    name: 'Helping Hands Surat Foundation',
+    organizationName: 'Helping Hands Surat Foundation',
+    address: 'Adajan, Surat, Gujarat',
+    latitude: 21.1972,
+    longitude: 72.7933,
+    foodTypesAccepted: ['cooked', 'packaged', 'raw'],
+    capacity: 250,
+    isVerified: true,
+    status: 'active',
+    isDemoData: true
+  },
+  {
+    id: 'ngo_demo_2',
+    name: 'Annapurna Seva Trust Vesu',
+    organizationName: 'Annapurna Seva Trust Vesu',
+    address: 'Vesu Main Road, Surat, Gujarat',
+    latitude: 21.1523,
+    longitude: 72.7725,
+    foodTypesAccepted: ['cooked', 'packaged'],
+    capacity: 180,
+    isVerified: true,
+    status: 'active',
+    isDemoData: true
+  },
+  {
+    id: 'ngo_demo_3',
+    name: 'Hope Food Bank Rander',
+    organizationName: 'Hope Food Bank Rander',
+    address: 'Rander Road, Surat, Gujarat',
+    latitude: 21.2185,
+    longitude: 72.7960,
+    foodTypesAccepted: ['cooked', 'packaged', 'beverages'],
+    capacity: 200,
+    isVerified: true,
+    status: 'active',
+    isDemoData: true
+  },
+  {
+    id: 'ngo_demo_4',
+    name: 'Community Care Foundation Varachha',
+    organizationName: 'Community Care Foundation Varachha',
+    address: 'Varachha, Surat, Gujarat',
+    latitude: 21.2144,
+    longitude: 72.8464,
+    foodTypesAccepted: ['cooked', 'packaged'],
+    capacity: 120,
+    isVerified: true,
+    status: 'active',
+    isDemoData: true
+  },
+  {
+    id: 'ngo_demo_5',
+    name: 'Food For All Katargam',
+    organizationName: 'Food For All Katargam',
+    address: 'Katargam, Surat, Gujarat',
+    latitude: 21.2312,
+    longitude: 72.8251,
+    foodTypesAccepted: ['cooked', 'packaged', 'fruits'],
+    capacity: 300,
+    isVerified: true,
+    status: 'active',
+    isDemoData: true
+  }
+];
+
+const formatLocationData = (latitude, longitude) => {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+  if (Number.isNaN(lat) || Number.isNaN(lng)) return {};
+  return {
+    latitude: lat,
+    longitude: lng,
+    location: {
+      type: 'Point',
+      coordinates: [lng, lat]
+    }
+  };
+};
+
+const getNgosForMap = async (options = {}) => {
+  const query = {
+    role: 'ngo',
+    $or: [{ isVerified: true }, { verificationStatus: 'APPROVED' }],
+    status: { $ne: 'SUSPENDED' },
+    latitude: { $ne: null, $exists: true },
+    longitude: { $ne: null, $exists: true }
+  };
+
+  const ngos = await User.find(query).select('-password');
+
+  let results = ngos.map((ngo) => ({
+    id: ngo._id.toString(),
+    name: ngo.organizationName || ngo.name,
+    organizationName: ngo.organizationName || ngo.name,
+    address: [ngo.address, ngo.city, ngo.state].filter(Boolean).join(', ') || 'Surat, Gujarat',
+    city: ngo.city || 'Surat',
+    state: ngo.state || 'Gujarat',
+    pincode: ngo.pincode || '',
+    phone: ngo.phone || '',
+    latitude: Number(ngo.latitude),
+    longitude: Number(ngo.longitude),
+    foodTypesAccepted: ngo.foodTypesAccepted?.length ? ngo.foodTypesAccepted : ['cooked', 'packaged'],
+    capacity: ngo.capacity || 150,
+    isVerified: Boolean(ngo.isVerified || ngo.verificationStatus === 'APPROVED'),
+    status: (ngo.status || 'ACTIVE').toLowerCase(),
+    isDemoData: false
+  }));
+
+  return results;
+};
+
+const getNearbyNgos = async (latitude, longitude, radiusMeters = 10000, excludeId = null) => {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+  const radiusKm = Number(radiusMeters) / 1000;
+
+  if (Number.isNaN(lat) || Number.isNaN(lng)) {
+    throw new ApiError(400, 'Latitude and longitude are required');
+  }
+
+  const query = {
+    role: 'ngo',
+    $or: [{ isVerified: true }, { verificationStatus: 'APPROVED' }],
+    status: { $ne: 'SUSPENDED' },
+    latitude: { $ne: null, $exists: true },
+    longitude: { $ne: null, $exists: true }
+  };
+
+  if (excludeId) {
+    query._id = { $ne: excludeId };
+  }
+
+  const ngos = await User.find(query).select('-password');
+
+  const R = 6371; // Earth radius in km
+  const results = [];
+
+  ngos.forEach((ngo) => {
+    const ngoLat = Number(ngo.latitude);
+    const ngoLng = Number(ngo.longitude);
+    if (Number.isNaN(ngoLat) || Number.isNaN(ngoLng)) return;
+
+    const dLat = (ngoLat - lat) * (Math.PI / 180);
+    const dLng = (ngoLng - lng) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat * (Math.PI / 180)) *
+        Math.cos(ngoLat * (Math.PI / 180)) *
+        Math.sin(dLng / 2) *
+        Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distKm = R * c;
+
+    if (distKm <= radiusKm) {
+      results.push({
+        id: ngo._id.toString(),
+        name: ngo.organizationName || ngo.name,
+        organizationName: ngo.organizationName || ngo.name,
+        address: [ngo.address, ngo.city, ngo.state].filter(Boolean).join(', ') || 'Surat, Gujarat',
+        city: ngo.city || 'Surat',
+        state: ngo.state || 'Gujarat',
+        phone: ngo.phone || '',
+        latitude: ngoLat,
+        longitude: ngoLng,
+        foodTypesAccepted: ngo.foodTypesAccepted?.length ? ngo.foodTypesAccepted : ['cooked', 'packaged'],
+        capacity: ngo.capacity || 150,
+        isVerified: Boolean(ngo.isVerified || ngo.verificationStatus === 'APPROVED'),
+        status: (ngo.status || 'ACTIVE').toLowerCase(),
+        distanceKm: Number(distKm.toFixed(2))
+      });
+    }
+  });
+
+  results.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  return results;
+};
+
 module.exports = {
   registerNgo,
   verifyNgo,
@@ -279,5 +460,8 @@ module.exports = {
   updateNgoProfile,
   getDashboard,
   findNearbyFood,
-  getHistory
+  getHistory,
+  formatLocationData,
+  getNgosForMap,
+  getNearbyNgos
 };

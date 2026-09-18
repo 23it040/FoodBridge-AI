@@ -4,9 +4,9 @@ import Footer from '../components/layout/Footer';
 import ErrorBoundary from '../components/error/ErrorBoundary';
 
 const MainLayout = () => (
-  <div className="min-h-screen bg-surface text-slate-900">
+  <div className="min-h-screen bg-[#0A1A1A] text-white flex flex-col justify-between overflow-x-hidden">
     <Navigation />
-    <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <main className="w-full flex-grow">
       <ErrorBoundary>
         <Outlet />
       </ErrorBoundary>
@@ -16,3 +16,4 @@ const MainLayout = () => (
 );
 
 export default MainLayout;
+

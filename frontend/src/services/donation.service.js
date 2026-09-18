@@ -9,8 +9,11 @@ const extractArray = (res) => {
 
 const normalizeDonationItem = (item) => {
   if (!item || typeof item !== 'object') return item;
+  const itemId = item._id ? String(item._id) : (item.id ? String(item.id) : undefined);
   return {
     ...item,
+    _id: itemId || item._id,
+    id: itemId || item.id,
     name: item.foodName || item.name || 'Food Item',
     foodName: item.foodName || item.name || 'Food Item',
     donorName: item.donorId?.name || item.donorName || item.donorId?.email || 'Donor',
@@ -30,6 +33,7 @@ const listDonations = async (params = {}) => {
 };
 
 const getDonation = async (id) => {
+  if (!id) throw new Error('Donation ID is required');
   const response = await api.get(`/api/food/${id}`);
   const raw = response?.data?.data || response?.data || response;
   return normalizeDonationItem(raw);

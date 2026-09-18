@@ -7,22 +7,38 @@ const createDonation = async (donationData) => {
 };
 
 const listDonations = async (user) => {
+  const now = new Date();
   if (user.role === 'admin') {
     return FoodDonation.find().populate('donorId', 'name email role');
   }
 
   return FoodDonation.find({
-    $or: [{ status: 'AVAILABLE' }, { donorId: user._id }]
+    $or: [
+      { status: 'AVAILABLE', expiryTime: { $gt: now } },
+      { donorId: user._id }
+    ]
   }).populate('donorId', 'name email role');
 };
 
+const mongoose = require('mongoose');
+
 const getDonationById = async (id, user) => {
+  if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, 'Invalid food donation ID');
+  }
+
   const donation = await FoodDonation.findById(id).populate('donorId', 'name email role');
   if (!donation) {
     throw new ApiError(404, 'Food donation not found');
   }
 
-  if (donation.status !== 'AVAILABLE' && donation.donorId._id.toString() !== user._id.toString() && user.role !== 'admin') {
+  const userRole = (user && user.role) ? String(user.role).toLowerCase() : '';
+  const isDonor = user && donation.donorId && (donation.donorId._id || donation.donorId).toString() === user._id.toString();
+  const isAdmin = userRole === 'admin';
+  const isNGO = userRole === 'ngo' || userRole === 'partner';
+  const isAvailable = String(donation.status || '').toUpperCase() === 'AVAILABLE';
+
+  if (!isAvailable && !isDonor && !isAdmin && !isNGO) {
     throw new ApiError(403, 'Access denied to this donation');
   }
 
