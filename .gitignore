@@ -27,7 +27,7 @@ __pycache__/
 htmlcov/
 
 # Database files & WiredTiger
-data/db/
+data/
 *.sqlite
 *.sqlite3
 *.db
