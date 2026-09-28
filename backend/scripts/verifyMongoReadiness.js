@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 async function run() {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/foodbridge';
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      throw new Error('MONGODB_URI is required in environment variables');
+    }
     await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 3000 });
     console.log('MongoDB Connection Successful!');
 

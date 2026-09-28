@@ -85,8 +85,8 @@ const updateProfile = async (req, res) => {
   if (req.body.city) updateData.city = req.body.city;
   if (req.body.state) updateData.state = req.body.state;
   if (req.body.pincode) updateData.pincode = req.body.pincode;
-  if (req.body.latitude) updateData.latitude = req.body.latitude;
-  if (req.body.longitude) updateData.longitude = req.body.longitude;
+  if (req.body.latitude !== undefined) updateData.latitude = Number(req.body.latitude);
+  if (req.body.longitude !== undefined) updateData.longitude = Number(req.body.longitude);
 
   if (req.file) {
     const uploadResult = await cloudinaryService.uploadImage(req.file.buffer, 'foodbridge/ngos');
@@ -144,14 +144,22 @@ const getHistory = async (req, res) => {
 };
 
 const getNearbyNgos = async (req, res) => {
-  const { lat, lng, radius } = req.query;
+  const lat = req.query.latitude != null ? req.query.latitude : req.query.lat;
+  const lng = req.query.longitude != null ? req.query.longitude : req.query.lng;
+  const radius = req.query.radius;
 
-  if (!lat || !lng) {
-    throw new ApiError(400, 'Latitude (lat) and longitude (lng) query parameters are required.');
+  if (lat == null || lng == null) {
+    throw new ApiError(400, 'Latitude (latitude or lat) and longitude (longitude or lng) query parameters are required.');
+  }
+
+  const numLat = Number(lat);
+  const numLng = Number(lng);
+  if (!Number.isFinite(numLat) || !Number.isFinite(numLng) || numLat < -90 || numLat > 90 || numLng < -180 || numLng > 180) {
+    throw new ApiError(400, 'Coordinates must be valid numbers: latitude [-90, 90], longitude [-180, 180].');
   }
 
   const excludeId = req.user?._id || null;
-  const ngos = await ngoService.getNearbyNgos(lat, lng, radius, excludeId);
+  const ngos = await ngoService.getNearbyNgos(numLat, numLng, radius, excludeId);
   res.status(200).json(
     new ApiResponse({
       success: true,

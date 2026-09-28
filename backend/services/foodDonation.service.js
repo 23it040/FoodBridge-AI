@@ -6,18 +6,34 @@ const createDonation = async (donationData) => {
   return donation;
 };
 
-const listDonations = async (user) => {
+const listDonations = async (user, query = {}) => {
   const now = new Date();
-  if (user.role === 'admin') {
-    return FoodDonation.find().populate('donorId', 'name email role');
+  let filter;
+
+  if (user && user.role === 'admin') {
+    filter = {};
+  } else if (user) {
+    filter = {
+      $or: [
+        { status: 'AVAILABLE', expiryTime: { $gt: now } },
+        { donorId: user._id }
+      ]
+    };
+  } else {
+    filter = { status: 'AVAILABLE', expiryTime: { $gt: now } };
   }
 
-  return FoodDonation.find({
-    $or: [
-      { status: 'AVAILABLE', expiryTime: { $gt: now } },
-      { donorId: user._id }
-    ]
-  }).populate('donorId', 'name email role');
+  if (query.status && (!user || user.role !== 'admin')) {
+    filter.status = query.status;
+  }
+
+  let dbQuery = FoodDonation.find(filter).populate('donorId', 'name email role').sort({ createdAt: -1 });
+
+  if (query.limit && Number(query.limit) > 0) {
+    dbQuery = dbQuery.limit(Number(query.limit));
+  }
+
+  return dbQuery;
 };
 
 const mongoose = require('mongoose');
@@ -44,6 +60,7 @@ const getDonationById = async (id, user) => {
 
   return donation;
 };
+
 
 const updateDonation = async (id, user, updateData) => {
   const donation = await FoodDonation.findById(id);

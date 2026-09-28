@@ -45,7 +45,31 @@ const authorizeRoles = (...roles) => {
   };
 };
 
+const optionalAuthenticate = async (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return next();
+    }
+
+    const token = authHeader.split(' ')[1];
+    const secret = process.env.JWT_SECRET || process.env.JWT_ACCESS_SECRET || 'your-super-secret-access-key-change-in-production';
+    const decoded = jwt.verify(token, secret);
+
+    const user = await User.findById(decoded.id).select('-password');
+    if (user && user.status === 'ACTIVE') {
+      req.user = user;
+    }
+    next();
+  } catch {
+    // Gracefully ignore token errors for optional authentication
+    next();
+  }
+};
+
 module.exports = {
   authenticate,
+  optionalAuthenticate,
   authorizeRoles
 };
+

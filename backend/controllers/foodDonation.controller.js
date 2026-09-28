@@ -72,7 +72,7 @@ const createDonation = async (req, res) => {
 };
 
 const listDonations = async (req, res) => {
-  const donations = await foodDonationService.listDonations(req.user);
+  const donations = await foodDonationService.listDonations(req.user, req.query);
   res.status(200).json(
     new ApiResponse({
       success: true,
@@ -82,6 +82,7 @@ const listDonations = async (req, res) => {
     })
   );
 };
+
 
 const getDonation = async (req, res) => {
   const donation = await foodDonationService.getDonationById(req.params.id, req.user);

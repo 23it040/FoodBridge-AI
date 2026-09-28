@@ -4,7 +4,7 @@ const connectDatabase = async () => {
   const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
   if (!mongoUri) {
-    throw new Error('MONGODB_URI or MONGO_URI is required in environment variables');
+    throw new Error('MONGODB_URI is required in environment variables');
   }
 
   try {
@@ -14,17 +14,8 @@ const connectDatabase = async () => {
     });
     console.log('MongoDB connected successfully');
   } catch (err) {
-    console.warn(`Failed to connect to configured MongoDB (${mongoUri}): ${err.message}`);
-    if (mongoUri !== 'mongodb://127.0.0.1:27017/foodbridge') {
-      console.log('Attempting fallback connection to local MongoDB: mongodb://127.0.0.1:27017/foodbridge');
-      await mongoose.connect('mongodb://127.0.0.1:27017/foodbridge', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-      });
-      console.log('MongoDB connected successfully to local instance');
-    } else {
-      throw err;
-    }
+    console.error(`MongoDB connection failed: ${err.message}`);
+    throw err;
   }
 };
 

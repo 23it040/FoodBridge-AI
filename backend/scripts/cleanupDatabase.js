@@ -10,7 +10,10 @@ const AuditLog = require('../models/AuditLog.model');
 const isDryRun = process.argv.includes('--dry-run');
 
 async function cleanup() {
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/foodbridge';
+  const mongoUri = process.env.MONGODB_URI;
+  if (!mongoUri) {
+    throw new Error('MONGODB_URI is required in environment variables');
+  }
   await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
 
   console.log(`==================================================`);

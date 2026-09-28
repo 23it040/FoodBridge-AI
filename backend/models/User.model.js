@@ -64,12 +64,10 @@ const userSchema = new mongoose.Schema(
     location: {
       type: {
         type: String,
-        enum: ['Point'],
-        default: 'Point'
+        enum: ['Point']
       },
       coordinates: {
-        type: [Number],
-        default: undefined
+        type: [Number]
       }
     },
     foodTypesAccepted: {
@@ -142,6 +140,15 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.pre('save', async function (next) {
+  if (this.latitude != null && this.longitude != null) {
+    this.location = {
+      type: 'Point',
+      coordinates: [this.longitude, this.latitude]
+    };
+  } else if (!this.location || !this.location.coordinates || this.location.coordinates.length < 2) {
+    this.location = undefined;
+  }
+
   if (!this.isModified('password')) {
     return next();
   }

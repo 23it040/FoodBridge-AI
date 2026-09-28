@@ -25,7 +25,7 @@ router.post(
 
 /**
  * GET /api/ngos/nearby or /api/ngo/nearby
- * Public route to fetch nearby NGOs from Overpass API
+ * Public route to fetch nearby registered FoodBridge NGOs from MongoDB
  * Query params: lat, lng, radius
  */
 router.get('/nearby', asyncHandler(ngoController.getNearbyNgos));

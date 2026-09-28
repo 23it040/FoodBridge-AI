@@ -3,6 +3,100 @@ const FoodRequest = require('../models/FoodRequest.model');
 const FoodDonation = require('../models/FoodDonation.model');
 const ApiError = require('../utils/ApiError');
 
+const DEFAULT_NEARBY_NGO_RADIUS_METERS = Number(process.env.NGO_NEARBY_RADIUS_METERS) || 10000;
+const MAX_NEARBY_NGO_RADIUS_METERS = Number(process.env.NGO_MAX_NEARBY_RADIUS_METERS) || 50000;
+
+const isValidCoordinatePair = (latitude, longitude) => {
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+
+  return Number.isFinite(lat) && Number.isFinite(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180 && (lat !== 0 || lng !== 0);
+};
+
+const formatLocationData = (latitude, longitude) => {
+  if (!isValidCoordinatePair(latitude, longitude)) return {};
+
+  const lat = Number(latitude);
+  const lng = Number(longitude);
+  return {
+    latitude: lat,
+    longitude: lng,
+    location: {
+      type: 'Point',
+      coordinates: [lng, lat]
+    }
+  };
+};
+
+const calculateHaversineDistanceKm = (lat1, lon1, lat2, lon2) => {
+  const R = 6371; // Earth radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+const toNgoMapData = (ngo, distanceInKm = null) => {
+  const coordinates = ngo.location?.coordinates;
+  const latitude = Array.isArray(coordinates) && coordinates.length >= 2
+    ? Number(coordinates[1])
+    : Number(ngo.latitude);
+  const longitude = Array.isArray(coordinates) && coordinates.length >= 2
+    ? Number(coordinates[0])
+    : Number(ngo.longitude);
+
+  if (!isValidCoordinatePair(latitude, longitude)) return null;
+
+  const addressParts = [];
+  if (ngo.address) addressParts.push(ngo.address);
+  if (ngo.city && (!ngo.address || !ngo.address.toLowerCase().includes(ngo.city.toLowerCase()))) {
+    addressParts.push(ngo.city);
+  }
+  if (ngo.state && (!ngo.address || !ngo.address.toLowerCase().includes(ngo.state.toLowerCase()))) {
+    addressParts.push(ngo.state);
+  }
+  const address = addressParts.join(', ') || (ngo.city ? `${ngo.city}, ${ngo.state || 'Gujarat'}` : 'Gujarat, India');
+
+
+  return {
+    id: ngo._id.toString(),
+    name: ngo.organizationName || ngo.name || 'FoodBridge Partner NGO',
+    organizationName: ngo.organizationName || ngo.name || 'FoodBridge Partner NGO',
+    address,
+    city: ngo.city || '',
+    state: ngo.state || '',
+    pincode: ngo.pincode || '',
+    phone: ngo.phone || '',
+    latitude,
+    longitude,
+    lat: latitude,
+    lng: longitude,
+    foodTypesAccepted: ngo.foodTypesAccepted?.length ? ngo.foodTypesAccepted : ['cooked', 'packaged'],
+    capacity: ngo.capacity ?? 150,
+    isVerified: true,
+    status: (ngo.status || 'ACTIVE').toLowerCase(),
+    ...(distanceInKm != null && Number.isFinite(distanceInKm) && {
+      distanceKm: Number(distanceInKm.toFixed(2))
+    })
+  };
+};
+
+const buildEligibleNgoQuery = () => ({
+  role: 'ngo',
+  $or: [
+    { isVerified: true },
+    { verificationStatus: 'APPROVED' }
+  ],
+  status: { $nin: ['SUSPENDED', 'BLOCKED'] }
+});
+
+
 const registerNgo = async ({ organizationName, registrationNumber, email, password, phone, address, city, state, pincode, latitude, longitude, profileImage }) => {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
@@ -26,8 +120,7 @@ const registerNgo = async ({ organizationName, registrationNumber, email, passwo
     city,
     state,
     pincode,
-    latitude,
-    longitude,
+    ...formatLocationData(latitude, longitude),
     profileImage,
     isVerified: false,
     verificationStatus: 'PENDING'
@@ -69,7 +162,18 @@ const updateNgoProfile = async (userId, updateData) => {
     throw new ApiError(404, 'NGO profile not found');
   }
 
+  const updatesLocation = Object.prototype.hasOwnProperty.call(updateData, 'latitude') ||
+    Object.prototype.hasOwnProperty.call(updateData, 'longitude');
+
   Object.assign(ngo, updateData);
+
+  if (updatesLocation) {
+    if (!isValidCoordinatePair(ngo.latitude, ngo.longitude)) {
+      throw new ApiError(400, 'Valid latitude and longitude are required for an NGO location.');
+    }
+
+    Object.assign(ngo, formatLocationData(ngo.latitude, ngo.longitude));
+  }
   await ngo.save();
   ngo.password = undefined;
   return ngo;
@@ -272,186 +376,83 @@ const getHistory = async (user) => {
   };
 };
 
-const DEMO_NGOS = [
-  {
-    id: 'ngo_demo_1',
-    name: 'Helping Hands Surat Foundation',
-    organizationName: 'Helping Hands Surat Foundation',
-    address: 'Adajan, Surat, Gujarat',
-    latitude: 21.1972,
-    longitude: 72.7933,
-    foodTypesAccepted: ['cooked', 'packaged', 'raw'],
-    capacity: 250,
-    isVerified: true,
-    status: 'active',
-    isDemoData: true
-  },
-  {
-    id: 'ngo_demo_2',
-    name: 'Annapurna Seva Trust Vesu',
-    organizationName: 'Annapurna Seva Trust Vesu',
-    address: 'Vesu Main Road, Surat, Gujarat',
-    latitude: 21.1523,
-    longitude: 72.7725,
-    foodTypesAccepted: ['cooked', 'packaged'],
-    capacity: 180,
-    isVerified: true,
-    status: 'active',
-    isDemoData: true
-  },
-  {
-    id: 'ngo_demo_3',
-    name: 'Hope Food Bank Rander',
-    organizationName: 'Hope Food Bank Rander',
-    address: 'Rander Road, Surat, Gujarat',
-    latitude: 21.2185,
-    longitude: 72.7960,
-    foodTypesAccepted: ['cooked', 'packaged', 'beverages'],
-    capacity: 200,
-    isVerified: true,
-    status: 'active',
-    isDemoData: true
-  },
-  {
-    id: 'ngo_demo_4',
-    name: 'Community Care Foundation Varachha',
-    organizationName: 'Community Care Foundation Varachha',
-    address: 'Varachha, Surat, Gujarat',
-    latitude: 21.2144,
-    longitude: 72.8464,
-    foodTypesAccepted: ['cooked', 'packaged'],
-    capacity: 120,
-    isVerified: true,
-    status: 'active',
-    isDemoData: true
-  },
-  {
-    id: 'ngo_demo_5',
-    name: 'Food For All Katargam',
-    organizationName: 'Food For All Katargam',
-    address: 'Katargam, Surat, Gujarat',
-    latitude: 21.2312,
-    longitude: 72.8251,
-    foodTypesAccepted: ['cooked', 'packaged', 'fruits'],
-    capacity: 300,
-    isVerified: true,
-    status: 'active',
-    isDemoData: true
-  }
-];
-
-const formatLocationData = (latitude, longitude) => {
-  const lat = Number(latitude);
-  const lng = Number(longitude);
-  if (Number.isNaN(lat) || Number.isNaN(lng)) return {};
-  return {
-    latitude: lat,
-    longitude: lng,
-    location: {
-      type: 'Point',
-      coordinates: [lng, lat]
-    }
-  };
-};
-
 const getNgosForMap = async (options = {}) => {
-  const query = {
-    role: 'ngo',
-    $or: [{ isVerified: true }, { verificationStatus: 'APPROVED' }],
-    status: { $ne: 'SUSPENDED' },
-    latitude: { $ne: null, $exists: true },
-    longitude: { $ne: null, $exists: true }
-  };
+  const query = buildEligibleNgoQuery();
+  const ngos = await User.find(query).select('-password').lean();
 
-  const ngos = await User.find(query).select('-password');
+  let userLat = null;
+  let userLng = null;
+  if (options.lat != null && options.lng != null && isValidCoordinatePair(options.lat, options.lng)) {
+    userLat = Number(options.lat);
+    userLng = Number(options.lng);
+  }
 
-  let results = ngos.map((ngo) => ({
-    id: ngo._id.toString(),
-    name: ngo.organizationName || ngo.name,
-    organizationName: ngo.organizationName || ngo.name,
-    address: [ngo.address, ngo.city, ngo.state].filter(Boolean).join(', ') || 'Surat, Gujarat',
-    city: ngo.city || 'Surat',
-    state: ngo.state || 'Gujarat',
-    pincode: ngo.pincode || '',
-    phone: ngo.phone || '',
-    latitude: Number(ngo.latitude),
-    longitude: Number(ngo.longitude),
-    foodTypesAccepted: ngo.foodTypesAccepted?.length ? ngo.foodTypesAccepted : ['cooked', 'packaged'],
-    capacity: ngo.capacity || 150,
-    isVerified: Boolean(ngo.isVerified || ngo.verificationStatus === 'APPROVED'),
-    status: (ngo.status || 'ACTIVE').toLowerCase(),
-    isDemoData: false
-  }));
+  const results = [];
+  for (const ngo of ngos) {
+    let distKm = null;
+    const coords = ngo.location?.coordinates;
+    const ngoLat = Array.isArray(coords) && coords.length >= 2 ? Number(coords[1]) : Number(ngo.latitude);
+    const ngoLng = Array.isArray(coords) && coords.length >= 2 ? Number(coords[0]) : Number(ngo.longitude);
+
+    if (!isValidCoordinatePair(ngoLat, ngoLng)) continue;
+
+    if (userLat !== null && userLng !== null) {
+      distKm = calculateHaversineDistanceKm(userLat, userLng, ngoLat, ngoLng);
+    }
+
+    const mapData = toNgoMapData(ngo, distKm);
+    if (mapData) results.push(mapData);
+  }
+
+  if (userLat !== null && userLng !== null) {
+    results.sort((a, b) => (a.distanceKm ?? 999999) - (b.distanceKm ?? 999999));
+  }
 
   return results;
 };
 
-const getNearbyNgos = async (latitude, longitude, radiusMeters = 10000, excludeId = null) => {
+const getNearbyNgos = async (latitude, longitude, radiusMeters, excludeId = null) => {
   const lat = Number(latitude);
   const lng = Number(longitude);
-  const radiusKm = Number(radiusMeters) / 1000;
+  const radius = radiusMeters == null || radiusMeters === '' ? DEFAULT_NEARBY_NGO_RADIUS_METERS : Number(radiusMeters);
+  const radiusKm = radius / 1000;
 
-  if (Number.isNaN(lat) || Number.isNaN(lng)) {
-    throw new ApiError(400, 'Latitude and longitude are required');
+  if (!isValidCoordinatePair(lat, lng)) {
+    throw new ApiError(400, 'Valid latitude and longitude are required');
   }
 
-  const query = {
-    role: 'ngo',
-    $or: [{ isVerified: true }, { verificationStatus: 'APPROVED' }],
-    status: { $ne: 'SUSPENDED' },
-    latitude: { $ne: null, $exists: true },
-    longitude: { $ne: null, $exists: true }
-  };
+  const query = buildEligibleNgoQuery();
+  if (excludeId) query._id = { $ne: excludeId };
 
-  if (excludeId) {
-    query._id = { $ne: excludeId };
-  }
+  const ngos = await User.find(query).select('-password').lean();
+  const allWithDistance = [];
 
-  const ngos = await User.find(query).select('-password');
+  for (const ngo of ngos) {
+    const coords = ngo.location?.coordinates;
+    const ngoLat = Array.isArray(coords) && coords.length >= 2 ? Number(coords[1]) : Number(ngo.latitude);
+    const ngoLng = Array.isArray(coords) && coords.length >= 2 ? Number(coords[0]) : Number(ngo.longitude);
 
-  const R = 6371; // Earth radius in km
-  const results = [];
+    if (!isValidCoordinatePair(ngoLat, ngoLng)) continue;
 
-  ngos.forEach((ngo) => {
-    const ngoLat = Number(ngo.latitude);
-    const ngoLng = Number(ngo.longitude);
-    if (Number.isNaN(ngoLat) || Number.isNaN(ngoLng)) return;
-
-    const dLat = (ngoLat - lat) * (Math.PI / 180);
-    const dLng = (ngoLng - lng) * (Math.PI / 180);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat * (Math.PI / 180)) *
-        Math.cos(ngoLat * (Math.PI / 180)) *
-        Math.sin(dLng / 2) *
-        Math.sin(dLng / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distKm = R * c;
-
-    if (distKm <= radiusKm) {
-      results.push({
-        id: ngo._id.toString(),
-        name: ngo.organizationName || ngo.name,
-        organizationName: ngo.organizationName || ngo.name,
-        address: [ngo.address, ngo.city, ngo.state].filter(Boolean).join(', ') || 'Surat, Gujarat',
-        city: ngo.city || 'Surat',
-        state: ngo.state || 'Gujarat',
-        phone: ngo.phone || '',
-        latitude: ngoLat,
-        longitude: ngoLng,
-        foodTypesAccepted: ngo.foodTypesAccepted?.length ? ngo.foodTypesAccepted : ['cooked', 'packaged'],
-        capacity: ngo.capacity || 150,
-        isVerified: Boolean(ngo.isVerified || ngo.verificationStatus === 'APPROVED'),
-        status: (ngo.status || 'ACTIVE').toLowerCase(),
-        distanceKm: Number(distKm.toFixed(2))
-      });
+    const distKm = calculateHaversineDistanceKm(lat, lng, ngoLat, ngoLng);
+    const mapData = toNgoMapData(ngo, distKm);
+    if (mapData) {
+      allWithDistance.push(mapData);
     }
-  });
+  }
 
-  results.sort((a, b) => a.distanceKm - b.distanceKm);
+  allWithDistance.sort((a, b) => a.distanceKm - b.distanceKm);
+
+  // Filter strictly within radius
+  const results = allWithDistance.filter((n) => n.distanceKm <= radiusKm);
+
+  if (process.env.NODE_ENV !== 'production') {
+    console.info('[NGO MAP] Nearby NGO query:', { latitude: lat, longitude: lng, radiusKm, count: results.length });
+  }
 
   return results;
 };
+
 
 module.exports = {
   registerNgo,
