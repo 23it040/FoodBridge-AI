@@ -11,9 +11,11 @@ import NGOMap from '../../components/maps/NGOMap';
 import Button from '../../components/ui/Button';
 import Badge from '../../components/ui/Badge';
 import { useForm } from 'react-hook-form';
+import { useLocationContext } from '../../context/LocationContext';
 import { FiSearch, FiFilter, FiMapPin, FiEye, FiBox } from 'react-icons/fi';
 
 const NearbyFood = () => {
+  const { currentLocation } = useLocationContext();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [donations, setDonations] = useState([]);
@@ -163,6 +165,7 @@ const NearbyFood = () => {
             <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
               <NGOMap
                 key={`nearby-food-map-${donations.length}`}
+                pickupLocation={currentLocation}
                 foodDonations={donations}
                 className="h-[380px]"
               />

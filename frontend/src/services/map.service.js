@@ -221,18 +221,14 @@ const fallbackDistanceMatrix = (origins, destinations, resolve) => {
 };
 
 export const getDirectionsUrl = (origin, destination) => {
-  if (!origin || !destination) return '#';
+  const dest = normalizeCoordinates(destination);
+  if (!dest) return '#';
 
   const orig = normalizeCoordinates(origin);
-  const dest = normalizeCoordinates(destination);
-
-  if (orig && dest) {
+  if (orig) {
     return `https://www.google.com/maps/dir/?api=1&origin=${orig.lat},${orig.lng}&destination=${dest.lat},${dest.lng}&travelmode=driving`;
   }
-  if (dest) {
-    return `https://www.google.com/maps/search/?api=1&query=${dest.lat},${dest.lng}`;
-  }
-  return '#';
+  return `https://www.google.com/maps/dir/?api=1&destination=${dest.lat},${dest.lng}&travelmode=driving`;
 };
 
 export default {

@@ -1,20 +1,12 @@
 import React from 'react';
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import NGOPinIcon from './NGOPinIcon';
-
-const parsePosition = (ngo) => {
-  if (!ngo) return null;
-  const lat = Number(ngo.latitude ?? ngo.lat ?? ngo.position?.[0] ?? ngo.position?.lat);
-  const lng = Number(ngo.longitude ?? ngo.lng ?? ngo.position?.[1] ?? ngo.position?.lng);
-  if (!isNaN(lat) && !isNaN(lng) && (lat !== 0 || lng !== 0)) {
-    return { lat, lng };
-  }
-  return null;
-};
+import { normalizeCoordinates } from '../../services/map.service';
 
 const NGOMarker = ({ ngo, onClick, isSelected }) => {
-  const position = parsePosition(ngo);
+  const position = normalizeCoordinates(ngo);
   if (!position) return null;
+
 
   const ngoName = ngo.organizationName || ngo.name || 'NGO Partner';
 

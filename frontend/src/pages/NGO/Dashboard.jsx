@@ -5,8 +5,9 @@ import requestService from '../../services/request.service';
 import ngoService from '../../services/ngo.service';
 import donationService from '../../services/donation.service';
 import useAuth from '../../hooks/useAuth';
-import useGeolocation from '../../hooks/useGeolocation';
-import { normalizeCoordinates } from '../../services/map.service';
+import { useLocationContext } from '../../context/LocationContext';
+import { discoverNearbyNGOs } from '../../services/ngoDiscovery.service';
+import { normalizeCoordinates, getDirectionsUrl } from '../../services/map.service';
 import { normalizeListResponse, normalizeObjectResponse } from '../../utils/normalizeApiResponse';
 import PageHeader from '../../components/layout/PageHeader';
 import StatCard from '../../components/ui/StatCard';
@@ -72,27 +73,30 @@ const Dashboard = () => {
   const [selectedFood, setSelectedFood] = useState(null);
 
   const {
-    location: deviceLocation,
-    loading: locating,
+    currentLocation: deviceLocation,
+    locationLoading: locating,
     errorMessage: locationError,
-    requestLocation
-  } = useGeolocation(false);
+    requestCurrentLocation
+  } = useLocationContext();
 
   const savedNgoLocation = useMemo(() => {
     if (!user) return null;
     return normalizeCoordinates(user);
   }, [user]);
 
-  const activeNgoLocation = deviceLocation || savedNgoLocation;
+  const effectiveNgoLocation = useMemo(() => {
+    if (deviceLocation) return deviceLocation;
+    if (savedNgoLocation) return savedNgoLocation;
+    return { lat: 22.6005, lng: 72.8205 }; // Neutral Gujarat center
+  }, [deviceLocation, savedNgoLocation]);
 
   const loadNgoDashboard = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const [analyticsRes, requestsRes, ngosRes, donationsRes] = await Promise.all([
+      const [analyticsRes, requestsRes, donationsRes] = await Promise.all([
         analyticsService.getNgoAnalytics(),
         requestService.listRequests({ limit: 5 }),
-        ngoService.getNgosForMap({ includeDemo: true }),
         donationService.listDonations({ status: 'AVAILABLE' }).catch(() => [])
       ]);
 
@@ -107,9 +111,6 @@ const Dashboard = () => {
       const requests = normalizeListResponse(requestsRes, ['requests', 'items']);
       setRecentRequests(requests);
 
-      const ngosList = Array.isArray(ngosRes) ? ngosRes : Array.isArray(ngosRes?.data) ? ngosRes.data : [];
-      setNearbyNgos(ngosList);
-
       const foodList = Array.isArray(donationsRes) ? donationsRes : Array.isArray(donationsRes?.data) ? donationsRes.data : [];
       setNearbyFood(foodList);
     } catch (err) {
@@ -120,13 +121,35 @@ const Dashboard = () => {
     }
   }, []);
 
+  const fetchNearbyNgos = useCallback(async (location) => {
+    if (!location) return;
+    try {
+      const res = await discoverNearbyNGOs({
+        location,
+        radiusMeters: 15000
+      });
+      setNearbyNgos(res.ngos || []);
+    } catch (err) {
+      console.warn('Failed to load nearby NGOs for NGO dashboard:', err);
+    }
+  }, []);
+
   useEffect(() => {
     loadNgoDashboard();
   }, [loadNgoDashboard]);
 
+  useEffect(() => {
+    if (effectiveNgoLocation) {
+      fetchNearbyNgos(effectiveNgoLocation);
+    }
+  }, [effectiveNgoLocation, fetchNearbyNgos]);
+
   const handleUseMyLocation = () => {
-    requestLocation()
-      .then(() => toast.success('Current device location updated!'))
+    requestCurrentLocation()
+      .then((loc) => {
+        toast.success('Current device location updated!');
+        if (loc) fetchNearbyNgos(loc);
+      })
       .catch((err) => toast.error(err.message || 'Failed to detect location.'));
   };
 
@@ -138,7 +161,7 @@ const Dashboard = () => {
 
   const matchedFoodList = useMemo(() => {
     if (!Array.isArray(nearbyFood) || nearbyFood.length === 0) return [];
-    const ngoPos = activeNgoLocation ? parseCoords(activeNgoLocation) : null;
+    const ngoPos = effectiveNgoLocation ? parseCoords(effectiveNgoLocation) : null;
     const ngoCap = user?.capacity || 100;
 
     return nearbyFood
@@ -394,7 +417,7 @@ const Dashboard = () => {
                         </div>
                       </div>
 
-                      <div className="pt-4 mt-2 border-t border-slate-100 flex gap-2">
+                      <div className="pt-4 mt-2 border-t border-slate-100 flex items-center gap-2">
                         <Button
                           size="sm"
                           variant="outline"
@@ -402,20 +425,31 @@ const Dashboard = () => {
                             setSelectedFood(food);
                             document.getElementById('ngo-dashboard-map-container')?.scrollIntoView({ behavior: 'smooth' });
                           }}
-                          className="flex-1 text-xs py-1.5 gap-1 text-indigo-700 border-indigo-200 hover:bg-indigo-50"
+                          className="flex-1 text-xs py-1.5 gap-1 text-emerald-800 border-emerald-300 hover:bg-emerald-50 font-bold"
+                          title="View donor pin and draw directions route on map"
                         >
-                          <FiMapPin className="h-3.5 w-3.5" />
-                          <span>View Pin</span>
+                          <FiNavigation className="h-3.5 w-3.5 text-emerald-600 shrink-0" />
+                          <span>View Pin & Route</span>
                         </Button>
 
                         <Button
                           size="sm"
                           onClick={() => navigate(`/ngo/food/${food._id || food.id}`)}
-                          className="flex-1 text-xs py-1.5 gap-1 bg-[#047857] hover:bg-[#065F46] text-white"
+                          className="flex-1 text-xs py-1.5 gap-1 bg-[#047857] hover:bg-[#065F46] text-white font-bold"
                         >
-                          <FiEye className="h-3.5 w-3.5" />
+                          <FiEye className="h-3.5 w-3.5 shrink-0" />
                           <span>Details</span>
                         </Button>
+
+                        <a
+                          href={getDirectionsUrl(effectiveNgoLocation, food)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Open turn-by-turn directions in Google Maps"
+                          className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-emerald-700 hover:border-emerald-300 hover:bg-emerald-50 transition-colors flex items-center justify-center shrink-0"
+                        >
+                          <FiMapPin className="h-4 w-4" />
+                        </a>
                       </div>
                     </div>
                   );
@@ -450,7 +484,7 @@ const Dashboard = () => {
               )}
               <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
                 <NGOMap
-                  pickupLocation={activeNgoLocation}
+                  pickupLocation={effectiveNgoLocation}
                   initialNgos={filteredNgos}
                   foodDonations={nearbyFood}
                   selectedFood={selectedFood}

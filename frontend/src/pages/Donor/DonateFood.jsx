@@ -14,24 +14,33 @@ import GoogleMap from '../../components/maps/GoogleMap';
 import PickupMarker from '../../components/maps/PickupMarker';
 import DonorMarker from '../../components/maps/DonorMarker';
 import NGOMarker from '../../components/maps/NGOMarker';
+import { useLocationContext } from '../../context/LocationContext';
+import { discoverNearbyNGOs } from '../../services/ngoDiscovery.service';
 import { FiBox, FiMapPin, FiCalendar, FiUpload, FiNavigation, FiX } from 'react-icons/fi';
 
-const DEFAULT_CENTER = { lat: 21.1702, lng: 72.8311 }; // Surat
+const NEUTRAL_CENTER = { lat: 22.6005, lng: 72.8205 }; // Neutral fallback map center
 
 const DonateFood = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const {
+    currentLocation: deviceLocation,
+    locationLoading: locating,
+    requestCurrentLocation
+  } = useLocationContext();
+
   const nowISO = new Date().toISOString().slice(0, 16);
   const defaultExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().slice(0, 16);
 
   const initialCoords = useMemo(() => {
+    if (deviceLocation) return deviceLocation;
     if (user) {
       const norm = normalizeCoordinates(user);
       if (norm) return norm;
     }
-    return DEFAULT_CENTER;
-  }, [user]);
+    return NEUTRAL_CENTER;
+  }, [user, deviceLocation]);
 
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
     defaultValues: {
@@ -56,12 +65,6 @@ const DonateFood = () => {
   const [nearbyNgos, setNearbyNgos] = useState([]);
   const fileRef = useRef(null);
 
-  const {
-    location: deviceLocation,
-    loading: locating,
-    requestLocation
-  } = useGeolocation(false);
-
   const latValue = watch('latitude');
   const lngValue = watch('longitude');
 
@@ -76,15 +79,19 @@ const DonateFood = () => {
 
   useEffect(() => {
     let mounted = true;
-    ngoService.getNgosForMap({ includeDemo: true })
-      .then((res) => {
-        if (!mounted) return;
-        const list = Array.isArray(res) ? res : Array.isArray(res?.data) ? res.data : [];
-        setNearbyNgos(list);
-      })
-      .catch((err) => console.warn('Failed to load nearby NGOs for donation map:', err));
-    return () => (mounted = false);
-  }, []);
+    const targetLoc = validPickupLocation || initialCoords;
+    if (targetLoc && targetLoc.lat && targetLoc.lng) {
+      discoverNearbyNGOs({ location: targetLoc, radiusMeters: 20000 })
+        .then((res) => {
+          if (!mounted) return;
+          setNearbyNgos(res.ngos || []);
+        })
+        .catch((err) => console.warn('Failed to load nearby NGOs for donation map:', err));
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [validPickupLocation, initialCoords]);
 
   const updateCoordinates = useCallback((lat, lng) => {
     const latNum = Number(Number(lat).toFixed(6));
@@ -119,7 +126,7 @@ const DonateFood = () => {
 
   const handleUseCurrentLocation = async () => {
     try {
-      const pos = await requestLocation();
+      const pos = await requestCurrentLocation();
       if (pos && typeof pos.lat === 'number' && typeof pos.lng === 'number') {
         updateCoordinates(pos.lat, pos.lng);
         toast.success('Pickup location updated to current GPS position!');
@@ -374,7 +381,7 @@ const DonateFood = () => {
 
             <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
               <GoogleMap
-                center={validPickupLocation || DEFAULT_CENTER}
+                center={validPickupLocation || NEUTRAL_CENTER}
                 zoom={14}
                 onClick={handleMapClick}
                 className="h-[380px]"

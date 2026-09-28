@@ -225,16 +225,16 @@ const GooglePlacesMarkers = ({ foodBridgeNGOs = [] }) => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '4px',
-                background: '#ECFDF5',
-                border: '1px solid #A7F3D0',
+                background: '#ECFEFF',
+                border: '1px solid #A5F3FC',
                 borderRadius: '9999px',
                 padding: '2px 8px',
                 fontSize: '10px',
                 fontWeight: 800,
-                color: '#065F46',
+                color: '#0E7490',
                 textTransform: 'uppercase'
               }}>
-                NGO / Non-Profit Organization
+                NEARBY NGO
               </span>
             </div>
             <h4 style={{

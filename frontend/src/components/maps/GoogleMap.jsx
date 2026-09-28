@@ -3,8 +3,6 @@ import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
 import MapError from './MapError';
 import MapControls from './MapControls';
 
-const DEFAULT_CENTER = { lat: 21.1702, lng: 72.8311 }; // Surat
-
 const MapInner = ({
   center,
   zoom,
@@ -99,8 +97,10 @@ const MapInner = ({
   );
 };
 
+const DEFAULT_FALLBACK_CENTER = { lat: 22.6005, lng: 72.8205 }; // Default to Gujarat center
+
 const GoogleMap = ({
-  center = DEFAULT_CENTER,
+  center = DEFAULT_FALLBACK_CENTER,
   zoom = 12,
   children,
   className = '',
@@ -110,7 +110,7 @@ const GoogleMap = ({
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
 
   const parsedCenter = useMemo(() => {
-    if (!center) return DEFAULT_CENTER;
+    if (!center) return DEFAULT_FALLBACK_CENTER;
     if (typeof center.lat === 'number' && typeof center.lng === 'number') return center;
     if (Array.isArray(center) && center.length >= 2) {
       const lat = Number(center[0]);
@@ -122,8 +122,9 @@ const GoogleMap = ({
       const lng = Number(center.lng ?? center.longitude);
       if (!isNaN(lat) && !isNaN(lng)) return { lat, lng };
     }
-    return DEFAULT_CENTER;
+    return DEFAULT_FALLBACK_CENTER;
   }, [center]);
+
 
   return (
     <APIProvider apiKey={apiKey} libraries={['places', 'marker']}>

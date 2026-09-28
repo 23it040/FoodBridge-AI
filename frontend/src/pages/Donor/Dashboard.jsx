@@ -5,7 +5,8 @@ import donationService from '../../services/donation.service';
 import requestService from '../../services/request.service';
 import ngoService from '../../services/ngo.service';
 import useAuth from '../../hooks/useAuth';
-import useGeolocation from '../../hooks/useGeolocation';
+import { useLocationContext } from '../../context/LocationContext';
+import { discoverNearbyNGOs } from '../../services/ngoDiscovery.service';
 import { normalizeCoordinates } from '../../services/map.service';
 import { normalizeListResponse, normalizeObjectResponse } from '../../utils/normalizeApiResponse';
 import PageHeader from '../../components/layout/PageHeader';
@@ -42,11 +43,11 @@ const Dashboard = () => {
   const [nearbyNgos, setNearbyNgos] = useState([]);
 
   const {
-    location: deviceLocation,
-    loading: locating,
+    currentLocation: deviceLocation,
+    locationLoading: locating,
     errorMessage: locationError,
-    requestLocation
-  } = useGeolocation(false);
+    requestCurrentLocation
+  } = useLocationContext();
 
   const savedDonorLocation = useMemo(() => {
     if (!user) return null;
@@ -59,11 +60,10 @@ const Dashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const [analyticsRes, donationsRes, requestsRes, ngosRes] = await Promise.all([
+      const [analyticsRes, donationsRes, requestsRes] = await Promise.all([
         analyticsService.getDonorAnalytics(),
         donationService.getMyDonations({ limit: 10 }),
-        requestService.listRequests({ limit: 5 }),
-        ngoService.getNgosForMap({ includeDemo: true })
+        requestService.listRequests({ limit: 5 })
       ]);
 
       const data = normalizeObjectResponse(analyticsRes);
@@ -79,9 +79,6 @@ const Dashboard = () => {
 
       const requests = normalizeListResponse(requestsRes, ['requests', 'items']);
       setRecentRequests(requests);
-
-      const ngosList = Array.isArray(ngosRes) ? ngosRes : Array.isArray(ngosRes?.data) ? ngosRes.data : [];
-      setNearbyNgos(ngosList);
     } catch (err) {
       console.error('Failed to load donor dashboard:', err);
       setError(err?.response?.data?.message || err?.message || 'Unable to load donor dashboard statistics');
@@ -90,13 +87,38 @@ const Dashboard = () => {
     }
   }, []);
 
+  const fetchNearbyNgos = useCallback(async (location) => {
+    if (!location) {
+      setNearbyNgos([]);
+      return;
+    }
+    try {
+      const res = await discoverNearbyNGOs({
+        location,
+        radiusMeters: 15000
+      });
+      setNearbyNgos(res.ngos || []);
+    } catch (err) {
+      console.warn('Failed to discover nearby NGOs for donor:', err);
+    }
+  }, []);
+
   useEffect(() => {
     loadDonorDashboard();
   }, [loadDonorDashboard]);
 
+  useEffect(() => {
+    if (activeDonorLocation) {
+      fetchNearbyNgos(activeDonorLocation);
+    }
+  }, [activeDonorLocation, fetchNearbyNgos]);
+
   const handleUseMyLocation = () => {
-    requestLocation()
-      .then(() => toast.success('Current device location updated!'))
+    requestCurrentLocation()
+      .then((loc) => {
+        toast.success('Current device location updated!');
+        if (loc) fetchNearbyNgos(loc);
+      })
       .catch((err) => toast.error(err.message || 'Failed to detect location.'));
   };
 

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import donationService from '../../services/donation.service';
 import requestService from '../../services/request.service';
 import { useAuth } from '../../context/AuthContext';
+import { useLocationContext } from '../../context/LocationContext';
 import { getFoodImageUrl } from '../../utils/image';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
@@ -13,14 +14,15 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import GoogleMap from '../../components/maps/GoogleMap';
 import DonorMarker from '../../components/maps/DonorMarker';
-import { normalizeCoordinates } from '../../services/map.service';
+import { normalizeCoordinates, getDirectionsUrl } from '../../services/map.service';
 import toast from 'react-hot-toast';
-import { FiBox, FiMapPin, FiCalendar, FiSend, FiUser, FiPhone, FiTruck, FiImage } from 'react-icons/fi';
+import { FiBox, FiMapPin, FiCalendar, FiSend, FiUser, FiPhone, FiTruck, FiImage, FiNavigation } from 'react-icons/fi';
 
 const FoodDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { currentLocation } = useLocationContext();
   const [donation, setDonation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -156,18 +158,45 @@ const FoodDetails = () => {
           <Card title="Pickup Location Map" icon={<FiMapPin className="h-5 w-5 text-[#428475]" />}>
             <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
               {donorCoords ? (
-                <GoogleMap
-                  key={`food-details-map-${id}`}
-                  center={donorCoords}
-                  zoom={14}
-                  className="h-[340px]"
-                >
-                  <DonorMarker
-                    location={donorCoords}
-                    variant="food"
-                    title={`Donor Pickup: ${donation.foodName || donation.name || 'Food Item'}`}
-                  />
-                </GoogleMap>
+                <div>
+                  <GoogleMap
+                    key={`food-details-map-${id}`}
+                    center={donorCoords}
+                    zoom={13}
+                    className="h-[340px]"
+                  >
+                    {/* Donor's actual pickup location */}
+                    <DonorMarker
+                      location={donorCoords}
+                      variant="food"
+                      title={`Donor Pickup: ${donation.foodName || donation.name || 'Food Item'}`}
+                    />
+
+                    {/* NGO's current location */}
+                    {currentLocation && (
+                      <DonorMarker
+                        location={currentLocation}
+                        variant="current"
+                        title="Your Current Location"
+                      />
+                    )}
+                  </GoogleMap>
+
+                  {currentLocation && (
+                    <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-xs text-slate-600 font-medium">Navigate to pickup location:</span>
+                      <a
+                        href={getDirectionsUrl(currentLocation, donorCoords)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#428475] hover:bg-[#346a5e] text-white rounded-lg text-xs font-bold transition"
+                      >
+                        <FiNavigation className="h-3.5 w-3.5" />
+                        <span>Get Directions</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
               ) : (
                 <div className="py-12 text-center text-xs font-semibold text-slate-500">
                   Donor pickup coordinates are not available for this donation.

@@ -15,7 +15,8 @@ const MetricStrip = () => {
     const fetchMetrics = async () => {
       try {
         const donList = await donationService.listDonations({ page: 1, limit: 100 });
-        const ngoList = await ngoService.getNearbyNgos(21.1702, 72.8311, 50000);
+        const ngoRes = await ngoService.getNgosForMap();
+        const ngoList = Array.isArray(ngoRes) ? ngoRes : Array.isArray(ngoRes?.data) ? ngoRes.data : [];
         
         setCounts({
           donations: Array.isArray(donList) ? donList.length : 0,

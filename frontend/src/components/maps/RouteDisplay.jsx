@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useMap } from '@vis.gl/react-google-maps';
 import { FiNavigation, FiClock, FiMapPin, FiX } from 'react-icons/fi';
+import { getDirectionsUrl } from '../../services/map.service';
 
 const RouteDisplay = ({ routeData, onClearRoute }) => {
   const map = useMap();
@@ -47,6 +48,14 @@ const RouteDisplay = ({ routeData, onClearRoute }) => {
         });
         polyline.setMap(map);
         polylineRef.current = polyline;
+
+        try {
+          const bounds = new window.google.maps.LatLngBounds();
+          routeData.path.forEach((pt) => bounds.extend(pt));
+          map.fitBounds(bounds, { top: 60, bottom: 60, left: 60, right: 60 });
+        } catch (fitErr) {
+          console.warn('Path fitBounds error:', fitErr);
+        }
       }
     } catch (err) {
       console.warn('RouteDisplay render error:', err);
@@ -102,6 +111,18 @@ const RouteDisplay = ({ routeData, onClearRoute }) => {
           </div>
         </div>
       </div>
+
+      {routeData.destination && (
+        <a
+          href={getDirectionsUrl(routeData.origin, routeData.destination)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 flex items-center justify-center gap-1.5 w-full py-2 px-3 bg-[#047857] hover:bg-[#065F46] text-white font-bold rounded-xl text-xs transition-colors shadow-sm text-center"
+        >
+          <FiNavigation className="h-3.5 w-3.5" />
+          <span>Start Navigation (Google Maps)</span>
+        </a>
+      )}
     </div>
   );
 };

@@ -300,9 +300,11 @@ const DonationDetails = () => {
                 id: m.ngoId,
                 name: m.ngoName,
                 organizationName: m.ngoName,
-                address: m.city || 'Surat',
+                address: m.city || m.address || 'Partner NGO',
                 latitude: m.latitude,
                 longitude: m.longitude,
+                lat: m.latitude,
+                lng: m.longitude,
                 capacity: m.capacity || 150,
                 isVerified: true
               }))}

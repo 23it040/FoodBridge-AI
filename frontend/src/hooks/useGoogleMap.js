@@ -56,8 +56,8 @@ export const useGoogleMap = () => {
   );
 
   const resetView = useCallback(
-    (center = { lat: 21.1702, lng: 72.8311 }, zoom = 12) => {
-      if (!map) return;
+    (center, zoom = 12) => {
+      if (!map || !center) return;
       map.setCenter(center);
       map.setZoom(zoom);
     },

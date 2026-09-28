@@ -9,14 +9,13 @@ import NGOInfoCard from './NGOInfoCard';
 import RouteDisplay from './RouteDisplay';
 import GooglePlacesMarkers from './GooglePlacesMarkers';
 import MapLoading from './MapLoading';
+
 import MapError from './MapError';
 import Button from '../ui/Button';
 import ngoService from '../../services/ngo.service';
 import useGoogleMap from '../../hooks/useGoogleMap';
 import useRouting from '../../hooks/useRouting';
-import { normalizeCoordinates } from '../../services/map.service';
-
-const DEFAULT_SURAT_CENTER = { lat: 21.1702, lng: 72.8311 };
+import { normalizeCoordinates, getDirectionsUrl } from '../../services/map.service';
 
 const parsePosition = (item) => {
   return normalizeCoordinates(item);
@@ -69,7 +68,7 @@ const NGOMapContent = ({
     });
     if (pickupLocation) {
       const pos = parsePosition(pickupLocation);
-      if (pos) list.push({ ...pickupLocation, position: pos, latitude: pos.lat, longitude: pos.lng, isPickup: true });
+      if (pos) list.unshift({ ...pickupLocation, position: pos, latitude: pos.lat, longitude: pos.lng, isPickup: true });
     }
     foodDonations.forEach((f) => {
       const pos = parsePosition(f);
@@ -82,11 +81,32 @@ const NGOMapContent = ({
     fitBoundsToMarkers(allMarkers);
   }, [fitBoundsToMarkers, allMarkers]);
 
+  // When selectedFood changes, calculate route to donor and fit bounds to origin & food pin
   useEffect(() => {
-    if (allMarkers.length > 0) {
+    if (selectedFood) {
+      const foodPos = parsePosition(selectedFood);
+      if (foodPos) {
+        if (pickupLocation) {
+          const originPos = parsePosition(pickupLocation);
+          if (originPos) {
+            fitBoundsToMarkers([originPos, foodPos]);
+            handleGetRoute(selectedFood);
+            return;
+          }
+        }
+        fitBoundsToMarkers([foodPos]);
+      }
+    } else if (!selectedNgo) {
+      clearRoute();
+    }
+  }, [selectedFood, pickupLocation, fitBoundsToMarkers, handleGetRoute, selectedNgo, clearRoute]);
+
+  // Fit bounds to all markers only on initial view when no specific food or NGO is selected
+  useEffect(() => {
+    if (!selectedFood && !selectedNgo && allMarkers.length > 0) {
       fitBoundsToMarkers(allMarkers);
     }
-  }, [allMarkers, fitBoundsToMarkers]);
+  }, [allMarkers, fitBoundsToMarkers, selectedFood, selectedNgo]);
 
   const mapCenter = useMemo(() => {
     if (pickupLocation) {
@@ -101,10 +121,19 @@ const NGOMapContent = ({
       const pos = parsePosition(ngos[0]);
       if (pos) return pos;
     }
-    return DEFAULT_SURAT_CENTER;
+    return { lat: 22.6005, lng: 72.8205 }; // Gujarat fallback
   }, [pickupLocation, ngos, foodDonations]);
 
+  const validNgoCount = useMemo(() => ngos.filter(parsePosition).length, [ngos]);
+
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      console.info('[NGO MAP] NGO marker coordinates validated:', validNgoCount);
+    }
+  }, [validNgoCount]);
+
   return (
+
     <GoogleMap
       center={mapCenter}
       zoom={12}
@@ -163,10 +192,13 @@ const NGOMapContent = ({
       {selectedFood && (
         <InfoWindow
           position={parsePosition(selectedFood)}
-          onCloseClick={() => setSelectedFood(null)}
+          onCloseClick={() => {
+            setSelectedFood(null);
+            clearRoute();
+          }}
           pixelOffset={[0, -32]}
         >
-          <div className="p-2 max-w-xs text-slate-800 space-y-2 font-sans">
+          <div className="p-2.5 max-w-xs text-slate-800 space-y-2 font-sans">
             <div className="flex items-center justify-between border-b border-slate-100 pb-1.5 gap-2">
               <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-extrabold text-amber-800">
                 <FiPackage className="h-3 w-3 text-amber-600" />
@@ -181,7 +213,7 @@ const NGOMapContent = ({
                 {selectedFood.foodName || selectedFood.name || 'Surplus Food'}
               </h4>
               <p className="text-xs text-slate-500 font-medium mt-0.5">
-                Category: <span className="font-semibold text-slate-700">{selectedFood.category || 'General'}</span>
+                Donor: <span className="font-semibold text-slate-700">{selectedFood.donorId?.name || selectedFood.donorName || 'Verified Donor'}</span>
               </p>
             </div>
             <div className="text-xs text-slate-600 space-y-1 bg-slate-50 p-2 rounded-xl border border-slate-100 font-medium">
@@ -191,28 +223,56 @@ const NGOMapContent = ({
                 <p className="truncate"><strong className="text-slate-700">Pickup:</strong> {selectedFood.pickupAddress || selectedFood.address}</p>
               ) : null}
             </div>
-            <div className="pt-1 flex gap-2">
+
+            {/* Route & Distance Info if available */}
+            {routeData && (
+              <div className="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-2.5 py-1.5 text-xs text-[#047857]">
+                <span className="font-extrabold flex items-center gap-1">
+                  <FiNavigation className="h-3.5 w-3.5 text-emerald-600" />
+                  {routeData.distanceText}
+                </span>
+                <span className="font-semibold text-slate-500 text-[11px]">
+                  Est. {routeData.durationText}
+                </span>
+              </div>
+            )}
+
+            <div className="pt-1 flex flex-col gap-1.5">
+              <a
+                href={getDirectionsUrl(pickupLocation, selectedFood)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 w-full py-2 px-3 bg-[#047857] hover:bg-[#065F46] text-white font-bold rounded-xl text-xs transition-colors shadow-sm text-center"
+              >
+                <FiNavigation className="h-3.5 w-3.5" />
+                <span>Turn-by-Turn Directions</span>
+              </a>
+
               <Button
                 size="sm"
+                variant="outline"
                 onClick={() => navigate(`/ngo/food/${selectedFood._id || selectedFood.id}`)}
-                className="w-full gap-1 text-xs py-1.5 bg-[#047857] hover:bg-[#065F46] text-white font-bold"
+                className="w-full gap-1 text-xs py-1.5 font-semibold text-slate-700 hover:bg-slate-50 border-slate-200"
               >
-                <FiEye className="h-3.5 w-3.5" />
-                <span>View Food</span>
+                <FiEye className="h-3.5 w-3.5 text-slate-500" />
+                <span>View Food Details</span>
               </Button>
             </div>
           </div>
         </InfoWindow>
       )}
 
-      {/* Google Places NGO/Charity Markers (purple) */}
-      <GooglePlacesMarkers foodBridgeNGOs={ngos} />
+      {/* Real-world non-profit organizations discovered via Google Places if not already provided */}
+      {!ngos.some((n) => n.source === 'google_places') && (
+        <GooglePlacesMarkers foodBridgeNGOs={ngos} />
+      )}
 
       {/* Route Polyline & Overlay */}
       <RouteDisplay routeData={routeData} onClearRoute={clearRoute} />
     </GoogleMap>
   );
 };
+
 
 const NGOMap = ({
   pickupLocation = null,
