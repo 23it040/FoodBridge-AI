@@ -141,7 +141,7 @@ const deleteDonation = async (req, res) => {
   );
 };
 
-function calculateLogisticsMatchScore({ distanceKm, donationQty, ngoCap, foodCategory, expiryHours }) {
+function calculateLogisticsMatchScore({ distanceKm, donationQty, ngoCap, foodCategory, expiryHours, capacityMatch, categoryMatch, currentWorkload }) {
   let distPts = 10;
   if (distanceKm <= 5) distPts = 100;
   else if (distanceKm <= 10) distPts = 90;
@@ -161,23 +161,29 @@ function calculateLogisticsMatchScore({ distanceKm, donationQty, ngoCap, foodCat
     else if (ratio <= 2.0) capPts = 40;
     else capPts = 20;
   }
+  if (capacityMatch === false) capPts = 20;
 
-  const catPts = 90;
+  let catPts = 90;
+  if (categoryMatch === true) catPts = 100;
+  else if (categoryMatch === false) catPts = 20;
 
-  let qtyPts = 50;
-  if (donationQty >= 50) qtyPts = 100;
-  else if (donationQty >= 20) qtyPts = 85;
-  else if (donationQty >= 10) qtyPts = 70;
+  let workloadPts = 100;
+  if (currentWorkload > 20) workloadPts = 20;
+  else if (currentWorkload > 10) workloadPts = 50;
+  else if (currentWorkload > 5) workloadPts = 75;
 
-  let urgPts = 50;
-  if (expiryHours <= 3) urgPts = 100;
-  else if (expiryHours <= 6) urgPts = 90;
-  else if (expiryHours <= 12) urgPts = 75;
-  else if (expiryHours <= 24) urgPts = 60;
+  let verifPts = 100;
 
-  const baseScore = (distPts * 0.45) + (capPts * 0.25) + (catPts * 0.15) + (qtyPts * 0.10) + (urgPts * 0.05);
+  const baseScore = (capPts * 0.35) + (distPts * 0.30) + (catPts * 0.20) + (workloadPts * 0.10) + (verifPts * 0.05);
 
   let finalScore = baseScore;
+  if (capacityMatch === false) {
+    finalScore = Math.min(finalScore, 25);
+  }
+  if (categoryMatch === false) {
+    finalScore = Math.min(finalScore, 20);
+  }
+
   if (distanceKm > 100) {
     finalScore = Math.min(finalScore, 20);
     finalScore = Math.max(10, Math.min(20, finalScore));
@@ -209,6 +215,8 @@ function calculateLogisticsMatchScore({ distanceKm, donationQty, ngoCap, foodCat
   } else {
     reasons.push(`✕ Pickup distance ${distanceKm.toFixed(1)} km`);
   }
+  if (capacityMatch === false) reasons.push(`✕ Insufficient capacity`);
+  if (categoryMatch === false) reasons.push(`✕ Incompatible food category`);
 
   return {
     score: roundedScore,
@@ -217,11 +225,11 @@ function calculateLogisticsMatchScore({ distanceKm, donationQty, ngoCap, foodCat
     matchLevel: recommendation,
     distanceKm: Math.round(distanceKm * 10) / 10,
     breakdown: {
-      distance: Math.round(distPts),
       capacity: Math.round(capPts),
+      distance: Math.round(distPts),
       category: Math.round(catPts),
-      quantity: Math.round(qtyPts),
-      urgency: Math.round(urgPts)
+      workload: Math.round(workloadPts),
+      verification: Math.round(verifPts)
     },
     reasons
   };
@@ -249,7 +257,7 @@ const getDonationMatches = async (req, res) => {
     status: 'ACTIVE',
     latitude: { $exists: true, $ne: null },
     longitude: { $exists: true, $ne: null }
-  }).select('_id name organizationName city latitude longitude phone address email capacity');
+  }).select('_id name organizationName city latitude longitude phone address email capacity foodTypesAccepted');
 
   if (!eligibleNgos || eligibleNgos.length === 0) {
     return res.status(200).json(
@@ -266,8 +274,44 @@ const getDonationMatches = async (req, res) => {
     );
   }
 
-  const donLat = donation.latitude || 28.6139;
-  const donLon = donation.longitude || 77.2090;
+  const donLat = donation.latitude;
+  const donLon = donation.longitude;
+  if (!donLat || !donLon) {
+    return res.status(200).json(
+      new ApiResponse({
+        success: false,
+        statusCode: 200,
+        message: 'Donation location is required for NGO matching',
+        data: {
+          donationId,
+          reason: 'LOCATION_REQUIRED',
+          aiAvailable: false,
+          donation: { id: donationId, quantity: donation.quantity, category: donation.category, unit: donation.unit },
+          recommendations: [],
+          nearbyUnverified: []
+        }
+      })
+    );
+  }
+
+  const FoodRequest = require('../models/FoodRequest.model');
+  const activeWorkloads = await FoodRequest.aggregate([
+    {
+      $match: {
+        ngoId: { $in: eligibleNgos.map(n => n._id) },
+        status: { $in: ['PENDING', 'ACCEPTED', 'PICKED_UP'] }
+      }
+    },
+    {
+      $group: {
+        _id: '$ngoId',
+        activeCount: { $sum: 1 }
+      }
+    }
+  ]);
+  const workloadMap = {};
+  activeWorkloads.forEach(w => { workloadMap[w._id.toString()] = w.activeCount; });
+
   const expiry = donation.expiryTime ? new Date(donation.expiryTime) : new Date(Date.now() + 6 * 3600 * 1000);
   const expiryHoursRemaining = Math.max(0.5, (expiry.getTime() - now.getTime()) / (1000 * 60 * 60));
 
@@ -280,6 +324,15 @@ const getDonationMatches = async (req, res) => {
   }));
 
   const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
+
+  const donationMeta = {
+    id: donationId,
+    quantity: donation.quantity || 1,
+    category: donation.category || 'General',
+    unit: donation.unit || 'servings',
+    latitude: donLat,
+    longitude: donLon
+  };
 
   try {
     const aiResponse = await axios.post(
@@ -301,15 +354,41 @@ const getDonationMatches = async (req, res) => {
     const matches = aiResponse.data?.matches || [];
     const enrichedMatches = matches.map((m) => {
       const dbNgo = eligibleNgos.find((n) => n._id.toString() === m.ngoId);
+      
+      const ngoCapacity = dbNgo?.capacity || null;
+      const currentWorkload = dbNgo ? (workloadMap[dbNgo._id.toString()] || 0) : 0;
+      const availableCapacity = ngoCapacity != null ? Math.max(0, ngoCapacity - currentWorkload) : null;
+      const capacityMatch = availableCapacity != null ? (availableCapacity >= (donation.quantity || 1)) : null;
+
+      const ngoFoodTypes = dbNgo && Array.isArray(dbNgo.foodTypesAccepted) && dbNgo.foodTypesAccepted.length > 0 ? dbNgo.foodTypesAccepted : null;
+      const donationCat = (donation.category || '').toLowerCase().trim();
+      let categoryMatch = null;
+      if (ngoFoodTypes && donationCat) {
+        categoryMatch = ngoFoodTypes.some(t => {
+          const tLower = t.toLowerCase().trim();
+          return donationCat.includes(tLower) || tLower.includes(donationCat) || (donationCat.includes('cook') && tLower.includes('cook')) || (donationCat.includes('package') && tLower.includes('package'));
+        });
+      }
+
       return {
         ...m,
         city: dbNgo?.city || 'Local Region',
         phone: dbNgo?.phone || null,
         email: dbNgo?.email || null,
         latitude: dbNgo?.latitude,
-        longitude: dbNgo?.longitude
+        longitude: dbNgo?.longitude,
+        capacity: ngoCapacity,
+        currentWorkload,
+        availableCapacity,
+        capacityMatch,
+        categoryMatch,
+        foodTypesAccepted: ngoFoodTypes || [],
+        source: 'FOODBRIDGE',
+        verified: true
       };
     }).sort((a, b) => (b.score || b.matchScore || 0) - (a.score || a.matchScore || 0));
+
+    const recommendations = enrichedMatches.filter(m => m.capacityMatch !== false && m.categoryMatch !== false);
 
     return res.status(200).json(
       new ApiResponse({
@@ -319,6 +398,9 @@ const getDonationMatches = async (req, res) => {
         data: {
           donationId,
           aiAvailable: true,
+          donation: donationMeta,
+          recommendations,
+          nearbyUnverified: [],
           matches: enrichedMatches
         }
       })
@@ -339,12 +421,30 @@ const getDonationMatches = async (req, res) => {
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
       const dist = R * c;
 
+      const ngoCapacity = ngo.capacity || null;
+      const currentWorkload = workloadMap[ngo._id.toString()] || 0;
+      const availableCapacity = ngoCapacity != null ? Math.max(0, ngoCapacity - currentWorkload) : null;
+      const capacityMatch = availableCapacity != null ? (availableCapacity >= (donation.quantity || 1)) : null;
+
+      const ngoFoodTypes = Array.isArray(ngo.foodTypesAccepted) && ngo.foodTypesAccepted.length > 0 ? ngo.foodTypesAccepted : null;
+      const donationCat = (donation.category || '').toLowerCase().trim();
+      let categoryMatch = null;
+      if (ngoFoodTypes && donationCat) {
+        categoryMatch = ngoFoodTypes.some(t => {
+          const tLower = t.toLowerCase().trim();
+          return donationCat.includes(tLower) || tLower.includes(donationCat) || (donationCat.includes('cook') && tLower.includes('cook')) || (donationCat.includes('package') && tLower.includes('package'));
+        });
+      }
+
       const evalRes = calculateLogisticsMatchScore({
         distanceKm: dist,
         donationQty: donation.quantity || 1,
         ngoCap: ngo.capacity || 100,
         foodCategory: donation.category || 'cooked_meals',
-        expiryHours: expiryHoursRemaining
+        expiryHours: expiryHoursRemaining,
+        capacityMatch,
+        categoryMatch,
+        currentWorkload
       });
 
       return {
@@ -364,9 +464,19 @@ const getDonationMatches = async (req, res) => {
           distance: dist <= 5 ? 'EXCELLENT' : dist <= 15 ? 'GOOD' : 'FAIR',
           quantityCompatibility: 'SUITABLE',
           urgency: expiryHoursRemaining <= 6 ? 'HIGH_PRIORITY' : 'NORMAL'
-        }
+        },
+        capacity: ngoCapacity,
+        currentWorkload,
+        availableCapacity,
+        capacityMatch,
+        categoryMatch,
+        foodTypesAccepted: ngoFoodTypes || [],
+        source: 'FOODBRIDGE',
+        verified: true
       };
     }).sort((a, b) => b.score - a.score);
+
+    const recommendations = fallbackMatches.filter(m => m.capacityMatch !== false && m.categoryMatch !== false);
 
     return res.status(200).json(
       new ApiResponse({
@@ -376,7 +486,175 @@ const getDonationMatches = async (req, res) => {
         data: {
           donationId,
           aiAvailable: false,
+          donation: donationMeta,
+          recommendations,
+          nearbyUnverified: [],
           matches: fallbackMatches
+        }
+      })
+    );
+  }
+};
+
+const getDonationSpoilageRisk = async (req, res) => {
+  const axios = require('axios');
+  const FoodDonation = require('../models/FoodDonation.model');
+  const mongoose = require('mongoose');
+
+  const donationId = req.params.id;
+
+  if (!donationId || !mongoose.Types.ObjectId.isValid(donationId)) {
+    throw new ApiError(400, 'Invalid food donation ID format');
+  }
+
+  const donation = await FoodDonation.findById(donationId);
+  if (!donation) {
+    throw new ApiError(404, 'Food donation listing not found');
+  }
+
+  // Authorization check: Donor, Admin, or verified NGO
+  const user = req.user;
+  const userRole = user && user.role ? String(user.role).toLowerCase() : '';
+  const isDonor = user && donation.donorId && donation.donorId.toString() === user._id.toString();
+  const isAdmin = userRole === 'admin';
+  const isNGO = userRole === 'ngo' || userRole === 'partner';
+
+  if (!isDonor && !isAdmin && !isNGO) {
+    throw new ApiError(403, 'Access denied: You do not have permission to view spoilage risk for this donation');
+  }
+
+  // Calculate real time-dependent features
+  const now = new Date();
+  const expiry = donation.expiryTime ? new Date(donation.expiryTime) : new Date(now.getTime() + 24 * 3600 * 1000);
+  const cooked = donation.cookedTime ? new Date(donation.cookedTime) : null;
+
+  const hoursUntilExpiry = (expiry.getTime() - now.getTime()) / (1000 * 3600);
+  const hoursSinceCooked = cooked ? Math.max(0, (now.getTime() - cooked.getTime()) / (1000 * 3600)) : null;
+  const isExpired = donation.status === 'EXPIRED' || hoursUntilExpiry <= 0 || now.getTime() >= expiry.getTime();
+
+  // Storage and packaging parameters
+  const storageCondition = req.body?.storageCondition || req.query?.storageCondition || 'pantry';
+  const storageTemperatureC =
+    req.body?.storageTemperatureC != null
+      ? Number(req.body.storageTemperatureC)
+      : storageCondition === 'frozen'
+        ? -18.0
+        : storageCondition === 'refrigerated'
+          ? 4.0
+          : 22.0;
+
+  const isOpened =
+    req.body?.isOpened != null
+      ? Number(req.body.isOpened)
+      : (String(donation.category || '').toLowerCase().includes('cook') || String(donation.category || '').toLowerCase().includes('meal'))
+        ? 1
+        : 0;
+
+  const aiServiceUrl = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
+
+  const aiPayload = {
+    foodId: donation._id.toString(),
+    foodName: donation.foodName || 'Donation Item',
+    category: donation.category || 'cooked_meals',
+    storageCondition,
+    storageTemperatureC,
+    isOpened,
+    hoursUntilExpiry: Math.round(hoursUntilExpiry * 10) / 10
+  };
+
+  try {
+    const aiResponse = await axios.post(
+      `${aiServiceUrl}/predict/spoilage-risk`,
+      aiPayload,
+      { timeout: 5000 }
+    );
+
+    const aiData = aiResponse.data;
+
+    if (!aiData || typeof aiData !== 'object' || aiData.spoilageRisk === undefined) {
+      throw new Error('Malformed AI service response: missing spoilageRisk field');
+    }
+
+    return res.status(200).json(
+      new ApiResponse({
+        success: true,
+        statusCode: 200,
+        message: 'Food spoilage risk evaluated successfully via ML model',
+        data: {
+          donationId: donation._id.toString(),
+          foodName: donation.foodName,
+          category: donation.category,
+          hoursUntilExpiry: Math.round(hoursUntilExpiry * 10) / 10,
+          hoursSinceCooked: hoursSinceCooked !== null ? Math.round(hoursSinceCooked * 10) / 10 : null,
+          isExpired,
+          aiAvailable: true,
+          fallback: false,
+          spoilageRisk: aiData.spoilageRisk,
+          riskLevel: aiData.riskLevel || (aiData.spoilageRisk === 1 ? 'High' : 'Low'),
+          highSpoilageRisk: Boolean(aiData.highSpoilageRisk ?? aiData.spoilageRisk === 1),
+          riskScore: aiData.riskScore != null ? aiData.riskScore : (aiData.spoilageRisk === 1 ? 85.0 : 15.0),
+          confidence: aiData.confidence || 0.85,
+          probabilities: aiData.probabilities || {
+            lowRisk: aiData.spoilageRisk === 1 ? 0.15 : 0.85,
+            highRisk: aiData.spoilageRisk === 1 ? 0.85 : 0.15
+          },
+          featuresUsed: aiData.featuresUsed || aiPayload,
+          recommendation: aiData.recommendation || (aiData.spoilageRisk === 1 ? 'High Spoilage Risk: Priority redistribution recommended within 24-48 hours.' : 'Low Spoilage Risk: Stable for standard distribution window.'),
+          model: aiData.model || 'FoodBridge AI - Food Spoilage Risk Classifier v1.0.0'
+        }
+      })
+    );
+  } catch (err) {
+    console.warn(`[AI Service Warning] Spoilage risk model call failed: ${err.message}. Using safety heuristic fallback.`);
+
+    const catLower = String(donation.category || '').toLowerCase();
+    const isPerishable =
+      catLower.includes('cook') ||
+      catLower.includes('meal') ||
+      catLower.includes('dairy') ||
+      catLower.includes('meat') ||
+      catLower.includes('fish') ||
+      catLower.includes('poultry') ||
+      catLower.includes('produce');
+
+    const isHighRisk =
+      isExpired ||
+      hoursUntilExpiry <= 6.0 ||
+      (isPerishable && hoursUntilExpiry <= 12.0) ||
+      (isPerishable && storageCondition === 'pantry');
+
+    const fallbackScore = isExpired ? 100.0 : (isHighRisk ? 88.0 : 15.0);
+
+    return res.status(200).json(
+      new ApiResponse({
+        success: true,
+        statusCode: 200,
+        message: 'Spoilage risk evaluated using safety heuristic fallback (AI service offline or unavailable)',
+        data: {
+          donationId: donation._id.toString(),
+          foodName: donation.foodName,
+          category: donation.category,
+          hoursUntilExpiry: Math.round(hoursUntilExpiry * 10) / 10,
+          hoursSinceCooked: hoursSinceCooked !== null ? Math.round(hoursSinceCooked * 10) / 10 : null,
+          isExpired,
+          aiAvailable: false,
+          fallback: true,
+          spoilageRisk: isHighRisk ? 1 : 0,
+          riskLevel: isExpired ? 'Critical' : (isHighRisk ? 'High' : 'Low'),
+          highSpoilageRisk: isHighRisk,
+          riskScore: fallbackScore,
+          confidence: 0.8,
+          probabilities: {
+            lowRisk: isHighRisk ? 0.12 : 0.88,
+            highRisk: isHighRisk ? 0.88 : 0.12
+          },
+          featuresUsed: aiPayload,
+          recommendation: isExpired
+            ? 'Donation expired. Unsafe for human consumption.'
+            : isHighRisk
+              ? 'High Spoilage Risk: Priority redistribution recommended within 24-48 hours.'
+              : 'Low Spoilage Risk: Stable for standard distribution window.',
+          fallbackReason: err.message
         }
       })
     );
@@ -390,5 +668,6 @@ module.exports = {
   updateDonation,
   deleteDonation,
   getDonationMatches,
+  getDonationSpoilageRisk,
   calculateLogisticsMatchScore
 };

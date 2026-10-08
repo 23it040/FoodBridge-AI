@@ -1,0 +1,46 @@
+{
+  "model_name": "FoodBridge AI - Food Spoilage Risk Classifier",
+  "model_version": "1.0.0",
+  "dataset_source": "Official USDA Food Safety and Inspection Service (FoodKeeper Dataset)",
+  "total_dataset_records": 1576,
+  "training_records": 1260,
+  "test_records": 316,
+  "target_variable": "spoilage_risk",
+  "target_classes": {
+    "0": "Low Spoilage Risk (Shelf life > 7 days under storage condition)",
+    "1": "High Spoilage Risk (Shelf life <= 7 days or unsafe storage condition)"
+  },
+  "features": {
+    "categorical": [
+      "category",
+      "storage_condition"
+    ],
+    "numerical": [
+      "storage_temperature_c",
+      "is_opened",
+      "requires_refrigeration",
+      "has_cooking_temp",
+      "cooking_temperature_f",
+      "is_perishable_category"
+    ]
+  },
+  "model_architecture": {
+    "algorithm": "RandomForestClassifier",
+    "parameters": {
+      "n_estimators": 150,
+      "max_depth": 8,
+      "min_samples_split": 4,
+      "min_samples_leaf": 2,
+      "class_weight": "balanced",
+      "random_state": 42
+    }
+  },
+  "metrics": {
+    "accuracy": 0.8639,
+    "precision": 0.88,
+    "recall": 0.7971,
+    "f1_score": 0.8365,
+    "roc_auc": 0.9534
+  },
+  "model_artifact": "spoilage_risk_model.joblib"
+}

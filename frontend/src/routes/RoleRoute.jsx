@@ -1,16 +1,13 @@
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { ROLE_PATHS } from '../constants/roles';
+import BrandedLoader from '../components/ui/BrandedLoader';
 
 const RoleRoute = ({ allowedRoles = [], children }) => {
   const { user, isAuthenticated, loading } = useAuth();
 
   if (loading) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4 text-slate-600">
-        Loading authentication...
-      </div>
-    );
+    return <BrandedLoader message="Checking permissions..." />;
   }
 
   if (!isAuthenticated || !user) {

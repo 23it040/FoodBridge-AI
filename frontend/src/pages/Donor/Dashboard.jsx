@@ -28,7 +28,8 @@ import {
   FiAlertTriangle,
   FiRefreshCw,
   FiMapPin,
-  FiNavigation
+  FiNavigation,
+  FiActivity
 } from 'react-icons/fi';
 
 const Dashboard = () => {
@@ -243,7 +244,12 @@ const Dashboard = () => {
                     key: 'foodName',
                     title: 'Food Item',
                     render: (r) => (
-                      <div className="font-semibold text-[#1A312C]">{r.foodName || r.name || 'Food Item'}</div>
+                      <div
+                        className="font-semibold text-[#1A312C] hover:text-[#2F8F72] cursor-pointer transition-colors"
+                        onClick={() => navigate(`/donor/donations/${r._id || r.id}`)}
+                      >
+                        {r.foodName || r.name || 'Food Item'}
+                      </div>
                     )
                   },
                   {
@@ -255,6 +261,21 @@ const Dashboard = () => {
                     key: 'status',
                     title: 'Status',
                     render: (r) => <Badge variant={r.status === 'AVAILABLE' ? 'success' : 'default'}>{r.status || 'AVAILABLE'}</Badge>
+                  },
+                  {
+                    key: 'actions',
+                    title: 'Action',
+                    render: (r) => (
+                      <Button
+                        size="xs"
+                        variant="outline"
+                        onClick={() => navigate(`/donor/donations/${r._id || r.id}`)}
+                        className="text-[11px] py-1 px-2.5 gap-1 border-[#79D6B2] text-[#2F8F72] hover:bg-[#E8F6F0]"
+                      >
+                        <FiActivity className="h-3 w-3" />
+                        <span>AI Risk</span>
+                      </Button>
+                    )
                   }
                 ]}
                 data={recentDonations}

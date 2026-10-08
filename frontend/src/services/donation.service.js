@@ -67,6 +67,18 @@ const cancelDonation = async (id) => {
   return deleteDonation(id);
 };
 
+const getSpoilageRisk = async (id, params = {}) => {
+  if (!id) throw new Error('Donation ID is required');
+  const response = await api.get(`/api/food/${id}/spoilage-risk`, { params });
+  return response?.data?.data || response?.data || response;
+};
+
+const evaluateSpoilageRisk = async (id, data = {}) => {
+  if (!id) throw new Error('Donation ID is required');
+  const response = await api.post(`/api/food/${id}/spoilage-risk`, data);
+  return response?.data?.data || response?.data || response;
+};
+
 export default {
   listDonations,
   getDonation,
@@ -74,5 +86,7 @@ export default {
   createDonation,
   updateDonation,
   deleteDonation,
-  cancelDonation
+  cancelDonation,
+  getSpoilageRisk,
+  evaluateSpoilageRisk
 };

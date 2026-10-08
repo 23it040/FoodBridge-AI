@@ -25,6 +25,8 @@ router.post(
   asyncHandler(foodDonationController.createDonation)
 );
 router.get('/:id/matches', authenticate, asyncHandler(foodDonationController.getDonationMatches));
+router.get('/:id/spoilage-risk', authenticate, asyncHandler(foodDonationController.getDonationSpoilageRisk));
+router.post('/:id/spoilage-risk', authenticate, asyncHandler(foodDonationController.getDonationSpoilageRisk));
 router.put(
   '/:id',
   authenticate,

@@ -9,8 +9,8 @@ import NGOInfoCard from './NGOInfoCard';
 import RouteDisplay from './RouteDisplay';
 import GooglePlacesMarkers from './GooglePlacesMarkers';
 import MapLoading from './MapLoading';
-
 import MapError from './MapError';
+import ErrorBoundary from '../error/ErrorBoundary';
 import Button from '../ui/Button';
 import ngoService from '../../services/ngo.service';
 import useGoogleMap from '../../hooks/useGoogleMap';
@@ -329,17 +329,19 @@ const NGOMap = ({
           {error}
         </div>
       )}
-      <NGOMapContent
-        ngos={ngos}
-        foodDonations={foodDonations}
-        pickupLocation={pickupLocation}
-        selectedNgo={selectedNgo}
-        setSelectedNgo={handleSelectNgo}
-        selectedFood={selectedFood}
-        setSelectedFood={onSelectFood}
-        onViewNgo={onViewNgo}
-        className={className}
-      />
+      <ErrorBoundary fallback={<MapError message="Unable to load map" subtext="Interactive map service is currently unavailable." onRetry={fetchNgos} className={className} />}>
+        <NGOMapContent
+          ngos={ngos}
+          foodDonations={foodDonations}
+          pickupLocation={pickupLocation}
+          selectedNgo={selectedNgo}
+          setSelectedNgo={handleSelectNgo}
+          selectedFood={selectedFood}
+          setSelectedFood={onSelectFood}
+          onViewNgo={onViewNgo}
+          className={className}
+        />
+      </ErrorBoundary>
     </div>
   );
 };

@@ -26,13 +26,19 @@ app.add_middleware(
 # Global model state
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS_DIR = os.path.join(BASE_DIR, 'models')
+SAVED_MODELS_DIR = os.path.join(BASE_DIR, 'saved_models')
 
+# Matching model state
 model = None
 preprocessor = None
 metadata = {}
 
+# Spoilage risk model state
+spoilage_pipeline = None
+spoilage_metadata = {}
+
 def load_artifacts():
-    global model, preprocessor, metadata
+    global model, preprocessor, metadata, spoilage_pipeline, spoilage_metadata
     model_path = os.path.join(MODELS_DIR, 'matching_model.pkl')
     preprocessor_path = os.path.join(MODELS_DIR, 'preprocessing.pkl')
     metadata_path = os.path.join(MODELS_DIR, 'metadata.json')
@@ -42,11 +48,25 @@ def load_artifacts():
         preprocessor = joblib.load(preprocessor_path)
         print("Loaded ML matching model & preprocessor successfully.")
     else:
-        print("Warning: Model artifacts not found. Please run training script first.")
+        print("Warning: Matching model artifacts not found.")
 
     if os.path.exists(metadata_path):
-        with open(metadata_path, 'r') as f:
+        with open(metadata_path, 'r', encoding='utf-8') as f:
             metadata = json.load(f)
+
+    # Load Food Spoilage Risk Model
+    spoilage_model_path = os.path.join(SAVED_MODELS_DIR, 'spoilage_risk_model.joblib')
+    spoilage_meta_path = os.path.join(SAVED_MODELS_DIR, 'spoilage_model_metadata.json')
+
+    if os.path.exists(spoilage_model_path):
+        spoilage_pipeline = joblib.load(spoilage_model_path)
+        print("Loaded ML Food Spoilage Risk model pipeline successfully.")
+    else:
+        print(f"Warning: Spoilage model artifact not found at {spoilage_model_path}.")
+
+    if os.path.exists(spoilage_meta_path):
+        with open(spoilage_meta_path, 'r', encoding='utf-8') as f:
+            spoilage_metadata = json.load(f)
 
 @app.on_event("startup")
 def startup_event():
@@ -96,10 +116,11 @@ def get_perishability_score(category: str) -> float:
 def health_check():
     return {
         "status": "healthy",
-        "service": "FoodBridge Donation-NGO Matching AI",
-        "modelLoaded": model is not None and preprocessor is not None,
-        "version": metadata.get("model_version", "1.0.0"),
-        "algorithm": metadata.get("algorithm", "RandomForestClassifier")
+        "service": "FoodBridge AI Microservice",
+        "matchingModelLoaded": model is not None and preprocessor is not None,
+        "spoilageModelLoaded": spoilage_pipeline is not None,
+        "matchingVersion": metadata.get("model_version", "1.0.0"),
+        "spoilageVersion": spoilage_metadata.get("model_version", "1.0.0")
     }
 
 def calculate_logistics_score(dist_km: float, donation_qty: float, ngo_cap: float, food_category: str, expiry_hours: float):
@@ -276,3 +297,151 @@ def predict_match(request: MatchRequest):
         "totalEvaluated": len(results),
         "matches": results
     }
+
+# ==========================================
+# Food Spoilage Risk Prediction Endpoint
+# ==========================================
+
+class SpoilageRiskRequest(BaseModel):
+    foodId: Optional[str] = "donation_item"
+    foodName: Optional[str] = "Food Donation Item"
+    category: Optional[str] = "cooked_meals"
+    storageCondition: Optional[str] = "pantry"  # 'pantry', 'refrigerated', 'frozen'
+    storageTemperatureC: Optional[float] = None
+    isOpened: Optional[int] = 0
+    hoursUntilExpiry: Optional[float] = 6.0
+    requiresRefrigeration: Optional[int] = None
+    hasCookingTemp: Optional[int] = 0
+    cookingTemperatureF: Optional[float] = None
+    isPerishableCategory: Optional[int] = None
+
+def normalize_foodkeeper_category(raw_cat: Optional[str]):
+    """
+    Maps FoodBridge / donor category strings to official USDA FoodKeeper category
+    and determines default perishability and refrigeration constraints.
+    """
+    cat = str(raw_cat or "cooked_meals").lower().strip()
+    
+    if any(k in cat for k in ["cook", "meal", "deli", "prepared", "curry", "rice", "biryani", "gravy"]):
+        return "Deli & Prepared Foods", 1, 1
+    elif any(k in cat for k in ["dairy", "milk", "cheese", "paneer", "curd", "yogurt", "butter"]):
+        return "Dairy Products & Eggs", 1, 1
+    elif any(k in cat for k in ["meat", "beef", "mutton", "pork", "lamb"]):
+        return "Meat", 1, 1
+    elif any(k in cat for k in ["poultry", "chicken", "turkey", "egg", "eggs"]):
+        return "Poultry", 1, 1
+    elif any(k in cat for k in ["seafood", "fish", "prawn", "shrimp", "crab"]):
+        return "Seafood", 1, 1
+    elif any(k in cat for k in ["produce", "fruit", "vegetable", "salad", "greens"]):
+        return "Produce", 0, 1
+    elif any(k in cat for k in ["bake", "bakery", "bread", "roti", "chapati", "naan", "cake"]):
+        return "Baked Goods", 0, 0
+    elif any(k in cat for k in ["grain", "pasta", "bean", "dal", "pulse", "lentil"]):
+        return "Grains, Beans & Pasta", 0, 0
+    elif any(k in cat for k in ["canned", "shelf", "packaged", "dry", "general"]):
+        return "Shelf Stable Foods", 0, 0
+    elif any(k in cat for k in ["beverage", "drink", "juice"]):
+        return "Beverages", 0, 0
+    elif "frozen" in cat:
+        return "Food Purchased Frozen", 1, 0
+    else:
+        return "Deli & Prepared Foods", 1, 1
+
+@app.post("/predict/spoilage-risk")
+def predict_spoilage_risk(request: SpoilageRiskRequest):
+    """
+    Predicts food spoilage risk level (High vs Low) and spoilage probability
+    using the scikit-learn model trained on official USDA FoodKeeper dataset.
+    """
+    if spoilage_pipeline is None:
+        raise HTTPException(
+            status_code=503,
+            detail="Food spoilage risk model not loaded. Model artifact 'saved_models/spoilage_risk_model.joblib' is unavailable."
+        )
+
+    cat_name, def_req_refrig, def_is_perish = normalize_foodkeeper_category(request.category)
+
+    # Normalize storage condition
+    storage_cond = str(request.storageCondition or "pantry").lower().strip()
+    if storage_cond not in ["pantry", "refrigerated", "frozen"]:
+        storage_cond = "pantry"
+
+    # Determine storage temperature
+    if request.storageTemperatureC is not None:
+        temp_c = float(request.storageTemperatureC)
+    elif storage_cond == "frozen":
+        temp_c = -18.0
+    elif storage_cond == "refrigerated":
+        temp_c = 4.0
+    else:
+        temp_c = 22.0
+
+    is_opened = 1 if request.isOpened else 0
+    req_refrig = int(request.requiresRefrigeration) if request.requiresRefrigeration is not None else def_req_refrig
+    is_perish = int(request.isPerishableCategory) if request.isPerishableCategory is not None else def_is_perish
+    has_cook = int(request.hasCookingTemp or 0)
+    cook_temp = float(request.cookingTemperatureF) if request.cookingTemperatureF is not None else np.nan
+
+    # Build input feature frame matching the trained model pipeline
+    df_input = pd.DataFrame([{
+        "category": cat_name,
+        "storage_condition": storage_cond,
+        "storage_temperature_c": temp_c,
+        "is_opened": is_opened,
+        "requires_refrigeration": req_refrig,
+        "has_cooking_temp": has_cook,
+        "cooking_temperature_f": cook_temp,
+        "is_perishable_category": is_perish
+    }])
+
+    pred_raw = int(spoilage_pipeline.predict(df_input)[0])
+    proba_raw = spoilage_pipeline.predict_proba(df_input)[0]
+
+    prob_low = float(proba_raw[0])
+    prob_high = float(proba_raw[1])
+
+    # Time-dependent adjustments
+    hours_left = request.hoursUntilExpiry
+    is_time_critical = (hours_left is not None and hours_left <= 4.0 and hours_left > 0)
+    is_expired = (hours_left is not None and hours_left <= 0.0)
+
+    final_prediction = 1 if (pred_raw == 1 or is_time_critical or is_expired) else 0
+    final_high_prob = 1.0 if is_expired else (max(prob_high, 0.85) if is_time_critical else prob_high)
+    final_low_prob = 1.0 - final_high_prob
+
+    if is_expired:
+        risk_level = "Critical"
+        recommendation = "Donation expired. Unsafe for human consumption."
+    elif final_prediction == 1:
+        risk_level = "High"
+        recommendation = "High Spoilage Risk: Priority redistribution recommended within 24-48 hours with immediate refrigeration."
+    else:
+        risk_level = "Low"
+        recommendation = "Low Spoilage Risk: Stable for standard distribution window."
+
+    return {
+        "success": True,
+        "foodId": request.foodId,
+        "foodName": request.foodName,
+        "spoilageRisk": final_prediction,
+        "riskLevel": risk_level,
+        "highSpoilageRisk": final_prediction == 1,
+        "riskScore": round(final_high_prob * 100, 2),
+        "confidence": round(max(final_low_prob, final_high_prob), 4),
+        "probabilities": {
+            "lowRisk": round(final_low_prob, 4),
+            "highRisk": round(final_high_prob, 4)
+        },
+        "featuresUsed": {
+            "category": cat_name,
+            "storageCondition": storage_cond,
+            "storageTemperatureC": temp_c,
+            "isOpened": is_opened,
+            "requiresRefrigeration": req_refrig,
+            "isPerishableCategory": is_perish,
+            "hoursUntilExpiry": hours_left
+        },
+        "recommendation": recommendation,
+        "model": "FoodBridge AI - Food Spoilage Risk Classifier v1.0.0"
+    }
+

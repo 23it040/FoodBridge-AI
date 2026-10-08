@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NotificationsDropdown from '../components/layout/NotificationsDropdown';
 import Sidebar from '../components/layout/Sidebar';
+import ErrorBoundary from '../components/error/ErrorBoundary';
 import useAuth from '../hooks/useAuth';
 import { FiMenu, FiBox, FiLogOut } from 'react-icons/fi';
 
@@ -106,7 +107,9 @@ const DashboardLayout = ({ portalName = 'Dashboard', sidebarItems = [], children
 
         <div className="flex flex-1 flex-col overflow-hidden min-w-0 transition-all duration-300">
           <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
-            {children}
+            <ErrorBoundary>
+              {children}
+            </ErrorBoundary>
           </main>
         </div>
       </div>

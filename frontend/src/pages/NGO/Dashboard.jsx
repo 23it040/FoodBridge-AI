@@ -94,25 +94,48 @@ const Dashboard = () => {
     setLoading(true);
     setError(null);
     try {
-      const [analyticsRes, requestsRes, donationsRes] = await Promise.all([
+      const [analyticsResult, requestsResult, donationsResult] = await Promise.allSettled([
         analyticsService.getNgoAnalytics(),
         requestService.listRequests({ limit: 5 }),
-        donationService.listDonations({ status: 'AVAILABLE' }).catch(() => [])
+        donationService.listDonations({ status: 'AVAILABLE' })
       ]);
 
-      const data = normalizeObjectResponse(analyticsRes);
-      const rawStats = data?.stats || data || {};
-      setStats({
-        ...rawStats,
-        requestsByMonth: data.requestsByMonth || [],
-        statusBreakdown: data.statusBreakdown || []
-      });
+      if (analyticsResult.status === 'fulfilled') {
+        const data = normalizeObjectResponse(analyticsResult.value);
+        const rawStats = data?.stats || data || {};
+        setStats({
+          ...rawStats,
+          requestsByMonth: data.requestsByMonth || [],
+          statusBreakdown: data.statusBreakdown || []
+        });
+      } else {
+        console.warn('NGO analytics fetch failed:', analyticsResult.reason);
+      }
 
-      const requests = normalizeListResponse(requestsRes, ['requests', 'items']);
-      setRecentRequests(requests);
+      if (requestsResult.status === 'fulfilled') {
+        const requests = normalizeListResponse(requestsResult.value, ['requests', 'items']);
+        setRecentRequests(requests);
+      } else {
+        console.warn('NGO requests fetch failed:', requestsResult.reason);
+      }
 
-      const foodList = Array.isArray(donationsRes) ? donationsRes : Array.isArray(donationsRes?.data) ? donationsRes.data : [];
-      setNearbyFood(foodList);
+      if (donationsResult.status === 'fulfilled') {
+        const res = donationsResult.value;
+        const foodList = Array.isArray(res) ? res : Array.isArray(res?.data) ? res.data : [];
+        setNearbyFood(foodList);
+      } else {
+        console.warn('NGO surplus food fetch failed:', donationsResult.reason);
+      }
+
+      // Only display fatal error if every single endpoint rejected (e.g. backend down / connection refused)
+      if (
+        analyticsResult.status === 'rejected' &&
+        requestsResult.status === 'rejected' &&
+        donationsResult.status === 'rejected'
+      ) {
+        const firstErr = analyticsResult.reason || requestsResult.reason;
+        setError(firstErr?.response?.data?.message || firstErr?.message || 'Unable to connect to server.');
+      }
     } catch (err) {
       console.error('Failed to load NGO dashboard:', err);
       setError(err?.response?.data?.message || err?.message || 'Unable to load NGO dashboard statistics');
@@ -281,7 +304,7 @@ const Dashboard = () => {
         };
       })
       .sort((a, b) => b.matchScore - a.matchScore);
-  }, [nearbyFood, activeNgoLocation, user]);
+  }, [nearbyFood, effectiveNgoLocation, user]);
 
   const statItems = [
     { label: 'Total Requests', value: stats?.totalRequests ?? 0, icon: <FiHeart className="h-6 w-6" /> },
@@ -409,7 +432,7 @@ const Dashboard = () => {
 
                         {/* Explainable match reasons */}
                         <div className="flex flex-wrap gap-1 pt-1">
-                          {food.reasons.map((reason, idx) => (
+                          {(food.reasons || []).map((reason, idx) => (
                             <span key={idx} className="text-[10px] font-bold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.5 rounded">
                               {reason}
                             </span>

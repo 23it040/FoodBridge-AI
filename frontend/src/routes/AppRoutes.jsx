@@ -7,6 +7,7 @@ import ProtectedRoute from './ProtectedRoute';
 import PublicRoute from './PublicRoute';
 import RoleRoute from './RoleRoute';
 import { ROLES } from '../constants/roles';
+import BrandedLoader from '../components/ui/BrandedLoader';
 
 const HomePage = lazy(() => import('../pages/Home/HomePage'));
 const AuthPage = lazy(() => import('../pages/Auth/AuthPage'));
@@ -51,7 +52,7 @@ const EditProfile = lazy(() => import('../pages/Profile/EditProfile'));
 const ChangePassword = lazy(() => import('../pages/Profile/ChangePassword'));
 const Settings = lazy(() => import('../pages/Profile/Settings'));
 
-const LoadingFallback = <div className="py-12 text-center text-slate-500">Loading page...</div>;
+const LoadingFallback = <BrandedLoader message="Loading page..." />;
 
 const AppRoutes = () => (
   <Suspense fallback={LoadingFallback}>
@@ -144,6 +145,7 @@ const AppRoutes = () => (
         <Route index element={<Navigate replace to="dashboard" />} />
         <Route path="dashboard" element={<NGODashboard />} />
         <Route path="nearby" element={<NGONearbyFood />} />
+        <Route path="nearby-food" element={<NGONearbyFood />} />
         <Route path="food/:id" element={<NGOFoodDetails />} />
         <Route path="food/:id/request" element={<NGORequestFood />} />
         <Route path="request/:id" element={<NGORequestFood />} />
@@ -151,6 +153,7 @@ const AppRoutes = () => (
         <Route path="request-food/:donationId" element={<NGORequestFood />} />
         <Route path="my-requests" element={<NGOMyRequests />} />
         <Route path="history" element={<NGORequestHistory />} />
+        <Route path="request-history" element={<NGORequestHistory />} />
         <Route path="notifications" element={<NGONotifications />} />
         <Route path="profile" element={<NGOProfile />} />
       </Route>

@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import donationService from '../../services/donation.service';
 import requestService from '../../services/request.service';
+import matchingService from '../../services/matching.service';
 import { getFoodImageUrl } from '../../utils/image';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
@@ -11,9 +12,15 @@ import Spinner from '../../components/ui/Spinner';
 import EmptyState from '../../components/ui/EmptyState';
 import Modal from '../../components/ui/Modal';
 import NGOMap from '../../components/maps/NGOMap';
-import matchingService from '../../services/matching.service';
+import NGORecommendationCard from '../../components/donor/NGORecommendationCard';
+import NearbyNGOCard from '../../components/donor/NearbyNGOCard';
+import AIFoodSpoilageRiskCard from '../../components/ai/AIFoodSpoilageRiskCard';
 import toast from 'react-hot-toast';
-import { FiMapPin, FiBox, FiImage, FiAward, FiAlertCircle, FiInfo, FiPhone, FiMail } from 'react-icons/fi';
+import {
+  FiMapPin, FiBox, FiImage, FiAward, FiAlertCircle, FiInfo,
+  FiPhone, FiMail, FiCheckCircle, FiXCircle, FiShield, FiRefreshCw,
+  FiNavigation, FiActivity
+} from 'react-icons/fi';
 
 const formatMatchScore = (score) => {
   if (score === undefined || score === null) return '0%';
@@ -26,6 +33,7 @@ const formatMatchScore = (score) => {
 const DonationDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const mapRef = useRef(null);
   const [donation, setDonation] = useState(null);
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -33,14 +41,21 @@ const DonationDetails = () => {
   const [imageError, setImageError] = useState(false);
   const [respondingId, setRespondingId] = useState(null);
   const [selectedNgoModal, setSelectedNgoModal] = useState(null);
+  const [highlightedNgoId, setHighlightedNgoId] = useState(null);
 
   const [matchesState, setMatchesState] = useState({
-    matches: [],
+    recommendations: [],
+    nearbyUnverified: [],
     aiAvailable: true,
     loading: true,
-    message: ''
+    donation: null,
+    locationRequired: false,
+    backendError: null,
+    placesError: null,
+    totalCount: 0
   });
 
+  // Fetch donation, requests, and enhanced NGO matches
   useEffect(() => {
     let mounted = true;
     const fetchAll = async () => {
@@ -51,6 +66,7 @@ const DonationDetails = () => {
         const dObj = d?.data || d;
         setDonation(dObj);
 
+        // Fetch requests (non-blocking)
         try {
           const reqs = await requestService.listRequests({ donationId: id });
           if (mounted) setRequests(Array.isArray(reqs) ? reqs : Array.isArray(reqs?.data) ? reqs.data : []);
@@ -58,33 +74,34 @@ const DonationDetails = () => {
           // Requests optional
         }
 
+        // Fetch enhanced NGO matches (multi-source: backend AI + Google Places)
         try {
-          const mRes = await matchingService.getDonationMatches(id);
-          if (mounted) {
-            const mData = mRes?.data || mRes || {};
-            const rawMatches = Array.isArray(mData.matches) ? mData.matches : [];
-            const sortedMatches = [...rawMatches].sort((a, b) => {
-              const scoreA = Number(a.matchScore || 0);
-              const scoreB = Number(b.matchScore || 0);
-              return scoreB - scoreA;
-            });
+          const donLat = dObj?.latitude;
+          const donLng = dObj?.longitude;
+          const donationLocation = (donLat && donLng) ? { lat: donLat, lng: donLng } : null;
 
+          const result = await matchingService.getEnhancedDonationMatches(id, donationLocation);
+          if (mounted) {
             setMatchesState({
-              matches: sortedMatches,
-              aiAvailable: mData.aiAvailable !== false,
+              recommendations: result.recommendations || [],
+              nearbyUnverified: result.nearbyUnverified || [],
+              aiAvailable: result.aiAvailable !== false,
               loading: false,
-              message: mRes?.message || ''
+              donation: result.donation || null,
+              locationRequired: result.locationRequired || false,
+              backendError: result.backendError || null,
+              placesError: result.placesError || null,
+              totalCount: result.totalCount || 0
             });
           }
         } catch (mErr) {
           console.warn('Failed to load NGO matches:', mErr);
           if (mounted) {
-            setMatchesState({
-              matches: [],
-              aiAvailable: false,
+            setMatchesState(prev => ({
+              ...prev,
               loading: false,
-              message: 'NGO recommendations are temporarily unavailable.'
-            });
+              backendError: mErr.message || 'Matching service unavailable'
+            }));
           }
         }
       } catch (err) {
@@ -117,22 +134,88 @@ const DonationDetails = () => {
     }
   };
 
+  // "View on Map" handler: scroll to map, center on NGO
+  const handleViewOnMap = useCallback((ngo) => {
+    setHighlightedNgoId(ngo.ngoId || ngo.id);
+    if (mapRef.current) {
+      mapRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, []);
+
+  // Retry matches
+  const handleRetryMatches = useCallback(async () => {
+    if (!donation) return;
+    setMatchesState(prev => ({ ...prev, loading: true }));
+    try {
+      const donLat = donation.latitude;
+      const donLng = donation.longitude;
+      const donationLocation = (donLat && donLng) ? { lat: donLat, lng: donLng } : null;
+      const result = await matchingService.getEnhancedDonationMatches(id, donationLocation);
+      setMatchesState({
+        recommendations: result.recommendations || [],
+        nearbyUnverified: result.nearbyUnverified || [],
+        aiAvailable: result.aiAvailable !== false,
+        loading: false,
+        donation: result.donation || null,
+        locationRequired: result.locationRequired || false,
+        backendError: result.backendError || null,
+        placesError: result.placesError || null,
+        totalCount: result.totalCount || 0
+      });
+    } catch (err) {
+      setMatchesState(prev => ({
+        ...prev,
+        loading: false,
+        backendError: err.message || 'Retry failed'
+      }));
+    }
+  }, [donation, id]);
+
   if (loading) return <div className="py-12 text-center"><Spinner size={48} /></div>;
   if (!donation) return <EmptyState title="Not found" description="Donation record does not exist." />;
 
-  const mapCenter = [donation.latitude || 28.6139, donation.longitude || 77.2090];
-  const markers = [
-    { id: donation._id, type: 'donation', position: mapCenter, foodName: donation.foodName, quantity: donation.quantity },
-    ...matchesState.matches
+  // Map center: use real donation coords, fallback to null (map handles gracefully)
+  const donLat = donation.latitude;
+  const donLng = donation.longitude;
+  const hasValidCoords = donLat && donLng && Number.isFinite(donLat) && Number.isFinite(donLng);
+
+  // Combine all NGOs for map markers
+  const allMapNgos = [
+    ...matchesState.recommendations
       .filter((m) => m.latitude && m.longitude)
       .map((m) => ({
-        id: m.ngoId,
-        type: 'verified_ngo',
-        position: [m.latitude, m.longitude],
-        ngoName: m.ngoName,
+        id: m.ngoId || m.id,
+        name: m.ngoName || m.name,
+        organizationName: m.ngoName || m.name,
+        address: m.city || m.address || 'Partner NGO',
+        latitude: m.latitude,
+        longitude: m.longitude,
+        lat: m.latitude,
+        lng: m.longitude,
+        capacity: m.capacity || 150,
+        isVerified: true,
         matchScore: formatMatchScore(m.matchScore)
+      })),
+    ...matchesState.nearbyUnverified
+      .filter((n) => (n.latitude || n.lat) && (n.longitude || n.lng))
+      .map((n) => ({
+        id: n.id || n._id,
+        name: n.name || n.organizationName,
+        organizationName: n.name || n.organizationName,
+        address: n.address || 'Nearby Organization',
+        latitude: n.latitude || n.lat,
+        longitude: n.longitude || n.lng,
+        lat: n.latitude || n.lat,
+        lng: n.longitude || n.lng,
+        isVerified: false,
+        source: 'google_places'
       }))
   ];
+
+  // Determine what notices to show
+  const hasRecommendations = matchesState.recommendations.length > 0;
+  const hasNearbyUnverified = matchesState.nearbyUnverified.length > 0;
+  const totalFailure = !hasRecommendations && !hasNearbyUnverified && matchesState.backendError && matchesState.placesError;
 
   return (
     <section className="py-6 space-y-6">
@@ -206,133 +289,189 @@ const DonationDetails = () => {
         </Card>
       </div>
 
+      {/* AI Food Spoilage Risk Prediction Card */}
+      <AIFoodSpoilageRiskCard donationId={id} donation={donation} className="w-full" />
+
+      {/* ============ RECOMMENDED NGO MATCHES ============ */}
       <Card
         title="Recommended NGO Matches"
         icon={<FiAward className="h-5 w-5 text-[#428475]" />}
+        action={
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={handleRetryMatches}
+            loading={matchesState.loading}
+            className="gap-1.5 text-xs py-1.5"
+          >
+            <FiRefreshCw className="h-3.5 w-3.5" />
+            <span>Refresh</span>
+          </Button>
+        }
       >
-        {!matchesState.aiAvailable && (
-          <div className="mb-4 flex items-center gap-2 rounded-xl bg-amber-50 p-3 text-xs font-semibold text-amber-800 border border-amber-200">
-            <FiAlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
-            <span>NGO recommendations are temporarily unavailable.</span>
+        {/* AI availability notice */}
+        {!matchesState.aiAvailable && hasRecommendations && (
+          <div className="mb-4 flex items-center gap-2 rounded-xl bg-blue-50 p-3 text-xs font-semibold text-blue-800 border border-blue-200">
+            <FiInfo className="h-4 w-4 text-blue-600 shrink-0" />
+            <span>AI model unavailable — deterministic matching active. Results are based on capacity, distance, and category compatibility.</span>
           </div>
         )}
 
+        {/* Location required notice */}
+        {matchesState.locationRequired && (
+          <div className="mb-4 flex items-center gap-2 rounded-xl bg-amber-50 p-3 text-xs font-semibold text-amber-800 border border-amber-200">
+            <FiAlertCircle className="h-4 w-4 text-amber-600 shrink-0" />
+            <span>Donation location is required for NGO matching. Please update the donation with a valid pickup location.</span>
+          </div>
+        )}
+
+        {/* Loading state */}
         {matchesState.loading ? (
           <div className="py-6 flex flex-col items-center justify-center gap-2 text-xs font-medium text-slate-500">
             <Spinner size={24} />
             <span>Finding suitable NGOs...</span>
           </div>
-        ) : matchesState.matches.length === 0 ? (
+        ) : hasRecommendations ? (
+          /* Primary: Verified FoodBridge NGO recommendations */
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {matchesState.recommendations.map((m, idx) => (
+              <NGORecommendationCard
+                key={m.ngoId || m.id || idx}
+                ngo={m}
+                rank={idx + 1}
+                donation={{ quantity: donation.quantity, category: donation.category, unit: donation.unit }}
+                onViewOnMap={handleViewOnMap}
+                onViewDetails={(ngo) => setSelectedNgoModal(ngo)}
+              />
+            ))}
+          </div>
+        ) : !hasNearbyUnverified && totalFailure ? (
+          /* Total failure: both services down */
+          <div className="py-8 flex flex-col items-center justify-center gap-3 text-center">
+            <FiAlertCircle className="h-8 w-8 text-slate-400" />
+            <div className="text-sm font-semibold text-slate-600">Unable to load NGO recommendations</div>
+            <p className="text-xs text-slate-500 max-w-md">Both the matching service and nearby NGO discovery are temporarily unavailable. Please try again.</p>
+            <Button size="sm" onClick={handleRetryMatches} className="mt-2 gap-1.5 text-xs">
+              <FiRefreshCw className="h-3.5 w-3.5" />
+              Retry
+            </Button>
+          </div>
+        ) : !hasNearbyUnverified ? (
+          /* No NGOs found at all */
           <div className="py-6 text-center text-xs font-medium text-slate-500">
-            No suitable NGOs found for this donation.
+            No nearby NGOs found for this donation location.
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {matchesState.matches.map((m, idx) => {
-              const numericScore = Number(m.matchScore || 0);
-              const isHighMatch = numericScore >= 0.8 || numericScore >= 80;
-              const isMedMatch = numericScore >= 0.5 || numericScore >= 50;
-
-              return (
-                <div
-                  key={m.ngoId || idx}
-                  className="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-xs hover:border-[#89D7B7] transition-all space-y-3"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-[10px] font-bold text-[#428475] uppercase tracking-wider block">Rank #{idx + 1}</span>
-                      <h4 className="text-sm font-bold text-[#1A312C] line-clamp-1">{m.ngoName}</h4>
-                      {m.city && <p className="text-xs text-slate-500 font-medium">{m.city}</p>}
-                    </div>
-                    <div className="text-right">
-                      <span className="text-[9px] uppercase font-bold text-slate-400 block">Match Score</span>
-                      <Badge variant={isHighMatch ? 'success' : isMedMatch ? 'secondary' : 'default'}>
-                        {formatMatchScore(m.matchScore)}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <div className="text-xs font-semibold text-slate-700">
-                    Distance: <span className="font-extrabold text-[#428475]">{m.distanceKm != null ? `${m.distanceKm} km` : 'N/A'}</span>
-                  </div>
-
-                  {m.factors && typeof m.factors === 'object' && Object.keys(m.factors).length > 0 && (
-                    <div className="grid grid-cols-2 gap-2 text-[11px] bg-[#FFF4E1]/30 p-2.5 rounded-xl border border-slate-100 font-medium text-slate-700">
-                      {m.factors.distance && (
-                        <div><strong className="text-slate-500 block text-[9px] uppercase">Proximity</strong> {m.factors.distance}</div>
-                      )}
-                      {m.factors.quantityCompatibility && (
-                        <div><strong className="text-slate-500 block text-[9px] uppercase">Capacity</strong> {m.factors.quantityCompatibility}</div>
-                      )}
-                      {m.factors.urgency && (
-                        <div><strong className="text-slate-500 block text-[9px] uppercase">Urgency</strong> {m.factors.urgency}</div>
-                      )}
-                    </div>
-                  )}
-
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setSelectedNgoModal(m)}
-                    className="w-full text-xs gap-1.5 py-1.5"
-                  >
-                    <FiInfo className="h-3.5 w-3.5" />
-                    View NGO
-                  </Button>
-                </div>
-              );
-            })}
+          /* No verified recommendations, but nearby unverified exist — show note */
+          <div className="py-4 text-center text-xs font-medium text-slate-500">
+            No verified FoodBridge NGOs matched this donation. See nearby organizations below.
           </div>
         )}
       </Card>
 
-      <Card icon={<FiMapPin className="h-5 w-5" />} title="Pickup & NGO Route Map">
-        <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
-          <NGOMap
-            pickupLocation={{
-              latitude: donation.latitude,
-              longitude: donation.longitude,
-              address: donation.pickupAddress
-            }}
-            initialNgos={matchesState.matches
-              .filter((m) => m.latitude && m.longitude)
-              .map((m) => ({
-                id: m.ngoId,
-                name: m.ngoName,
-                organizationName: m.ngoName,
-                address: m.city || m.address || 'Partner NGO',
-                latitude: m.latitude,
-                longitude: m.longitude,
-                lat: m.latitude,
-                lng: m.longitude,
-                capacity: m.capacity || 150,
-                isVerified: true
-              }))}
-          />
-        </div>
-      </Card>
+      {/* ============ NEARBY NGOs — CAPACITY VERIFICATION NEEDED ============ */}
+      {hasNearbyUnverified && (
+        <Card
+          title="Nearby NGOs"
+          description="Real organizations found near the donation location. Capacity and food acceptance must be confirmed."
+          icon={<FiMapPin className="h-5 w-5 text-amber-600" />}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+            {matchesState.nearbyUnverified.map((n, idx) => (
+              <NearbyNGOCard
+                key={n.id || idx}
+                ngo={n}
+                donationLocation={hasValidCoords ? { latitude: donLat, longitude: donLng } : null}
+              />
+            ))}
+          </div>
+        </Card>
+      )}
 
+      {/* ============ PICKUP & NGO ROUTE MAP ============ */}
+      <div ref={mapRef}>
+        <Card icon={<FiMapPin className="h-5 w-5" />} title="Pickup & NGO Route Map">
+          <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+            <NGOMap
+              pickupLocation={hasValidCoords ? {
+                latitude: donLat,
+                longitude: donLng,
+                address: donation.pickupAddress
+              } : null}
+              initialNgos={allMapNgos}
+              selectedNgoId={highlightedNgoId}
+            />
+          </div>
+        </Card>
+      </div>
+
+      {/* ============ NGO DETAIL MODAL ============ */}
       <Modal
         open={Boolean(selectedNgoModal)}
         onClose={() => setSelectedNgoModal(null)}
-        title={selectedNgoModal?.ngoName || 'NGO Details'}
+        title={selectedNgoModal?.ngoName || selectedNgoModal?.name || 'NGO Details'}
       >
         {selectedNgoModal && (
           <div className="space-y-4 text-xs font-medium text-[#1A312C]">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <div>
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Verification</span>
-                <Badge variant="success">Verified Partner</Badge>
+                {selectedNgoModal.verified || selectedNgoModal.source === 'FOODBRIDGE' ? (
+                  <Badge variant="success"><FiShield className="inline h-3 w-3 mr-1" />Verified Partner</Badge>
+                ) : (
+                  <Badge variant="warning">Nearby Organization</Badge>
+                )}
               </div>
               <div className="text-right">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Match Score</span>
-                <span className="text-base font-extrabold text-[#428475]">{formatMatchScore(selectedNgoModal.matchScore)}</span>
+                {(selectedNgoModal.matchScore !== undefined && selectedNgoModal.matchScore !== null) && (
+                  <>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Match Score</span>
+                    <span className="text-base font-extrabold text-[#428475]">{formatMatchScore(selectedNgoModal.matchScore)}</span>
+                  </>
+                )}
               </div>
             </div>
 
             <div className="space-y-2">
-              <div><strong className="text-slate-500 uppercase text-[10px] block">Location / City</strong> {selectedNgoModal.city || 'Local Region'}</div>
+              <div><strong className="text-slate-500 uppercase text-[10px] block">Location / City</strong> {selectedNgoModal.city || selectedNgoModal.address || 'Local Region'}</div>
               <div><strong className="text-slate-500 uppercase text-[10px] block">Calculated Distance</strong> {selectedNgoModal.distanceKm != null ? `${selectedNgoModal.distanceKm} km` : 'N/A'}</div>
+
+              {/* Capacity info */}
+              {selectedNgoModal.capacityMatch === true && (
+                <div className="flex items-center gap-2 text-emerald-700">
+                  <FiCheckCircle className="h-3.5 w-3.5" />
+                  <span>Capacity Compatible — Available: {selectedNgoModal.availableCapacity}, Needed: {donation.quantity}</span>
+                </div>
+              )}
+              {selectedNgoModal.capacityMatch === false && (
+                <div className="flex items-center gap-2 text-red-600">
+                  <FiXCircle className="h-3.5 w-3.5" />
+                  <span>Insufficient Capacity — Available: {selectedNgoModal.availableCapacity}, Needed: {donation.quantity}</span>
+                </div>
+              )}
+
+              {/* Category info */}
+              {selectedNgoModal.categoryMatch === true && (
+                <div className="flex items-center gap-2 text-emerald-700">
+                  <FiCheckCircle className="h-3.5 w-3.5" />
+                  <span>Food Category Accepted</span>
+                </div>
+              )}
+              {selectedNgoModal.categoryMatch === false && (
+                <div className="flex items-center gap-2 text-red-600">
+                  <FiXCircle className="h-3.5 w-3.5" />
+                  <span>Food Category Not Accepted</span>
+                </div>
+              )}
+
+              {/* Workload */}
+              {selectedNgoModal.currentWorkload != null && (
+                <div className="flex items-center gap-2 text-amber-700">
+                  <FiActivity className="h-3.5 w-3.5" />
+                  <span>Current Workload: {selectedNgoModal.currentWorkload} active requests</span>
+                </div>
+              )}
+
               {selectedNgoModal.phone && (
                 <div className="flex items-center gap-2"><FiPhone className="h-3.5 w-3.5 text-[#428475]" /> <span>{selectedNgoModal.phone}</span></div>
               )}
@@ -354,6 +493,18 @@ const DonationDetails = () => {
                   {selectedNgoModal.factors.urgency && (
                     <div><span className="block text-[9px] uppercase text-slate-400 font-bold">Urgency</span> <span className="font-extrabold text-[#428475]">{selectedNgoModal.factors.urgency}</span></div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Food types accepted */}
+            {Array.isArray(selectedNgoModal.foodTypesAccepted) && selectedNgoModal.foodTypesAccepted.length > 0 && (
+              <div className="pt-2 border-t border-slate-100">
+                <strong className="text-slate-500 uppercase text-[10px] block mb-2">Accepted Food Types</strong>
+                <div className="flex flex-wrap gap-1.5">
+                  {selectedNgoModal.foodTypesAccepted.map((t, i) => (
+                    <Badge key={i} variant="secondary">{t}</Badge>
+                  ))}
                 </div>
               </div>
             )}
