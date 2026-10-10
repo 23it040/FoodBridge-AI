@@ -128,7 +128,7 @@ const Dashboard = () => {
             >
               <DataTable
                 columns={[
-                  { key: 'foodName', title: 'Food Item', render: (r) => <span className="font-bold text-[#1A312C]">{r.foodName || r.name}</span> },
+                  { key: 'foodName', title: 'Food Item', render: (r) => <span className="font-bold text-[#292B29]">{r.foodName || r.name}</span> },
                   { key: 'status', title: 'Status', render: (r) => <Badge variant={r.status === 'AVAILABLE' ? 'success' : 'default'}>{r.status || 'AVAILABLE'}</Badge> }
                 ]}
                 data={recentDonations}
@@ -148,7 +148,7 @@ const Dashboard = () => {
             >
               <DataTable
                 columns={[
-                  { key: 'ngoName', title: 'NGO', render: (r) => <span className="font-bold text-[#1A312C]">{r.ngoId?.name || r.ngoName || 'NGO'}</span> },
+                  { key: 'ngoName', title: 'NGO', render: (r) => <span className="font-bold text-[#292B29]">{r.ngoId?.name || r.ngoName || 'NGO'}</span> },
                   { key: 'status', title: 'Status', render: (r) => <Badge variant={r.status === 'ACCEPTED' ? 'success' : 'warning'}>{r.status || 'PENDING'}</Badge> }
                 ]}
                 data={recentRequests}

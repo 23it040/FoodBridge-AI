@@ -4,7 +4,7 @@ import Footer from '../components/layout/Footer';
 import ErrorBoundary from '../components/error/ErrorBoundary';
 
 const MainLayout = () => (
-  <div className="min-h-screen bg-[#0A1A1A] text-white flex flex-col justify-between overflow-x-hidden">
+  <div className="min-h-screen bg-[#FAF7F2] text-[#292B29] flex flex-col justify-between overflow-x-hidden">
     <Navigation />
     <main className="w-full flex-grow">
       <ErrorBoundary>

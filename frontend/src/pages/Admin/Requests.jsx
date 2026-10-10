@@ -49,8 +49,8 @@ const Requests = () => {
         const food = row.foodId || row.donation;
         return (
           <div>
-            <span className="font-extrabold text-[#1A312C]">{food?.foodName || row.donationName || 'Food Item'}</span>
-            {food?.category && <span className="ml-2 text-xs font-semibold text-slate-500">({food.category})</span>}
+            <span className="font-extrabold text-[#292B29]">{food?.foodName || row.donationName || 'Food Item'}</span>
+            {food?.category && <span className="ml-2 text-xs font-semibold text-[#626760]">({food.category})</span>}
           </div>
         );
       }
@@ -62,8 +62,8 @@ const Requests = () => {
         const ngo = row.ngoId || row.ngo;
         return (
           <div>
-            <div className="text-xs font-bold text-[#1A312C]">{ngo?.name || row.ngoName || 'NGO Partner'}</div>
-            <div className="text-xs text-slate-500">{ngo?.email || ''}</div>
+            <div className="text-xs font-bold text-[#292B29]">{ngo?.name || row.ngoName || 'NGO Partner'}</div>
+            <div className="text-xs text-[#626760]">{ngo?.email || ''}</div>
           </div>
         );
       }
@@ -73,7 +73,7 @@ const Requests = () => {
       title: 'Donor',
       render: (row) => {
         const donor = row.donorId || row.donor;
-        return <span className="text-xs font-semibold text-slate-700">{donor?.name || 'Donor'}</span>;
+        return <span className="text-xs font-semibold text-[#292B29]">{donor?.name || 'Donor'}</span>;
       }
     },
     {
@@ -124,15 +124,15 @@ const Requests = () => {
       />
 
       <Card>
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/30 p-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1A312C]">
-            <FiFilter className="h-4 w-4 text-[#428475]" />
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-4">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#292B29]">
+            <FiFilter className="h-4 w-4 text-[#BD715C]" />
             <span>Filter Status</span>
           </div>
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+            className="rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
           >
             <option value="">All Statuses</option>
             <option value="PENDING">PENDING</option>
@@ -177,37 +177,37 @@ const Requests = () => {
       {selectedRequest && (
         <Modal isOpen={Boolean(selectedRequest)} onClose={() => setSelectedRequest(null)} title="Food Request Details">
           <div className="space-y-4 text-xs">
-            <div className="rounded-xl border border-slate-200 p-3 bg-slate-50">
-              <span className="font-bold text-[#1A312C] text-sm">
+            <div className="rounded-xl border border-[#E6DED6] p-3 bg-[#FAF7F2]">
+              <span className="font-bold text-[#292B29] text-sm">
                 Request #{selectedRequest._id ? selectedRequest._id.slice(-6) : 'ID'}
               </span>
-              <div className="text-slate-600 mt-1">
+              <div className="text-[#626760] mt-1">
                 Message: {selectedRequest.requestMessage || 'No custom message.'}
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <span className="font-bold text-slate-700">Food Item:</span>
-                <p className="font-semibold text-slate-900">{selectedRequest.foodId?.foodName || selectedRequest.donationName || 'Food'}</p>
+                <span className="font-bold text-[#626760]">Food Item:</span>
+                <p className="font-semibold text-[#292B29]">{selectedRequest.foodId?.foodName || selectedRequest.donationName || 'Food'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Quantity:</span>
-                <p className="font-semibold text-slate-900">{selectedRequest.foodId?.quantity || 'N/A'}</p>
+                <span className="font-bold text-[#626760]">Quantity:</span>
+                <p className="font-semibold text-[#292B29]">{selectedRequest.foodId?.quantity || 'N/A'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">NGO Partner:</span>
-                <p className="font-semibold text-slate-900">{selectedRequest.ngoId?.name || 'NGO'}</p>
+                <span className="font-bold text-[#626760]">NGO Partner:</span>
+                <p className="font-semibold text-[#292B29]">{selectedRequest.ngoId?.name || 'NGO'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Donor:</span>
-                <p className="font-semibold text-slate-900">{selectedRequest.donorId?.name || 'Donor'}</p>
+                <span className="font-bold text-[#626760]">Donor:</span>
+                <p className="font-semibold text-[#292B29]">{selectedRequest.donorId?.name || 'Donor'}</p>
               </div>
             </div>
 
-            <div className="border-t border-slate-200 pt-3">
-              <span className="font-bold text-slate-700">Current Status:</span>
-              <p className="font-extrabold text-[#428475]">{selectedRequest.status}</p>
+            <div className="border-t border-[#E6DED6] pt-3">
+              <span className="font-bold text-[#626760]">Current Status:</span>
+              <p className="font-extrabold text-[#BD715C]">{selectedRequest.status}</p>
             </div>
 
             <div className="flex justify-end pt-3">

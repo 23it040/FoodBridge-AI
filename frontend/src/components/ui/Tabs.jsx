@@ -6,10 +6,10 @@ const Tabs = ({ tabs = [], activeTab, onChange, className = '' }) => (
           key={tab.value}
           type="button"
           onClick={() => onChange(tab.value)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+          className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
             activeTab === tab.value
-              ? 'bg-secondary text-white'
-              : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              ? 'bg-[#BD715C] text-white shadow-xs'
+              : 'bg-[#FAF7F2] text-[#626760] border border-[#E6DED6] hover:bg-[#F3DED6]/40 hover:text-[#292B29]'
           }`}
         >
           {tab.label}

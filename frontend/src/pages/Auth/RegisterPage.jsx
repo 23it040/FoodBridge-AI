@@ -74,13 +74,13 @@ const RegisterPage = () => {
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
       {/* HEADINGS */}
       <div className="text-center space-y-1">
-        <h2 className="text-2xl font-black text-white tracking-tight">Create Your Account</h2>
-        <p className="text-xs font-semibold text-[#A7B8B3]">Select your account type to join the FoodBridge network</p>
+        <h2 className="text-2xl font-black text-[#292B29] tracking-tight">Create Your Account</h2>
+        <p className="text-xs font-semibold text-[#626760]">Select your account type to join the FoodBridge network</p>
       </div>
 
       {/* VISUAL ROLE SELECTION CARDS */}
       <div className="space-y-2">
-        <label className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+        <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
           Choose Account Type
         </label>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -94,25 +94,25 @@ const RegisterPage = () => {
                 onClick={() => setValue('role', r.value, { shouldValidate: true })}
                 className={`relative flex flex-col items-center justify-between rounded-xl border p-3.5 text-center transition-all ${
                   isSelected
-                    ? 'border-[#79D6B2] bg-[#79D6B2]/15 text-white shadow-[0_0_15px_rgba(121,214,178,0.2)]'
-                    : 'border-white/10 bg-[#061918]/60 text-[#A7B8B3] hover:border-white/25 hover:text-white'
+                    ? 'border-[#BD715C] bg-[#F3DED6]/40 text-[#292B29] shadow-xs'
+                    : 'border-[#E6DED6] bg-white text-[#626760] hover:border-[#BD715C]/40 hover:text-[#292B29]'
                 }`}
               >
                 {isSelected && (
-                  <span className="absolute top-2 right-2 text-[#79D6B2]">
+                  <span className="absolute top-2 right-2 text-[#BD715C]">
                     <FiCheckCircle className="h-3.5 w-3.5" />
                   </span>
                 )}
                 <div
                   className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    isSelected ? 'bg-[#79D6B2] text-[#0A1A1A]' : 'bg-white/5 text-[#A7B8B3]'
+                    isSelected ? 'bg-[#BD715C] text-white shadow-xs' : 'bg-[#FAF7F2] text-[#626760]'
                   }`}
                 >
                   <Icon className="h-4.5 w-4.5" />
                 </div>
                 <div className="mt-2.5">
-                  <span className="block text-xs font-extrabold text-white">{r.label}</span>
-                  <span className="block text-[10px] text-[#A7B8B3] leading-tight mt-0.5">{r.subLabel}</span>
+                  <span className="block text-xs font-extrabold text-[#292B29]">{r.label}</span>
+                  <span className="block text-[10px] text-[#626760] leading-tight mt-0.5">{r.subLabel}</span>
                 </div>
               </button>
             );
@@ -126,22 +126,22 @@ const RegisterPage = () => {
       <div className="grid gap-4 sm:grid-cols-2">
         {/* FULL NAME */}
         <div className="sm:col-span-2">
-          <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="name" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Full Name
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiUser className="h-4 w-4" />
             </div>
             <input
               id="name"
               placeholder="John Doe"
               {...register('name', { required: 'Full Name is required' })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.name && (
-            <p className="mt-1 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.name.message}
             </p>
           )}
@@ -149,11 +149,11 @@ const RegisterPage = () => {
 
         {/* EMAIL ADDRESS */}
         <div className="sm:col-span-2">
-          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Email Address
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiMail className="h-4 w-4" />
             </div>
             <input
@@ -167,11 +167,11 @@ const RegisterPage = () => {
                   message: 'Enter a valid email address'
                 }
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.email && (
-            <p className="mt-1 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.email.message}
             </p>
           )}
@@ -179,11 +179,11 @@ const RegisterPage = () => {
 
         {/* PASSWORD */}
         <div>
-          <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Password
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiLock className="h-4 w-4" />
             </div>
             <input
@@ -194,11 +194,11 @@ const RegisterPage = () => {
                 required: 'Password is required',
                 minLength: { value: 8, message: 'Password must be at least 8 characters' }
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.password && (
-            <p className="mt-1 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.password.message}
             </p>
           )}
@@ -206,11 +206,11 @@ const RegisterPage = () => {
 
         {/* CONFIRM PASSWORD */}
         <div>
-          <label htmlFor="confirmPassword" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="confirmPassword" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Confirm Password
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiLock className="h-4 w-4" />
             </div>
             <input
@@ -221,11 +221,11 @@ const RegisterPage = () => {
                 required: 'Please confirm your password',
                 validate: (value) => value === password || 'Passwords do not match'
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.confirmPassword && (
-            <p className="mt-1 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.confirmPassword.message}
             </p>
           )}
@@ -237,11 +237,11 @@ const RegisterPage = () => {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full py-3.5 bg-[#79D6B2] hover:bg-[#68D8B0] text-[#0A1A1A] font-extrabold rounded-xl shadow-[0_0_20px_rgba(121,214,178,0.25)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          className="w-full py-3.5 bg-[#BD715C] hover:bg-[#A85F4D] text-white font-extrabold rounded-full shadow-[0_4px_14px_rgba(189,113,92,0.25)] hover:shadow-[0_6px_20px_rgba(189,113,92,0.35)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm hover:-translate-y-0.5"
         >
           {submitting ? (
             <>
-              <svg className="h-4 w-4 animate-spin text-[#0A1A1A]" viewBox="0 0 24 24" fill="none">
+              <svg className="h-4 w-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
@@ -257,9 +257,9 @@ const RegisterPage = () => {
       </div>
 
       {/* FOOTER SWITCH */}
-      <div className="pt-2 text-center text-xs font-medium text-[#A7B8B3]">
+      <div className="pt-2 text-center text-xs font-medium text-[#626760]">
         Already have an account?{' '}
-        <Link to="/auth/login" className="font-extrabold text-[#79D6B2] hover:underline">
+        <Link to="/auth/login" className="font-extrabold text-[#BD715C] hover:underline">
           Sign In
         </Link>
       </div>

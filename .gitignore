@@ -49,3 +49,7 @@ backend/uploads/*
 Thumbs.db
 desktop.ini
 .vscode/
+
+# Root verification captures and raw media
+/*.png
+/*.mp4

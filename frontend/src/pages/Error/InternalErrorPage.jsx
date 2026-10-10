@@ -13,7 +13,7 @@ const InternalErrorPage = ({ error }) => (
         action={(
           <div className="flex items-center justify-center gap-3">
             <Button onClick={() => window.location.reload()}>Retry Page</Button>
-            <Button variant="outline" onClick={() => (window.location.href = '/')} className="bg-white text-[#428475] border-[#428475]">
+            <Button variant="secondary" onClick={() => (window.location.href = '/')}>
               Return Home
             </Button>
           </div>

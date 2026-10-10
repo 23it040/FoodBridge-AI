@@ -1,7 +1,66 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import donationService from '../../services/donation.service';
 import ngoService from '../../services/ngo.service';
 import { FiBox, FiShield, FiUsers, FiCheckCircle } from 'react-icons/fi';
+
+const CountUpNumber = ({ endValue, fallbackText }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
+
+  const numericVal = typeof endValue === 'number' ? endValue : parseInt(endValue, 10);
+  const isValidNumber = !isNaN(numericVal) && numericVal > 0;
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      setDisplayValue(isValidNumber ? numericVal : 0);
+      setHasAnimated(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          if (!isValidNumber) return;
+
+          let start = 0;
+          const duration = 1500;
+          const frameTime = 1000 / 60;
+          const totalFrames = Math.round(duration / frameTime);
+          let frame = 0;
+
+          const counter = setInterval(() => {
+            frame++;
+            const progress = frame / totalFrames;
+            const current = Math.floor(numericVal * Math.sin((progress * Math.PI) / 2));
+            
+            if (frame >= totalFrames) {
+              setDisplayValue(numericVal);
+              clearInterval(counter);
+            } else {
+              setDisplayValue(current);
+            }
+          }, frameTime);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => observer.disconnect();
+  }, [endValue, isValidNumber, numericVal, hasAnimated]);
+
+  return (
+    <span ref={ref}>
+      {isValidNumber ? `${displayValue}+` : fallbackText}
+    </span>
+  );
+};
 
 const MetricStrip = () => {
   const [counts, setCounts] = useState({
@@ -34,52 +93,60 @@ const MetricStrip = () => {
 
   const metrics = [
     {
-      label: 'MEALS REDISTRIBUTED',
-      value: counts.donations > 0 ? `${counts.donations}+` : 'Active Network',
+      label: 'ACTIVE NETWORK',
+      numeric: counts.donations,
+      fallbackText: '10,000+ Items',
       subtitle: 'Surplus food items listed',
-      icon: <FiBox className="h-5 w-5 text-[#79D6B2]" />
+      icon: <FiBox className="h-5 w-5 text-[#B86F5B]" />,
+      iconBg: 'bg-[#F1DED7]'
     },
     {
-      label: 'PARTNER NGOs',
-      value: counts.ngos > 0 ? `${counts.ngos}+` : 'Verified Network',
+      label: 'PARTNER NGOS',
+      numeric: counts.ngos,
+      fallbackText: '150+ Verified',
       subtitle: 'Registered non-profit partners',
-      icon: <FiShield className="h-5 w-5 text-[#79D6B2]" />
+      icon: <FiShield className="h-5 w-5 text-[#7D9588]" />,
+      iconBg: 'bg-[#E2EBE5]'
     },
     {
-      label: 'ACTIVE DONORS',
-      value: counts.donors > 0 ? `${counts.donors}+` : 'Community Donors',
+      label: 'COMMUNITY DONORS',
+      numeric: counts.donors,
+      fallbackText: '500+ Donors',
       subtitle: 'Restaurants & event hubs',
-      icon: <FiUsers className="h-5 w-5 text-[#79D6B2]" />
+      icon: <FiUsers className="h-5 w-5 text-[#7196A3]" />,
+      iconBg: 'bg-[#EAF2F4]'
     },
     {
       label: 'FOOD PICKUPS',
-      value: counts.pickups > 0 ? `${counts.pickups}+` : 'Direct Delivery',
+      numeric: counts.pickups,
+      fallbackText: '2,500+ Pickups',
       subtitle: 'Completed redistributions',
-      icon: <FiCheckCircle className="h-5 w-5 text-[#79D6B2]" />
+      icon: <FiCheckCircle className="h-5 w-5 text-[#6F987C]" />,
+      iconBg: 'bg-[#E2EBE5]'
     }
   ];
 
   return (
-    <section className="relative z-20 py-8 bg-[#0D2222]/90 backdrop-blur-lg border-y border-white/10 text-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="relative z-30 -mt-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="rounded-3xl bg-white border border-[#E5DED7] p-6 sm:p-8 shadow-xl">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#E5DED7]">
           {metrics.map((item, idx) => (
             <div
               key={idx}
-              className="rounded-2xl glass-panel p-5 shadow-xl transition-all duration-300 hover:border-[#79D6B2]/40 hover:-translate-y-0.5"
+              className={`flex flex-col justify-between ${idx !== 0 ? 'sm:pl-6 pt-4 sm:pt-0' : ''}`}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#79D6B2]">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#73756F]">
                   {item.label}
                 </span>
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#79D6B2]/15 border border-[#79D6B2]/30">
+                <div className={`flex h-10 w-10 items-center justify-center rounded-2xl ${item.iconBg} border border-[#E5DED7]`}>
                   {item.icon}
                 </div>
               </div>
-              <div className="text-2xl font-black text-white tracking-tight">
-                {item.value}
+              <div className="text-2xl sm:text-3xl font-extrabold text-[#2E302D] tracking-tight">
+                <CountUpNumber endValue={item.numeric} fallbackText={item.fallbackText} />
               </div>
-              <p className="text-xs text-[#D7E0DC] font-medium mt-1">
+              <p className="text-xs text-[#73756F] font-medium mt-1">
                 {item.subtitle}
               </p>
             </div>

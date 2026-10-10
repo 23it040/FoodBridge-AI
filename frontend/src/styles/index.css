@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark light;
+  color-scheme: light;
   font-family: 'Inter', 'Manrope', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  background-color: #0A1A1A;
-  color: #FFFFFF;
+  background-color: #FAF7F2;
+  color: #292B29;
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #0A1A1A;
+  background-color: #FAF7F2;
 }
 
 body {
   min-height: 100vh;
-  background-color: #0A1A1A;
-  color: #FFFFFF;
+  background-color: #FAF7F2;
+  color: #292B29;
 }
 
 button,
@@ -28,8 +28,32 @@ select {
 }
 
 ::selection {
-  background-color: #79D6B2;
-  color: #102A2A;
+  background-color: #F3DED6;
+  color: #BD715C;
+}
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(-4px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+.animate-float-soft {
+  animation: floatSoft 5s ease-in-out infinite;
+}
+
+.animate-float-soft-delayed {
+  animation: floatSoft 5s ease-in-out 2.5s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-soft,
+  .animate-float-soft-delayed {
+    animation: none !important;
+  }
 }
 
 /* ============================================================
@@ -62,6 +86,8 @@ select {
 .foodbridge-map-container:active .gm-style canvas,
 .foodbridge-map-container:active .gm-style > div,
 .foodbridge-map-container.is-dragging .gm-style,
+.foodbridge-map-container:active .gm-style canvas,
+.foodbridge-map-container:active .gm-style > div,
 .foodbridge-map-container.is-dragging .gm-style canvas,
 .foodbridge-map-container.is-dragging .gm-style > div {
   cursor: grabbing !important;
@@ -82,63 +108,91 @@ select {
 }
 
 @layer components {
+  .dashboard-background {
+    min-height: 100%;
+    background-color: #FAF7F2;
+    background-image: url("/images/foodbridge-dashboard-background.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  @media (max-width: 768px) {
+    .dashboard-background {
+      background-attachment: scroll;
+    }
+  }
+
+  .auth-background {
+    min-height: 100%;
+    background-color: #FAF7F2;
+    background-image: url("/images/foodbridge-auth-bg.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+
+  @media (max-width: 768px) {
+    .auth-background {
+      background-attachment: scroll;
+      background-position: center top;
+    }
+  }
+
   .card {
-    @apply rounded-2xl bg-white/5 backdrop-blur-md p-6 shadow-card border border-white/10 transition-all duration-200 hover:shadow-elevated hover:border-[#79D6B2]/40;
+    @apply rounded-[24px] bg-white/90 backdrop-blur-md p-6 shadow-card border border-[#E6DED6] transition-all duration-300 hover:shadow-elevated hover:border-[#BD715C]/30;
   }
 
   .glass-panel {
-    background: rgba(16, 42, 42, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid #E6DED6;
+    box-shadow: 0 8px 30px rgba(41, 43, 41, 0.04);
   }
 
   .glass-pill {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    background: #E6EEE8;
+    border: 1px solid #E6DED6;
+    color: #7D9588;
   }
 
   .glass-nav {
-    background: rgba(10, 26, 26, 0.78);
+    background: rgba(255, 255, 255, 0.90);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    border: 1px solid #E6DED6;
+    box-shadow: 0 4px 20px rgba(41, 43, 41, 0.04);
   }
 
   .glass-btn-primary {
-    background: rgba(121, 214, 178, 0.22);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(121, 214, 178, 0.45);
+    background: #BD715C;
     color: #FFFFFF;
-    box-shadow: 0 4px 20px rgba(121, 214, 178, 0.2);
+    border: 1px solid #BD715C;
+    box-shadow: 0 4px 15px rgba(189, 113, 92, 0.25);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-btn-primary:hover {
-    background: rgba(121, 214, 178, 0.38);
-    border-color: rgba(121, 214, 178, 0.7);
-    box-shadow: 0 6px 25px rgba(121, 214, 178, 0.38);
-    transform: translateY(-2px);
+    background: #A85F4D;
+    border-color: #A85F4D;
+    box-shadow: 0 6px 20px rgba(189, 113, 92, 0.35);
+    transform: translateY(-1px);
   }
 
   .glass-btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    color: #FFFFFF;
+    background: #FFFFFF;
+    border: 1px solid #E6DED6;
+    color: #292B29;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .glass-btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
+    background: #F3DED6;
+    border-color: #BD715C;
+    color: #292B29;
+    transform: translateY(-1px);
   }
 }

@@ -6,7 +6,7 @@ import React from 'react';
  * Displays a clean, professional Google Maps-style location pin containing a minimal
  * flat vector building icon for NGO locations.
  *
- * Color: FoodBridge Green (#2F8F72 / #15803D) with crisp white inner disc.
+ * Color: FoodBridge Terracotta (#BD715C / #A85F4D) with crisp white inner disc.
  * Anchor: Pin tip at bottom-center (transform: translate(-50%, -100%)).
  */
 const NGOPinIcon = ({ size = 42 }) => {
@@ -32,21 +32,21 @@ const NGOPinIcon = ({ size = 42 }) => {
         height={height}
         fill="none"
       >
-        {/* Outer Pin Body (Dark Green Outline) */}
+        {/* Outer Pin Body (Terracotta Dark Outline) */}
         <path
           d="M21 0C9.402 0 0 9.402 0 21c0 14.174 19.21 27.637 20.035 28.217a1.6 1.6 0 0 0 1.93 0C22.79 48.637 42 35.174 42 21 42 9.402 32.598 0 21 0Z"
-          fill="#15803D"
+          fill="#A85F4D"
         />
-        {/* Inner Pin Body (FoodBridge Green Fill) */}
+        {/* Inner Pin Body (FoodBridge Terracotta Fill) */}
         <path
           d="M21 2C10.5 2 2 10.5 2 21c0 12.8 17.1 25.1 19 26.5 1.9-1.4 19-13.7 19-26.5C40 10.5 31.5 2 21 2Z"
-          fill="#2F8F72"
+          fill="#BD715C"
         />
         {/* Inner White Disc */}
         <circle cx="21" cy="19" r="12.5" fill="#FFFFFF" />
 
         {/* Vector NGO Organization Building Icon */}
-        <path d="M14 26V13.5l7-3.5 7 3.5V26H14Z" fill="#2F8F72" />
+        <path d="M14 26V13.5l7-3.5 7 3.5V26H14Z" fill="#BD715C" />
         <rect x="16.5" y="16" width="2.5" height="2.5" rx="0.5" fill="#FFFFFF" />
         <rect x="23" y="16" width="2.5" height="2.5" rx="0.5" fill="#FFFFFF" />
         <rect x="16.5" y="20.5" width="2.5" height="2.5" rx="0.5" fill="#FFFFFF" />

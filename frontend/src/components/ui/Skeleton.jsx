@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 const Skeleton = ({ className = '' }) => (
-  <div className={`animate-pulse rounded-2xl bg-[#89D7B7]/25 ${className}`} />
+  <div className={`animate-pulse rounded-2xl bg-[#E6DED6]/60 ${className}`} />
 );
 
 export default memo(Skeleton);

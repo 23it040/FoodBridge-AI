@@ -40,15 +40,15 @@ const Settings = () => {
     <section className="py-6 space-y-6">
       <PageHeader title="Account Settings" subtitle="Preferences, active sessions, and security governance" />
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <Card title="Account Overview" icon={<FiSettings className="h-5 w-5" />}>
-          <div className="space-y-3 text-xs font-medium text-[#102A2A]">
-            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
-              <span className="text-[#687370] font-semibold uppercase tracking-wider">Signed in as</span>
-              <span className="font-extrabold text-[#102A2A] text-sm">{user?.email || 'User'}</span>
+        <Card title="Account Overview" icon={<FiSettings className="h-5 w-5 text-[#BD715C]" />}>
+          <div className="space-y-3 text-xs font-medium text-[#292B29]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <span className="text-[#626760] font-semibold uppercase tracking-wider">Signed in as</span>
+              <span className="font-extrabold text-[#292B29] text-sm">{user?.email || 'User'}</span>
             </div>
-            <div className="flex items-center justify-between p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
-              <span className="text-[#687370] font-semibold uppercase tracking-wider">Platform Role</span>
-              <span className="font-extrabold text-[#2F8F72] uppercase text-xs px-2.5 py-1 rounded-full bg-[#E8F6F0] border border-[#79D6B2]">
+            <div className="flex items-center justify-between p-3 rounded-xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <span className="text-[#626760] font-semibold uppercase tracking-wider">Platform Role</span>
+              <span className="font-extrabold text-[#BD715C] uppercase text-xs px-2.5 py-1 rounded-full bg-[#F3DED6] border border-[#BD715C]/30">
                 {user?.role || 'user'}
               </span>
             </div>
@@ -65,14 +65,14 @@ const Settings = () => {
           </div>
         </Card>
 
-        <Card title="Security & Sessions" icon={<FiShield className="h-5 w-5" />}>
-          <div className="space-y-3 text-xs font-medium text-[#687370]">
-            <div className="p-3 rounded-xl bg-[#E8F6F0]/50 border border-[#79D6B2]">
-              <strong className="text-[#102A2A] block font-extrabold">Active Authentication Session</strong>
+        <Card title="Security & Sessions" icon={<FiShield className="h-5 w-5 text-[#BD715C]" />}>
+          <div className="space-y-3 text-xs font-medium text-[#626760]">
+            <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <strong className="text-[#292B29] block font-extrabold">Active Authentication Session</strong>
               JWT Bearer Token active. Session auto-renews upon API requests.
             </div>
-            <div className="p-3 rounded-xl bg-[#F6F7F4] border border-[#DDE5E1]">
-              <strong className="text-[#102A2A] block font-extrabold">Data Protection & Privacy</strong>
+            <div className="p-3 rounded-xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <strong className="text-[#292B29] block font-extrabold">Data Protection & Privacy</strong>
               All donor and NGO records are encrypted and stored in secure MongoDB clusters.
             </div>
           </div>

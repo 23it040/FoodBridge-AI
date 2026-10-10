@@ -239,16 +239,16 @@ const DonateFood = () => {
               <input
                 {...register('name', { required: 'Food name is required' })}
                 placeholder="e.g. Fresh Veg Biryani & Curry"
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
-              {errors.name && <p className="mt-1 text-xs font-semibold text-red-600">{errors.name.message}</p>}
+              {errors.name && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.name.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Category</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Category</label>
               <select
                 {...register('category')}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               >
                 <option value="Cooked Meals">Cooked Meals</option>
                 <option value="Milk / Dairy">Milk / Dairy</option>
@@ -260,10 +260,10 @@ const DonateFood = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Meal Type</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Meal Type</label>
               <select
                 {...register('mealType')}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               >
                 <option value="Veg">Vegetarian</option>
                 <option value="Non-Veg">Non-Vegetarian</option>
@@ -273,7 +273,7 @@ const DonateFood = () => {
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Quantity *</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Quantity *</label>
               <input
                 type="number"
                 min={1}
@@ -282,14 +282,14 @@ const DonateFood = () => {
                   valueAsNumber: true,
                   min: { value: 1, message: 'Quantity must be at least 1' }
                 })}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Unit</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Unit</label>
               <select
                 {...register('unit')}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               >
                 <option value="servings">servings / meals</option>
                 <option value="kg">kilograms (kg)</option>
@@ -300,7 +300,7 @@ const DonateFood = () => {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Pickup Address</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Pickup Address</label>
               <Button
                 type="button"
                 variant="outline"
@@ -309,21 +309,21 @@ const DonateFood = () => {
                 loading={locating}
                 className="gap-1.5 text-xs py-1 px-3"
               >
-                <FiNavigation className="h-3.5 w-3.5 text-[#428475]" />
+                <FiNavigation className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Use Current Location</span>
               </Button>
             </div>
             <input
               {...register('pickupAddress', { required: 'Pickup address is required' })}
               placeholder="e.g. Community Kitchen #4, Connaught Place"
-              className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
-            {errors.pickupAddress && <p className="mt-1 text-xs font-semibold text-red-600">{errors.pickupAddress.message}</p>}
+            {errors.pickupAddress && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.pickupAddress.message}</p>}
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Latitude</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Latitude</label>
               <input
                 type="number"
                 step="any"
@@ -332,13 +332,13 @@ const DonateFood = () => {
                   min: { value: -90, message: 'Latitude must be between -90 and 90' },
                   max: { value: 90, message: 'Latitude must be between -90 and 90' }
                 })}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
-              {errors.latitude && <p className="mt-1 text-xs font-semibold text-red-600">{errors.latitude.message}</p>}
+              {errors.latitude && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.latitude.message}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Longitude</label>
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Longitude</label>
               <input
                 type="number"
                 step="any"
@@ -347,23 +347,23 @@ const DonateFood = () => {
                   min: { value: -180, message: 'Longitude must be between -180 and 180' },
                   max: { value: 180, message: 'Longitude must be between -180 and 180' }
                 })}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
-              {errors.longitude && <p className="mt-1 text-xs font-semibold text-red-600">{errors.longitude.message}</p>}
+              {errors.longitude && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.longitude.message}</p>}
             </div>
           </div>
 
           <div>
             <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                <FiMapPin className="h-4 w-4 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] flex items-center gap-1.5">
+                <FiMapPin className="h-4 w-4 text-[#BD715C]" />
                 <span>Pickup Location Map (Click map to adjust pin)</span>
               </label>
 
               {/* Marker Legend */}
-              <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold text-slate-600">
+              <div className="flex flex-wrap items-center gap-3 text-[11px] font-semibold text-[#626760]">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-red-600 shadow-xs" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-600 shadow-xs" />
                   <span>Pickup Location (Draggable)</span>
                 </div>
                 {deviceLocation && (
@@ -379,7 +379,7 @@ const DonateFood = () => {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+            <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
               <GoogleMap
                 center={validPickupLocation || NEUTRAL_CENTER}
                 zoom={14}
@@ -413,31 +413,31 @@ const DonateFood = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">Food Description & Handling Notes</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Food Description & Handling Notes</label>
             <textarea
               {...register('description')}
               rows={3}
               placeholder="Freshly prepared at 2 PM. Packed in hygienic food-grade containers..."
-              className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-medium text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+              className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-medium text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1">
-                <FiCalendar className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] flex items-center gap-1">
+                <FiCalendar className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Cooked / Prepared Time *</span>
               </label>
               <input
                 type="datetime-local"
                 {...register('cookedTime', { required: 'Cooked time is required' })}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
-              {errors.cookedTime && <p className="mt-1 text-xs font-semibold text-red-600">{errors.cookedTime.message}</p>}
+              {errors.cookedTime && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.cookedTime.message}</p>}
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1">
-                <FiCalendar className="h-3.5 w-3.5 text-red-600" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] flex items-center gap-1">
+                <FiCalendar className="h-3.5 w-3.5 text-rose-600" />
                 <span>Best Before / Expiry Time *</span>
               </label>
               <input
@@ -446,24 +446,24 @@ const DonateFood = () => {
                   required: 'Expiry time is required',
                   validate: (value, values) => new Date(value) > new Date(values.cookedTime) || 'Expiry must be after cooked time'
                 })}
-                className="mt-1.5 w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none transition focus:border-[#428475] focus:ring-2 focus:ring-[#428475]/20"
+                className="mt-1.5 w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
               />
-              {errors.expiryTime && <p className="mt-1 text-xs font-semibold text-red-600">{errors.expiryTime.message}</p>}
+              {errors.expiryTime && <p className="mt-1 text-xs font-semibold text-rose-600">{errors.expiryTime.message}</p>}
             </div>
           </div>
 
-          <div className="p-4 rounded-2xl border border-dashed border-[#89D7B7] bg-[#FFF4E1]/30">
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1.5">
-              <FiUpload className="h-4 w-4 text-[#428475]" />
+          <div className="p-4 rounded-2xl border border-dashed border-[#E6DED6] bg-[#FAF7F2]">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1.5">
+              <FiUpload className="h-4 w-4 text-[#BD715C]" />
               <span>FOOD IMAGE UPLOAD *</span>
             </label>
-            <p className="text-[11px] font-medium text-slate-500 mb-2">Upload a clear photo of the food.</p>
+            <p className="text-[11px] font-medium text-[#626760] mb-2">Upload a clear photo of the food.</p>
             <input
               ref={fileRef}
               type="file"
               accept="image/jpeg,image/png,image/webp,image/jpg"
               onChange={handleImageChange}
-              className="text-xs text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#428475] file:text-white hover:file:bg-[#1A312C]"
+              className="text-xs text-[#626760] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-[#BD715C] file:text-white hover:file:bg-[#A85F4D] file:transition-colors file:cursor-pointer"
             />
             {imageError && <p className="mt-1.5 text-xs font-semibold text-red-600">{imageError}</p>}
             {imagePreview && (

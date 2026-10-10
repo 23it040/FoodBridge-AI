@@ -49,8 +49,8 @@ const AuditLogs = () => {
         if (!u) return <span className="text-xs text-slate-400">System</span>;
         return (
           <div>
-            <div className="text-xs font-bold text-[#1A312C]">{u.name || u.email || 'Admin'}</div>
-            {u.role && <div className="text-xs text-slate-500">({u.role})</div>}
+            <div className="text-xs font-bold text-[#292B29]">{u.name || u.email || 'Admin'}</div>
+            {u.role && <div className="text-xs text-[#626760]">({u.role})</div>}
           </div>
         );
       }
@@ -58,20 +58,20 @@ const AuditLogs = () => {
     {
       key: 'entity',
       title: 'Resource Entity',
-      render: (row) => <span className="text-xs font-semibold text-slate-700">{row.entity || row.resourceType || '—'}</span>
+      render: (row) => <span className="text-xs font-semibold text-[#292B29]">{row.entity || row.resourceType || '—'}</span>
     },
     {
       key: 'timestamp',
       title: 'Timestamp',
       sortable: true,
-      render: (row) => (row.timestamp || row.createdAt ? new Date(row.timestamp || row.createdAt).toLocaleString() : '—')
+      render: (row) => <span className="text-xs text-[#626760] font-medium">{row.timestamp || row.createdAt ? new Date(row.timestamp || row.createdAt).toLocaleString() : '—'}</span>
     },
     {
       key: 'details',
       title: 'Event Details',
       render: (row) => {
         const details = row.details ? JSON.stringify(row.details) : '—';
-        return <span className="font-mono text-xs text-slate-600 truncate max-w-xs block">{details}</span>;
+        return <span className="font-mono text-xs text-[#626760] truncate max-w-xs block">{details}</span>;
       }
     }
   ];

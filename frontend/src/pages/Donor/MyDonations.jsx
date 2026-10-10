@@ -75,20 +75,20 @@ const MyDonations = () => {
       title: 'Food Item',
       render: (row) => (
         <div>
-          <div className="font-extrabold text-[#102A2A]">{row.foodName || row.name || row.title || 'Food Item'}</div>
-          <div className="text-xs text-[#687370]">{row.pickupAddress || 'Address N/A'}</div>
+          <div className="font-extrabold text-[#292B29]">{row.foodName || row.name || row.title || 'Food Item'}</div>
+          <div className="text-xs text-[#626760]">{row.pickupAddress || 'Address N/A'}</div>
         </div>
       )
     },
     {
       key: 'category',
       title: 'Category',
-      render: (row) => <span className="font-semibold text-[#102A2A]">{row.category || 'General'}</span>
+      render: (row) => <span className="font-semibold text-[#292B29]">{row.category || 'General'}</span>
     },
     {
       key: 'quantity',
       title: 'Quantity',
-      render: (row) => <span className="font-bold text-[#2F8F72]">{row.quantity} {row.unit || 'servings'}</span>
+      render: (row) => <span className="font-bold text-[#BD715C]">{row.quantity} {row.unit || 'servings'}</span>
     },
     {
       key: 'status',
@@ -156,21 +156,21 @@ const MyDonations = () => {
         onCancel={handleCloseDeleteModal}
       >
         {deletingDonation && (
-          <div className="mt-3 rounded-2xl border border-[#DDE5E1] bg-[#E8F6F0]/40 p-3.5 space-y-1.5 text-xs text-[#102A2A] font-sans">
-            <div className="flex items-center justify-between border-b border-[#DDE5E1] pb-1.5">
-              <span className="font-extrabold text-sm text-[#102A2A]">
+          <div className="mt-3 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-3.5 space-y-1.5 text-xs text-[#292B29] font-sans">
+            <div className="flex items-center justify-between border-b border-[#E6DED6]/60 pb-1.5">
+              <span className="font-extrabold text-sm text-[#292B29]">
                 {deletingDonation.foodName || deletingDonation.name || deletingDonation.title || 'Food Item'}
               </span>
               <Badge variant={deletingDonation.status === 'AVAILABLE' || deletingDonation.status === 'available' ? 'success' : 'default'}>
                 {deletingDonation.status || 'AVAILABLE'}
               </Badge>
             </div>
-            <div className="flex items-center justify-between pt-1 text-[#687370] font-medium">
+            <div className="flex items-center justify-between pt-1 text-[#626760] font-medium">
               <span>Category: <strong>{deletingDonation.category || 'General'}</strong></span>
-              <span>Quantity: <strong className="text-[#2F8F72]">{deletingDonation.quantity} {deletingDonation.unit || 'servings'}</strong></span>
+              <span>Quantity: <strong className="text-[#BD715C]">{deletingDonation.quantity} {deletingDonation.unit || 'servings'}</strong></span>
             </div>
             {deletingDonation.pickupAddress && (
-              <p className="text-[11px] text-[#687370] truncate pt-1">
+              <p className="text-[11px] text-[#626760] truncate pt-1">
                 Pickup: {deletingDonation.pickupAddress}
               </p>
             )}

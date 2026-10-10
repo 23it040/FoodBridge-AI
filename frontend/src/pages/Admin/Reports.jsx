@@ -71,7 +71,7 @@ const Reports = () => {
         }
       />
 
-      <Card title="Database Report Generator" icon={<FiFileText className="h-5 w-5" />}>
+      <Card title="Database Report Generator" icon={<FiFileText className="h-5 w-5 text-[#BD715C]" />}>
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
             <Spinner size={44} />
@@ -92,7 +92,7 @@ const Reports = () => {
           </div>
         ) : (
           <div className="space-y-6">
-            <div className="flex flex-wrap items-center justify-between gap-3 bg-[#FFF4E1]/40 p-4 rounded-2xl border border-[#89D7B7]">
+            <div className="flex flex-wrap items-center justify-between gap-3 bg-[#FAF7F2] p-4 rounded-2xl border border-[#E6DED6]">
               <div className="flex flex-wrap gap-2">
                 {['daily', 'weekly', 'monthly', 'yearly'].map((period) => (
                   <button
@@ -101,8 +101,8 @@ const Reports = () => {
                     onClick={() => setActiveFilter(period)}
                     className={`rounded-full px-4 py-2 text-xs font-bold uppercase transition ${
                       activeFilter === period
-                        ? 'bg-[#428475] text-white shadow-xs'
-                        : 'border border-slate-200 bg-white text-slate-700 hover:bg-[#89D7B7]/20'
+                        ? 'bg-[#BD715C] text-white shadow-xs'
+                        : 'border border-[#E6DED6] bg-white text-[#626760] hover:bg-[#FAF7F2]'
                     }`}
                   >
                     {period}
@@ -117,24 +117,24 @@ const Reports = () => {
 
             {reportData ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-1">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">New Registered Users</span>
-                  <div className="text-2xl font-extrabold text-[#1A312C]">{reportData.newUsers ?? 0}</div>
+                <div className="p-4 rounded-2xl border border-[#E6DED6] bg-white shadow-xs space-y-1">
+                  <span className="text-xs font-bold text-[#626760] uppercase tracking-wider">New Registered Users</span>
+                  <div className="text-2xl font-extrabold text-[#292B29]">{reportData.newUsers ?? 0}</div>
                   <Badge variant="primary">{activeFilter.toUpperCase()}</Badge>
                 </div>
-                <div className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-1">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Food Donations Posted</span>
-                  <div className="text-2xl font-extrabold text-[#428475]">{reportData.donationCount ?? 0}</div>
-                  <Badge variant="success">REDISTRIBUTION</Badge>
+                <div className="p-4 rounded-2xl border border-[#E6DED6] bg-white shadow-xs space-y-1">
+                  <span className="text-xs font-bold text-[#626760] uppercase tracking-wider">Food Donations Posted</span>
+                  <div className="text-2xl font-extrabold text-[#BD715C]">{reportData.donationCount ?? 0}</div>
+                  <Badge variant="terracotta">REDISTRIBUTION</Badge>
                 </div>
-                <div className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-1">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Food Requests Submitted</span>
-                  <div className="text-2xl font-extrabold text-blue-600">{reportData.requestCount ?? 0}</div>
-                  <Badge variant="info">NGO CLAIMS</Badge>
+                <div className="p-4 rounded-2xl border border-[#E6DED6] bg-white shadow-xs space-y-1">
+                  <span className="text-xs font-bold text-[#626760] uppercase tracking-wider">Food Requests Submitted</span>
+                  <div className="text-2xl font-extrabold text-[#7D9588]">{reportData.requestCount ?? 0}</div>
+                  <Badge variant="sage">NGO CLAIMS</Badge>
                 </div>
-                <div className="p-4 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-1">
-                  <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Meals Distributed</span>
-                  <div className="text-2xl font-extrabold text-emerald-600">{reportData.mealsDistributed ?? 0}</div>
+                <div className="p-4 rounded-2xl border border-[#E6DED6] bg-white shadow-xs space-y-1">
+                  <span className="text-xs font-bold text-[#626760] uppercase tracking-wider">Meals Distributed</span>
+                  <div className="text-2xl font-extrabold text-[#BD715C]">{reportData.mealsDistributed ?? 0}</div>
                   <Badge variant="success">IMPACT</Badge>
                 </div>
               </div>

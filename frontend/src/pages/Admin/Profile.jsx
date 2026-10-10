@@ -77,7 +77,7 @@ const ProfilePage = () => {
         }
       />
 
-      <Card title="Account Settings" icon={<FiUser className="h-5 w-5" />}>
+      <Card title="Account Settings" icon={<FiUser className="h-5 w-5 text-[#BD715C]" />}>
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 gap-3">
             <Spinner size={44} />
@@ -98,59 +98,59 @@ const ProfilePage = () => {
           </div>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-2xl bg-[#FFF4E1]/40 border border-[#89D7B7]">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#428475] text-white font-extrabold text-xl shadow-xs">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-2xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#BD715C] text-white font-extrabold text-xl shadow-xs">
                 {userProfile?.name ? userProfile.name.charAt(0).toUpperCase() : 'A'}
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <h4 className="font-extrabold text-[#1A312C] text-base">{userProfile?.name || 'Administrator'}</h4>
+                  <h4 className="font-extrabold text-[#292B29] text-base">{userProfile?.name || 'Administrator'}</h4>
                   <Badge variant="danger">ADMINISTRATOR</Badge>
                 </div>
-                <p className="text-xs font-medium text-slate-600">{userProfile?.email}</p>
+                <p className="text-xs font-medium text-[#626760]">{userProfile?.email}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Full Name
                 </label>
                 <input
                   {...register('name')}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-2.5 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Phone Number
                 </label>
                 <input
                   {...register('phone')}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-2.5 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                   placeholder="+1 (555) 000-0000"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Email Address (Read-only)
                 </label>
                 <input
                   {...register('email')}
                   disabled
-                  className="w-full rounded-xl border border-slate-200 bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-500 cursor-not-allowed"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-[#FAF7F2] px-4 py-2.5 text-xs font-semibold text-[#626760] cursor-not-allowed"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Avatar Upload
                 </label>
                 <input
                   ref={avatarRef}
                   type="file"
                   accept="image/*"
-                  className="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#428475] file:text-white hover:file:bg-[#1A312C]"
+                  className="w-full text-xs text-[#626760] file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-[#BD715C] file:text-white hover:file:bg-[#A85F4D]"
                 />
               </div>
             </div>

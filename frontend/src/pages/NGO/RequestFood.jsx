@@ -143,30 +143,30 @@ const RequestFood = ({ donationId: propDonationId }) => {
       {loadingItem ? (
         <div className="py-8 text-center"><Spinner size={36} /></div>
       ) : selectedDonation ? (
-        <Card title="Selected Food Listing" icon={<FiBox className="h-5 w-5" />}>
-          <div className="space-y-3 bg-[#FFF4E1]/40 p-4 rounded-2xl border border-[#89D7B7]">
+        <Card title="Selected Food Listing" icon={<FiBox className="h-5 w-5 text-[#BD715C]" />}>
+          <div className="space-y-3 bg-[#FAF7F2] p-4 rounded-2xl border border-[#E6DED6]">
             <div className="flex flex-wrap justify-between items-start gap-2">
               <div>
-                <h3 className="text-lg font-bold text-[#1A312C]">{selectedDonation.foodName || selectedDonation.name}</h3>
-                <p className="text-xs font-semibold text-slate-500">Donated by: {selectedDonation.donorId?.name || selectedDonation.donorName || 'Verified Donor'}</p>
+                <h3 className="text-lg font-bold text-[#292B29]">{selectedDonation.foodName || selectedDonation.name}</h3>
+                <p className="text-xs font-semibold text-[#626760]">Donated by: {selectedDonation.donorId?.name || selectedDonation.donorName || 'Verified Donor'}</p>
               </div>
               <Badge variant="success">{selectedDonation.status || 'AVAILABLE'}</Badge>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-slate-700 pt-2 border-t border-[#89D7B7]/50">
-              <div><strong className="text-slate-500 uppercase tracking-wider block">Quantity</strong> {selectedDonation.quantity} {selectedDonation.unit || 'servings'}</div>
-              <div><strong className="text-slate-500 uppercase tracking-wider block">Category</strong> {selectedDonation.category || 'General'}</div>
-              <div><strong className="text-slate-500 uppercase tracking-wider block">Meal Type</strong> {selectedDonation.mealType || 'Cooked'}</div>
-              <div><strong className="text-slate-500 uppercase tracking-wider block">Pickup Address</strong> {selectedDonation.pickupAddress || 'Address specified upon confirmation'}</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs text-[#292B29] pt-2 border-t border-[#E6DED6]">
+              <div><strong className="text-[#626760] uppercase tracking-wider block">Quantity</strong> {selectedDonation.quantity} {selectedDonation.unit || 'servings'}</div>
+              <div><strong className="text-[#626760] uppercase tracking-wider block">Category</strong> {selectedDonation.category || 'General'}</div>
+              <div><strong className="text-[#626760] uppercase tracking-wider block">Meal Type</strong> {selectedDonation.mealType || 'Cooked'}</div>
+              <div><strong className="text-[#626760] uppercase tracking-wider block">Pickup Address</strong> {selectedDonation.pickupAddress || 'Address specified upon confirmation'}</div>
             </div>
           </div>
         </Card>
       ) : null}
 
-      <Card title="NGO Pickup Request Form" icon={<FiSend className="h-5 w-5" />}>
+      <Card title="NGO Pickup Request Form" icon={<FiSend className="h-5 w-5 text-[#BD715C]" />}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {!targetDonationId && (
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                 Select Available Food Item *
               </label>
               {loadingDonations ? (
@@ -174,7 +174,7 @@ const RequestFood = ({ donationId: propDonationId }) => {
               ) : (
                 <select
                   {...register('foodId', { required: 'Please select a food donation' })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                 >
                   <option value="">-- Select Food Item --</option>
                   {donations.map((d) => (
@@ -190,8 +190,8 @@ const RequestFood = ({ donationId: propDonationId }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">
-                <FiCalendar className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1">
+                <FiCalendar className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Pickup Date *</span>
               </label>
               <input
@@ -200,19 +200,19 @@ const RequestFood = ({ donationId: propDonationId }) => {
                   required: 'Pickup date is required',
                   validate: (value) => value >= new Date().toISOString().slice(0, 10) || 'Pickup date cannot be in the past'
                 })}
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               {errors.pickupDate && <p className="mt-1 text-xs font-semibold text-red-600">{errors.pickupDate.message}</p>}
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">
-                <FiCalendar className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1">
+                <FiCalendar className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Pickup Time *</span>
               </label>
               <input
                 type="time"
                 {...register('pickupTime', { required: 'Pickup time is required' })}
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               {errors.pickupTime && <p className="mt-1 text-xs font-semibold text-red-600">{errors.pickupTime.message}</p>}
             </div>
@@ -220,21 +220,21 @@ const RequestFood = ({ donationId: propDonationId }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">
-                <FiUser className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1">
+                <FiUser className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Contact Person *</span>
               </label>
               <input
                 type="text"
                 {...register('contactPerson', { required: 'Contact person is required' })}
                 placeholder="Coordinator Name"
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               {errors.contactPerson && <p className="mt-1 text-xs font-semibold text-red-600">{errors.contactPerson.message}</p>}
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">
-                <FiPhone className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1">
+                <FiPhone className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Contact Phone Number *</span>
               </label>
               <input
@@ -244,7 +244,7 @@ const RequestFood = ({ donationId: propDonationId }) => {
                   pattern: { value: /^[+\d][\d\s()-]{7,}$/, message: 'Enter a valid contact number' }
                 })}
                 placeholder="+91 9876543210"
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               {errors.contactNumber && <p className="mt-1 text-xs font-semibold text-red-600">{errors.contactNumber.message}</p>}
             </div>
@@ -252,7 +252,7 @@ const RequestFood = ({ donationId: propDonationId }) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                 Estimated Beneficiaries / Servings Needed
               </label>
               <input
@@ -262,18 +262,18 @@ const RequestFood = ({ donationId: propDonationId }) => {
                   valueAsNumber: true,
                   min: { value: 1, message: 'At least one beneficiary is required' }
                 })}
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               {errors.beneficiaries && <p className="mt-1 text-xs font-semibold text-red-600">{errors.beneficiaries.message}</p>}
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center gap-1">
-                <FiTruck className="h-3.5 w-3.5 text-[#428475]" />
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1 flex items-center gap-1">
+                <FiTruck className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Logistics / Vehicle Required</span>
               </label>
               <select
                 {...register('vehicleRequired')}
-                className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               >
                 <option value="Standard Vehicle">Standard Vehicle / Car</option>
                 <option value="Refrigerated Van">Refrigerated Van (Perishables)</option>
@@ -284,13 +284,13 @@ const RequestFood = ({ donationId: propDonationId }) => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
               Request Purpose & Message for Donor
             </label>
             <textarea
               {...register('requestMessage')}
               rows={3}
-              className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-4 py-3 text-sm font-medium text-[#1A312C] outline-none focus:border-[#428475]"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-medium text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
             />
           </div>
 

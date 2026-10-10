@@ -40,7 +40,7 @@ const NotificationsPage = () => {
   return (
     <section className="py-6 space-y-6">
       <PageHeader title="NGO Notifications" subtitle="Alerts regarding food approvals, pickup logistics, and messages" />
-      <Card title="Activity Feed" icon={<FiBell className="h-5 w-5" />}>
+      <Card title="Activity Feed" icon={<FiBell className="h-5 w-5 text-[#BD715C]" />}>
         {loading ? (
           <div className="py-12 text-center"><Spinner size={44} /></div>
         ) : !Array.isArray(notifications) || notifications.length === 0 ? (
@@ -53,19 +53,19 @@ const NotificationsPage = () => {
                 <div
                   key={n._id || n.id}
                   className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl p-4 transition-all ${
-                    isUnread ? 'bg-[#FFF4E1]/50 border border-[#89D7B7] shadow-xs' : 'bg-white border border-slate-200'
+                    isUnread ? 'bg-[#F3DED6]/40 border border-[#BD715C]/40 shadow-xs' : 'bg-white border border-[#E6DED6]'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#428475] text-white' : 'bg-slate-100 text-slate-500'}`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#BD715C] text-white' : 'bg-[#FAF7F2] text-[#626760]'}`}>
                       <FiBell className="h-5 w-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-extrabold text-[#1A312C] text-sm">{n.title || n.message}</h4>
+                        <h4 className="font-extrabold text-[#292B29] text-sm">{n.title || n.message}</h4>
                         {isUnread && <Badge variant="primary">New</Badge>}
                       </div>
-                      <p className="mt-0.5 text-xs font-medium text-slate-600">{n.body || n.message}</p>
+                      <p className="mt-0.5 text-xs font-medium text-[#626760]">{n.body || n.message}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 self-end sm:self-auto">

@@ -12,16 +12,16 @@ const AuthPage = () => {
   }
 
   return (
-    <div className="w-full space-y-6 rounded-[24px] bg-[#102A2A]/85 backdrop-blur-xl p-6 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] border border-white/10 text-white">
+    <div className="w-full space-y-6 rounded-[28px] bg-white/95 backdrop-blur-xl p-6 sm:p-8 shadow-xl border border-[#E6DED6] text-[#292B29]">
       {/* CARD TOP HEADER WITH BRAND BADGE & NAVIGATION PILLS */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-[#E6DED6]/60 pb-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#061918] text-[#79D6B2] shadow-inner border border-[#79D6B2]/30">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F3DED6] text-[#BD715C] shadow-xs border border-[#BD715C]/20">
             <FiHeart className="h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">FoodBridge Platform</h1>
-            <p className="text-xs font-semibold text-[#A7B8B3]">Sign in or create a verified account</p>
+            <h1 className="text-xl font-bold tracking-tight text-[#292B29]">FoodBridge Platform</h1>
+            <p className="text-xs font-semibold text-[#626760]">Sign in or create a verified account</p>
           </div>
         </div>
 
@@ -32,8 +32,8 @@ const AuthPage = () => {
             className={({ isActive }) =>
               `rounded-full px-3.5 py-1.5 transition-all ${
                 isActive
-                  ? 'bg-[#79D6B2] text-[#0A1A1A] font-extrabold shadow-[0_0_12px_rgba(121,214,178,0.35)]'
-                  : 'bg-white/5 text-[#A7B8B3] border border-white/10 hover:bg-white/10 hover:text-white'
+                  ? 'bg-[#BD715C] text-white font-extrabold shadow-xs'
+                  : 'bg-[#FAF7F2] text-[#626760] border border-[#E6DED6] hover:bg-[#F3DED6]/50 hover:text-[#292B29]'
               }`
             }
           >
@@ -44,8 +44,8 @@ const AuthPage = () => {
             className={({ isActive }) =>
               `rounded-full px-3.5 py-1.5 transition-all ${
                 isActive
-                  ? 'bg-[#79D6B2] text-[#0A1A1A] font-extrabold shadow-[0_0_12px_rgba(121,214,178,0.35)]'
-                  : 'bg-white/5 text-[#A7B8B3] border border-white/10 hover:bg-white/10 hover:text-white'
+                  ? 'bg-[#BD715C] text-white font-extrabold shadow-xs'
+                  : 'bg-[#FAF7F2] text-[#626760] border border-[#E6DED6] hover:bg-[#F3DED6]/50 hover:text-[#292B29]'
               }`
             }
           >
@@ -56,8 +56,8 @@ const AuthPage = () => {
             className={({ isActive }) =>
               `rounded-full px-3.5 py-1.5 transition-all ${
                 isActive
-                  ? 'bg-[#79D6B2] text-[#0A1A1A] font-extrabold shadow-[0_0_12px_rgba(121,214,178,0.35)]'
-                  : 'bg-white/5 text-[#A7B8B3] border border-white/10 hover:bg-white/10 hover:text-white'
+                  ? 'bg-[#BD715C] text-white font-extrabold shadow-xs'
+                  : 'bg-[#FAF7F2] text-[#626760] border border-[#E6DED6] hover:bg-[#F3DED6]/50 hover:text-[#292B29]'
               }`
             }
           >

@@ -66,8 +66,8 @@ const RequestHistory = () => {
       title: 'Food Item',
       render: (row) => (
         <div>
-          <div className="font-extrabold text-[#1A312C]">{row.foodName || row.donationName || 'Food Item'}</div>
-          <div className="text-xs text-slate-500">{row.pickupAddress || 'Local Location'}</div>
+          <div className="font-extrabold text-[#292B29]">{row.foodName || row.donationName || 'Food Item'}</div>
+          <div className="text-xs text-[#626760]">{row.pickupAddress || 'Local Location'}</div>
         </div>
       )
     },
@@ -75,7 +75,7 @@ const RequestHistory = () => {
       key: 'quantity',
       title: 'Quantity',
       render: (row) => (
-        <span className="font-extrabold text-[#428475] text-xs">
+        <span className="font-extrabold text-[#BD715C] text-xs">
           {row.quantity || row.foodId?.quantity || 1} {row.unit || row.foodId?.unit || 'servings'}
         </span>
       )
@@ -83,17 +83,17 @@ const RequestHistory = () => {
     {
       key: 'donorName',
       title: 'Donor',
-      render: (row) => <span className="font-semibold text-slate-700 text-xs">{row.donorName || row.donorId?.name || 'Donor'}</span>
+      render: (row) => <span className="font-semibold text-[#292B29] text-xs">{row.donorName || row.donorId?.name || 'Donor'}</span>
     },
     {
       key: 'message',
       title: 'Message',
-      render: (row) => <span className="text-xs text-slate-600 line-clamp-2">{row.message || row.requestMessage || 'No notes'}</span>
+      render: (row) => <span className="text-xs text-[#626760] line-clamp-2">{row.message || row.requestMessage || 'No notes'}</span>
     },
     {
       key: 'createdAt',
       title: 'Request Date',
-      render: (row) => <span className="text-xs text-slate-500 font-medium">{row.createdAt ? new Date(row.createdAt).toLocaleDateString() : 'N/A'}</span>
+      render: (row) => <span className="text-xs text-[#626760] font-medium">{row.createdAt ? new Date(row.createdAt).toLocaleDateString() : 'N/A'}</span>
     },
     {
       key: 'status',
@@ -119,9 +119,9 @@ const RequestHistory = () => {
         subtitle="Complete log of your accepted and rejected food requests"
       />
 
-      <Card icon={<FiClock className="h-5 w-5" />} title="Historical Records">
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-[#FFF4E1]/40 p-3 rounded-2xl border border-[#89D7B7]">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#1A312C]">Filter by Status</div>
+      <Card icon={<FiClock className="h-5 w-5 text-[#BD715C]" />} title="Historical Records">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3 bg-[#FAF7F2] p-3 rounded-2xl border border-[#E6DED6]">
+          <div className="text-xs font-bold uppercase tracking-wider text-[#292B29]">Filter by Status</div>
           <div className="flex flex-wrap gap-1.5">
             {['ALL', 'ACCEPTED', 'REJECTED'].map((st) => (
               <button
@@ -129,8 +129,8 @@ const RequestHistory = () => {
                 onClick={() => setStatusFilter(st)}
                 className={`rounded-full px-4 py-1.5 text-xs font-bold transition ${
                   statusFilter === st
-                    ? 'bg-[#428475] text-white shadow-xs'
-                    : 'border border-slate-200 bg-white text-slate-700 hover:bg-[#89D7B7]/20'
+                    ? 'bg-[#BD715C] text-white shadow-xs'
+                    : 'border border-[#E6DED6] bg-white text-[#626760] hover:bg-[#FAF7F2]'
                 }`}
               >
                 {st}

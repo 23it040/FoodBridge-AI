@@ -409,21 +409,21 @@ const Dashboard = () => {
                         </div>
 
                         <div>
-                          <h4 className="font-extrabold text-sm text-[#1A312C] line-clamp-1">
+                          <h4 className="font-extrabold text-sm text-[#292B29] line-clamp-1">
                             {food.foodName || food.name || 'Surplus Food Listing'}
                           </h4>
-                          <p className="text-xs text-slate-500 line-clamp-1">
-                            Donor: <span className="font-medium text-slate-700">{food.donorId?.name || food.donorName || 'Verified Donor'}</span>
+                          <p className="text-xs text-[#626760] line-clamp-1">
+                            Donor: <span className="font-medium text-[#292B29]">{food.donorId?.name || food.donorName || 'Verified Donor'}</span>
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-3 text-xs text-slate-600 font-medium">
+                        <div className="flex items-center gap-3 text-xs text-[#626760] font-medium">
                           <span className="inline-flex items-center gap-1">
                             <FiPackage className="h-3.5 w-3.5 text-emerald-600" />
                             {food.quantity} {food.unit || 'servings'}
                           </span>
                           {food.calculatedDistance !== null && (
-                            <span className="inline-flex items-center gap-1 text-slate-500">
+                            <span className="inline-flex items-center gap-1 text-[#626760]">
                               <FiMapPin className="h-3.5 w-3.5 text-indigo-500" />
                               {food.calculatedDistance} km away
                             </span>
@@ -440,7 +440,7 @@ const Dashboard = () => {
                         </div>
                       </div>
 
-                      <div className="pt-4 mt-2 border-t border-slate-100 flex items-center gap-2">
+                      <div className="pt-4 mt-2 border-t border-[#E6DED6]/60 flex items-center gap-2">
                         <Button
                           size="sm"
                           variant="outline"
@@ -458,7 +458,7 @@ const Dashboard = () => {
                         <Button
                           size="sm"
                           onClick={() => navigate(`/ngo/food/${food._id || food.id}`)}
-                          className="flex-1 text-xs py-1.5 gap-1 bg-[#047857] hover:bg-[#065F46] text-white font-bold"
+                          className="flex-1 text-xs py-1.5 gap-1 bg-[#BD715C] hover:bg-[#A85F4D] text-white font-bold"
                         >
                           <FiEye className="h-3.5 w-3.5 shrink-0" />
                           <span>Details</span>
@@ -486,7 +486,7 @@ const Dashboard = () => {
             <Card
               title="NGO Network & Food Pickup Map"
               description="Interactive map displaying your location, verified FoodBridge partner NGOs, and nearby surplus food donations"
-              icon={<FiMapPin className="h-5 w-5 text-[#428475]" />}
+              icon={<FiMapPin className="h-5 w-5 text-[#BD715C]" />}
               action={
                 <Button
                   size="sm"
@@ -495,17 +495,17 @@ const Dashboard = () => {
                   loading={locating}
                   className="gap-1.5 text-xs py-1.5"
                 >
-                  <FiNavigation className="h-3.5 w-3.5 text-[#428475]" />
+                  <FiNavigation className="h-3.5 w-3.5 text-[#BD715C]" />
                   <span>Use My Location</span>
                 </Button>
               }
             >
               {locationError && (
-                <div className="mb-[#3px] p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-medium">
+                <div className="mb-3 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-medium">
                   {locationError}
                 </div>
               )}
-              <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+              <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
                 <NGOMap
                   pickupLocation={effectiveNgoLocation}
                   initialNgos={filteredNgos}
@@ -537,7 +537,7 @@ const Dashboard = () => {
                     title: 'Food Item',
                     render: (r) => (
                       <div>
-                        <div className="font-bold text-[#1A312C]">{r.foodId?.foodName || r.foodName || 'Food Item'}</div>
+                        <div className="font-bold text-[#292B29]">{r.foodId?.foodName || r.foodName || 'Food Item'}</div>
                         <div className="text-xs text-slate-500">{r.donorId?.name || r.donorName || 'Donor'}</div>
                       </div>
                     )

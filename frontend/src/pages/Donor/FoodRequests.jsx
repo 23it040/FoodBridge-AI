@@ -70,8 +70,8 @@ const FoodRequests = () => {
       title: 'Requesting NGO',
       render: (row) => (
         <div>
-          <div className="font-extrabold text-[#1A312C]">{row.ngoName || row.ngoId?.name || 'NGO Partner'}</div>
-          <div className="text-xs text-slate-500">{row.ngoId?.email || 'Contact Info'}</div>
+          <div className="font-extrabold text-[#292B29]">{row.ngoName || row.ngoId?.name || 'NGO Partner'}</div>
+          <div className="text-xs text-[#626760]">{row.ngoId?.email || 'Contact Info'}</div>
         </div>
       )
     },

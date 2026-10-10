@@ -39,14 +39,14 @@ const ForgotPasswordPage = () => {
     <div className="space-y-6">
       {/* HEADINGS */}
       <div className="text-center space-y-1">
-        <h2 className="text-2xl font-black text-white tracking-tight">Forgot Password</h2>
-        <p className="text-xs font-semibold text-[#A7B8B3] max-w-md mx-auto">
+        <h2 className="text-2xl font-black text-[#292B29] tracking-tight">Forgot Password</h2>
+        <p className="text-xs font-semibold text-[#626760] max-w-md mx-auto">
           Enter your registered email address to receive password recovery instructions.
         </p>
       </div>
 
       {submitted && (
-        <div className="rounded-xl border border-[#79D6B2]/30 bg-[#79D6B2]/10 p-3.5 text-xs text-center font-semibold text-[#79D6B2] flex items-center justify-center gap-2">
+        <div className="rounded-2xl border border-[#BD715C]/30 bg-[#F3DED6]/40 p-3.5 text-xs text-center font-semibold text-[#BD715C] flex items-center justify-center gap-2">
           <FiCheckCircle className="h-4 w-4 shrink-0" />
           <span>Reset instructions sent! Please check your inbox.</span>
         </div>
@@ -55,11 +55,11 @@ const ForgotPasswordPage = () => {
       {/* FORM */}
       <form className="space-y-5" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
-          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Email Address
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiMail className="h-4 w-4" />
             </div>
             <input
@@ -73,11 +73,11 @@ const ForgotPasswordPage = () => {
                   message: 'Enter a valid email address'
                 }
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.email && (
-            <p className="mt-1.5 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1.5 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.email.message}
             </p>
           )}
@@ -87,11 +87,11 @@ const ForgotPasswordPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-[#79D6B2] hover:bg-[#68D8B0] text-[#0A1A1A] font-extrabold rounded-xl shadow-[0_0_20px_rgba(121,214,178,0.25)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+            className="w-full py-3.5 bg-[#BD715C] hover:bg-[#A85F4D] text-white font-extrabold rounded-full shadow-[0_4px_14px_rgba(189,113,92,0.25)] hover:shadow-[0_6px_20px_rgba(189,113,92,0.35)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm hover:-translate-y-0.5"
           >
             {loading ? (
               <>
-                <svg className="h-4 w-4 animate-spin text-[#0A1A1A]" viewBox="0 0 24 24" fill="none">
+                <svg className="h-4 w-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
@@ -106,9 +106,9 @@ const ForgotPasswordPage = () => {
           </button>
         </div>
 
-        <div className="pt-2 text-center text-xs font-medium text-[#A7B8B3]">
+        <div className="pt-2 text-center text-xs font-medium text-[#626760]">
           Remembered your password?{' '}
-          <Link to="/auth/login" className="font-extrabold text-[#79D6B2] hover:underline">
+          <Link to="/auth/login" className="font-extrabold text-[#BD715C] hover:underline">
             Back to Sign In
           </Link>
         </div>

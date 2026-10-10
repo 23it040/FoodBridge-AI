@@ -93,38 +93,40 @@ const LiveMapSection = () => {
     : null;
 
   return (
-    <section id="live-discovery" className="py-20 bg-[#0D2222] text-white border-b border-white/10 relative">
+    <section id="live-discovery" className="py-24 bg-[#FAF7F2] border-b border-[#E5DED7] relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+        
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full glass-pill px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#79D6B2] mb-3">
-              <span className="h-2 w-2 rounded-full bg-[#79D6B2] animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#E2EBE5] border border-[#E5DED7] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#7D9588] mb-3">
+              <span className="h-2 w-2 rounded-full bg-[#7D9588] animate-pulse" />
               <span>GEOGRAPHIC DISCOVERY</span>
             </div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <h2 className="text-3xl font-extrabold tracking-tight text-[#2E302D] sm:text-4xl">
               Discover Nearby Food & Partners
             </h2>
-            <p className="text-sm font-medium text-[#D7E0DC] mt-1">
+            <p className="text-sm font-normal text-[#73756F] mt-1">
               Interactive map tracking verified NGO partners and community organizations in real time around your location.
             </p>
           </div>
-          <Button
+
+          <button
             onClick={handleUseMyLocation}
-            loading={locating}
-            variant="outline"
-            className="gap-2 border-[#79D6B2]/60 bg-transparent text-[#79D6B2] hover:bg-[#79D6B2]/10"
+            disabled={locating}
+            className="inline-flex items-center gap-2 bg-white border border-[#E5DED7] hover:bg-[#F1DED7] hover:border-[#B86F5B] text-[#2E302D] px-5 py-2.5 rounded-full text-xs font-bold shadow-sm transition-all"
           >
-            <FiNavigation className="h-4 w-4" />
-            <span>Use My Location</span>
-          </Button>
+            <FiNavigation className="h-4 w-4 text-[#B86F5B]" />
+            <span>{locating ? 'Locating...' : 'Use My Location'}</span>
+          </button>
         </div>
 
         {/* Two-Column Layout */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-          {/* LEFT: Google Map in Dark Container */}
+          
+          {/* LEFT: Google Map in Light Container */}
           <div className="lg:col-span-7">
-            <div className="overflow-hidden rounded-3xl border border-white/15 bg-white/5 shadow-2xl h-[480px] sm:h-[520px] relative">
+            <div className="overflow-hidden rounded-3xl border border-[#E5DED7] bg-white shadow-lg h-[480px] sm:h-[520px] relative">
               <NGOMap
                 pickupLocation={currentLocation}
                 initialNgos={ngos}
@@ -136,8 +138,8 @@ const LiveMapSection = () => {
                 className="h-[480px] sm:h-[520px]"
               />
               {locationMessage && (
-                <div className="absolute left-3 top-3 z-10 rounded-xl border border-white/20 bg-[#102A2A]/90 px-3.5 py-2 text-xs font-medium text-[#D7E0DC] shadow-md backdrop-blur-md flex items-center gap-2">
-                  <FiCompass className="h-4 w-4 text-[#79D6B2] shrink-0" />
+                <div className="absolute left-3 top-3 z-10 rounded-xl border border-[#E5DED7] bg-white/95 px-3.5 py-2 text-xs font-medium text-[#2E302D] shadow-md backdrop-blur-md flex items-center gap-2">
+                  <FiCompass className="h-4 w-4 text-[#B86F5B] shrink-0" />
                   <span>{locationMessage}</span>
                 </div>
               )}
@@ -147,52 +149,50 @@ const LiveMapSection = () => {
           {/* RIGHT: Logistics NGO Cards */}
           <div className="lg:col-span-5 flex flex-col space-y-4 max-h-[520px] overflow-y-auto pr-1">
             {loading ? (
-              <div className="flex h-64 flex-col items-center justify-center gap-3 rounded-3xl border border-white/10 glass-panel">
+              <div className="flex h-64 flex-col items-center justify-center gap-3 rounded-3xl border border-[#E5DED7] bg-white p-6 shadow-sm">
                 <Spinner />
-                <span className="text-xs font-medium text-[#D7E0DC]">Finding NGOs near your location...</span>
+                <span className="text-xs font-medium text-[#73756F]">Finding NGOs near your location...</span>
               </div>
             ) : error ? (
-              <div className="rounded-3xl border border-amber-300 bg-amber-50 p-8 text-center text-amber-900 space-y-3">
-                <h4 className="text-base font-bold">{error}</h4>
-                <p className="text-xs text-amber-800">
+              <div className="rounded-3xl border border-[#E5DED7] bg-white p-8 text-center text-[#2E302D] space-y-3 shadow-sm">
+                <h4 className="text-base font-bold text-[#B86F5B]">{error}</h4>
+                <p className="text-xs text-[#73756F]">
                   Please check network connection or click below to retry.
                 </p>
-                <Button
-                  size="sm"
+                <button
                   onClick={() => fetchNgos(currentLocation)}
-                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold"
+                  className="bg-[#B86F5B] hover:bg-[#A85F4D] text-white px-4 py-2 rounded-full text-xs font-bold shadow-sm"
                 >
                   Retry Search
-                </Button>
+                </button>
               </div>
             ) : !currentLocation ? (
-              <div className="rounded-3xl border border-white/10 glass-panel p-8 text-center space-y-3">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#79D6B2]/20 text-[#79D6B2]">
+              <div className="rounded-3xl border border-[#E5DED7] bg-white p-8 text-center space-y-3 shadow-sm">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#E2EBE5] text-[#7D9588]">
                   <FiCompass className="h-6 w-6" />
                 </div>
-                <h4 className="text-base font-bold text-white">Enable Location</h4>
-                <p className="text-xs text-[#D7E0DC]">
+                <h4 className="text-base font-bold text-[#2E302D]">Enable Location</h4>
+                <p className="text-xs text-[#73756F]">
                   Allow location access in your browser or click "Use My Location" to discover non-profit organizations near you.
                 </p>
-                <Button
-                  size="sm"
+                <button
                   onClick={handleUseMyLocation}
-                  loading={locating}
-                  className="gap-2 bg-[#79D6B2] text-[#0D2222] font-extrabold hover:bg-[#8ee0c2]"
+                  disabled={locating}
+                  className="inline-flex items-center gap-2 bg-[#B86F5B] hover:bg-[#A85F4D] text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-sm"
                 >
                   <FiNavigation className="h-4 w-4" />
                   <span>Find NGOs Near Me</span>
-                </Button>
+                </button>
               </div>
             ) : ngos.length === 0 ? (
-              <div className="rounded-3xl border border-white/10 glass-panel p-8 text-center space-y-3">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#79D6B2]/20 text-[#79D6B2]">
+              <div className="rounded-3xl border border-[#E5DED7] bg-white p-8 text-center space-y-3 shadow-sm">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F1DED7] text-[#B86F5B]">
                   <FiMapPin className="h-6 w-6" />
                 </div>
-                <h4 className="text-base font-bold text-white">
+                <h4 className="text-base font-bold text-[#2E302D]">
                   {emptyNotice || 'No nearby NGOs found within this radius.'}
                 </h4>
-                <p className="text-xs text-[#D7E0DC]">
+                <p className="text-xs text-[#73756F]">
                   We couldn't find any registered NGOs or non-profit organizations within 10 km of your current location.
                 </p>
               </div>
@@ -209,62 +209,62 @@ const LiveMapSection = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3, delay: idx * 0.05 }}
                     onClick={() => handleCardClick(ngo, ngoId)}
-                    className={`rounded-2xl border p-4.5 transition-all duration-300 cursor-pointer glass-panel ${
+                    className={`rounded-2xl border p-4.5 transition-all duration-300 cursor-pointer bg-white ${
                       isSelected
-                        ? 'border-[#79D6B2] shadow-2xl ring-2 ring-[#79D6B2]/30 bg-white/10'
-                        : 'border-white/10 hover:border-[#79D6B2]/50'
+                        ? 'border-[#B86F5B] shadow-md ring-2 ring-[#B86F5B]/20 bg-[#F1DED7]/20'
+                        : 'border-[#E5DED7] hover:border-[#B86F5B]/50 hover:shadow-sm'
                     }`}
                   >
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div>
                         {isFoodBridge ? (
-                          <div className="inline-flex items-center gap-1 rounded-full bg-[#79D6B2]/20 border border-[#79D6B2]/30 px-2.5 py-0.5 text-[10px] font-extrabold text-[#79D6B2] mb-1">
+                          <div className="inline-flex items-center gap-1 rounded-full bg-[#E2EBE5] border border-[#E5DED7] px-2.5 py-0.5 text-[10px] font-extrabold text-[#7D9588] mb-1">
                             <FiCheckCircle className="h-3 w-3" />
                             <span>VERIFIED FOODBRIDGE NGO</span>
                           </div>
                         ) : (
-                          <div className="inline-flex items-center gap-1 rounded-full bg-cyan-500/20 border border-cyan-400/30 px-2.5 py-0.5 text-[10px] font-extrabold text-cyan-300 mb-1">
+                          <div className="inline-flex items-center gap-1 rounded-full bg-[#EAF2F4] border border-[#E5DED7] px-2.5 py-0.5 text-[10px] font-extrabold text-[#7196A3] mb-1">
                             <span>NEARBY NGO</span>
                           </div>
                         )}
-                        <h4 className="text-sm font-bold text-white line-clamp-1">
+                        <h4 className="text-sm font-bold text-[#2E302D] line-clamp-1">
                           {ngo.organizationName || ngo.name || 'Community Organization'}
                         </h4>
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         {ngo.capacity && (
-                          <span className="text-xs font-bold text-[#79D6B2] shrink-0 bg-[#79D6B2]/10 px-2 py-0.5 rounded-md">
+                          <span className="text-xs font-bold text-[#7D9588] shrink-0 bg-[#E2EBE5] px-2 py-0.5 rounded-md">
                             Cap: {ngo.capacity}
                           </span>
                         )}
                         {ngo.distanceKm != null && (
-                          <span className="text-[11px] font-semibold text-[#79D6B2] bg-[#79D6B2]/15 px-2 py-0.5 rounded">
+                          <span className="text-[11px] font-semibold text-[#B86F5B] bg-[#F1DED7] px-2 py-0.5 rounded">
                             {ngo.distanceKm} km away
                           </span>
                         )}
                       </div>
                     </div>
 
-                    <p className="text-xs text-[#D7E0DC] line-clamp-2 mb-3">
+                    <p className="text-xs text-[#73756F] line-clamp-2 mb-3">
                       {ngo.address || ngo.city || 'Non-profit food assistance partner'}
                     </p>
 
-                    <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+                    <div className="flex items-center justify-between pt-2 border-t border-[#E5DED7] text-xs">
                       {isFoodBridge ? (
-                        <span className="text-[#79D6B2] font-semibold text-[11px]">
+                        <span className="text-[#7D9588] font-semibold text-[11px]">
                           Accepts: {Array.isArray(ngo.foodTypesAccepted) ? ngo.foodTypesAccepted.join(', ') : 'cooked, packaged'}
                         </span>
                       ) : ngo.rating ? (
-                        <span className="text-amber-300 font-semibold text-[11px]">
+                        <span className="text-amber-600 font-semibold text-[11px]">
                           ★ {ngo.rating} {ngo.reviews ? `(${ngo.reviews} reviews)` : ''}
                         </span>
                       ) : (
-                        <span className="text-slate-400 font-medium text-[11px]">Community Partner</span>
+                        <span className="text-[#73756F] font-medium text-[11px]">Community Partner</span>
                       )}
 
                       {ngo.phone ? (
-                        <span className="text-[#D7E0DC] flex items-center gap-1 font-medium">
-                          <FiPhone className="h-3 w-3 text-[#79D6B2]" />
+                        <span className="text-[#2E302D] flex items-center gap-1 font-medium">
+                          <FiPhone className="h-3 w-3 text-[#B86F5B]" />
                           <span>{ngo.phone}</span>
                         </span>
                       ) : ngo.googleMapsURI ? (
@@ -273,7 +273,7 @@ const LiveMapSection = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="text-[#79D6B2] hover:text-white flex items-center gap-1 font-medium text-[11px]"
+                          className="text-[#B86F5B] hover:text-[#A85F4D] flex items-center gap-1 font-medium text-[11px]"
                         >
                           <span>Google Maps</span>
                           <FiExternalLink className="h-3 w-3" />

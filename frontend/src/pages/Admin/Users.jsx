@@ -74,8 +74,8 @@ const Users = () => {
       sortable: true,
       render: (row) => (
         <div>
-          <div className="font-extrabold text-[#1A312C]">{row.name || 'Unnamed User'}</div>
-          <div className="text-xs text-slate-500">{row.email}</div>
+          <div className="font-extrabold text-[#292B29]">{row.name || 'Unnamed User'}</div>
+          <div className="text-xs text-[#626760]">{row.email}</div>
         </div>
       )
     },
@@ -131,7 +131,7 @@ const Users = () => {
               setNewStatus(row.status || 'ACTIVE');
               setStatusReason(row.statusReason || '');
             }}
-            className="gap-1 text-xs py-1 px-2 text-slate-700 hover:bg-slate-100"
+            className="gap-1 text-xs py-1 px-2 text-[#626760] hover:bg-[#FAF7F2]"
           >
             {row.status === 'ACTIVE' ? <FiUserX className="h-3.5 w-3.5 text-amber-600" /> : <FiUserCheck className="h-3.5 w-3.5 text-emerald-600" />}
             <span>Status</span>
@@ -155,16 +155,16 @@ const Users = () => {
       />
 
       <Card>
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/30 p-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1A312C]">
-            <FiFilter className="h-4 w-4 text-[#428475]" />
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-4">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#292B29]">
+            <FiFilter className="h-4 w-4 text-[#BD715C]" />
             <span>Filters</span>
           </div>
           <div className="flex flex-wrap gap-3">
             <select
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+              className="rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
             >
               <option value="">All Roles</option>
               <option value="user">Donor / User</option>
@@ -174,7 +174,7 @@ const Users = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+              className="rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
             >
               <option value="">All Statuses</option>
               <option value="ACTIVE">ACTIVE</option>
@@ -217,39 +217,39 @@ const Users = () => {
       {selectedUser && (
         <Modal isOpen={Boolean(selectedUser)} onClose={() => setSelectedUser(null)} title="User Account Profile">
           <div className="space-y-4 text-xs">
-            <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-200">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#428475] text-white font-extrabold text-lg">
+            <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2] border border-[#E6DED6]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#BD715C] text-white font-extrabold text-lg">
                 {selectedUser.name ? selectedUser.name.charAt(0).toUpperCase() : 'U'}
               </div>
               <div>
-                <h4 className="font-extrabold text-[#1A312C] text-sm">{selectedUser.name}</h4>
-                <p className="text-slate-500">{selectedUser.email}</p>
+                <h4 className="font-extrabold text-[#292B29] text-sm">{selectedUser.name}</h4>
+                <p className="text-[#626760]">{selectedUser.email}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <span className="font-bold text-slate-700">Role:</span>
-                <p className="font-semibold text-slate-900">{selectedUser.role}</p>
+                <span className="font-bold text-[#626760]">Role:</span>
+                <p className="font-semibold text-[#292B29]">{selectedUser.role}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Account Status:</span>
-                <p className="font-semibold text-slate-900">{selectedUser.status || 'ACTIVE'}</p>
+                <span className="font-bold text-[#626760]">Account Status:</span>
+                <p className="font-semibold text-[#292B29]">{selectedUser.status || 'ACTIVE'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Phone:</span>
-                <p className="font-semibold text-slate-900">{selectedUser.phone || 'N/A'}</p>
+                <span className="font-bold text-[#626760]">Phone:</span>
+                <p className="font-semibold text-[#292B29]">{selectedUser.phone || 'N/A'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Verification Status:</span>
-                <p className="font-semibold text-slate-900">{selectedUser.verificationStatus || 'N/A'}</p>
+                <span className="font-bold text-[#626760]">Verification Status:</span>
+                <p className="font-semibold text-[#292B29]">{selectedUser.verificationStatus || 'N/A'}</p>
               </div>
             </div>
 
             {selectedUser.address && (
-              <div className="border-t border-slate-200 pt-3">
-                <span className="font-bold text-slate-700">Address:</span>
-                <p className="text-slate-800">{selectedUser.address}, {selectedUser.city || ''} {selectedUser.state || ''}</p>
+              <div className="border-t border-[#E6DED6] pt-3">
+                <span className="font-bold text-[#626760]">Address:</span>
+                <p className="text-[#292B29]">{selectedUser.address}, {selectedUser.city || ''} {selectedUser.state || ''}</p>
               </div>
             )}
 
@@ -264,15 +264,15 @@ const Users = () => {
       {statusModalUser && (
         <Modal isOpen={Boolean(statusModalUser)} onClose={() => setStatusModalUser(null)} title="Update Account Status">
           <form onSubmit={handleStatusUpdate} className="space-y-4 text-xs">
-            <p className="text-slate-700 font-medium">
-              Updating status for <strong className="text-[#1A312C]">{statusModalUser.name} ({statusModalUser.email})</strong>
+            <p className="text-[#626760] font-medium">
+              Updating status for <strong className="text-[#292B29]">{statusModalUser.name} ({statusModalUser.email})</strong>
             </p>
             <div>
-              <label className="block font-bold text-slate-700 mb-1">New Status</label>
+              <label className="block font-bold text-[#626760] mb-1">New Status</label>
               <select
                 value={newStatus}
                 onChange={(e) => setNewStatus(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold"
+                className="w-full rounded-xl border border-[#E6DED6] px-3 py-2 text-xs font-semibold text-[#292B29] outline-none focus:border-[#BD715C]"
               >
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="SUSPENDED">SUSPENDED</option>
@@ -280,11 +280,11 @@ const Users = () => {
               </select>
             </div>
             <div>
-              <label className="block font-bold text-slate-700 mb-1">Reason / Note (Optional)</label>
+              <label className="block font-bold text-[#626760] mb-1">Reason / Note (Optional)</label>
               <textarea
                 value={statusReason}
                 onChange={(e) => setStatusReason(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-xs"
+                className="w-full rounded-xl border border-[#E6DED6] px-3 py-2 text-xs text-[#292B29] outline-none focus:border-[#BD715C]"
                 rows={3}
                 placeholder="Reason for changing user status..."
               />

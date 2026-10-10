@@ -131,32 +131,32 @@ const FoodDetails = () => {
                   src={getFoodImageUrl(donation)}
                   alt={donation.foodName || donation.name || 'Food Item'}
                   onError={() => setImageError(true)}
-                  className="h-56 w-full md:w-72 rounded-2xl object-cover border border-[#89D7B7] shadow-sm"
+                  className="h-56 w-full md:w-72 rounded-2xl object-cover border border-[#E6DED6] shadow-sm"
                 />
               ) : (
-                <div className="h-56 w-full md:w-72 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 flex flex-col items-center justify-center gap-2 text-slate-500 shadow-xs p-4 text-center shrink-0">
-                  <FiImage className="h-10 w-10 text-[#428475]/60" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-slate-600">No image uploaded</span>
-                  <span className="text-[11px] text-slate-400 font-medium">Donor did not attach a food photo</span>
+                <div className="h-56 w-full md:w-72 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] flex flex-col items-center justify-center gap-2 text-[#626760] shadow-xs p-4 text-center shrink-0">
+                  <FiImage className="h-10 w-10 text-[#BD715C]" />
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#626760]">No image uploaded</span>
+                  <span className="text-[11px] text-[#A8ADA5] font-medium">Donor did not attach a food photo</span>
                 </div>
               )}
-              <div className="space-y-3.5 text-xs font-medium flex-1 text-[#1A312C]">
+              <div className="space-y-3.5 text-xs font-medium flex-1 text-[#292B29]">
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">{donation.category || 'General'}</Badge>
                   <Badge variant={isExpired ? 'danger' : 'success'}>
                     {isExpired ? 'EXPIRED' : (donation.status || 'AVAILABLE')}
                   </Badge>
                 </div>
-                <div><span className="font-bold text-slate-500 uppercase tracking-wider block">Quantity Available</span> <span className="text-base font-extrabold text-[#428475]">{donation.quantity} {donation.unit || 'servings'}</span></div>
-                <div><span className="font-bold text-slate-500 uppercase tracking-wider block">Expiry Date / Time</span> <span className={isExpired ? "text-red-600 font-bold" : "text-amber-700 font-bold"}>{donation.expiryTime ? new Date(donation.expiryTime).toLocaleString() : 'Within 24 Hours'}</span></div>
-                <div><span className="font-bold text-slate-500 uppercase tracking-wider block">Pickup Address</span> <span className="font-semibold text-slate-800">{donation.pickupAddress || 'Address specified upon request'}</span></div>
-                <div className="pt-3 border-t border-slate-100 text-slate-600 leading-relaxed">{donation.description || 'No additional description provided.'}</div>
+                <div><span className="font-bold text-[#626760] uppercase tracking-wider block">Quantity Available</span> <span className="text-base font-extrabold text-[#BD715C]">{donation.quantity} {donation.unit || 'servings'}</span></div>
+                <div><span className="font-bold text-[#626760] uppercase tracking-wider block">Expiry Date / Time</span> <span className={isExpired ? "text-rose-600 font-bold" : "text-amber-700 font-bold"}>{donation.expiryTime ? new Date(donation.expiryTime).toLocaleString() : 'Within 24 Hours'}</span></div>
+                <div><span className="font-bold text-[#626760] uppercase tracking-wider block">Pickup Address</span> <span className="font-semibold text-[#292B29]">{donation.pickupAddress || 'Address specified upon request'}</span></div>
+                <div className="pt-3 border-t border-[#E6DED6]/60 text-[#626760] leading-relaxed">{donation.description || 'No additional description provided.'}</div>
               </div>
             </div>
           </Card>
 
-          <Card title="Pickup Location Map" icon={<FiMapPin className="h-5 w-5 text-[#428475]" />}>
-            <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+          <Card title="Pickup Location Map" icon={<FiMapPin className="h-5 w-5 text-[#BD715C]" />}>
+            <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
               {donorCoords ? (
                 <div>
                   <GoogleMap
@@ -183,13 +183,13 @@ const FoodDetails = () => {
                   </GoogleMap>
 
                   {currentLocation && (
-                    <div className="p-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-xs text-slate-600 font-medium">Navigate to pickup location:</span>
+                    <div className="p-3 bg-[#FAF7F2] border-t border-[#E6DED6]/60 flex items-center justify-between">
+                      <span className="text-xs text-[#626760] font-medium">Navigate to pickup location:</span>
                       <a
                         href={getDirectionsUrl(currentLocation, donorCoords)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#428475] hover:bg-[#346a5e] text-white rounded-lg text-xs font-bold transition"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#BD715C] hover:bg-[#A85F4D] text-white rounded-lg text-xs font-bold transition"
                       >
                         <FiNavigation className="h-3.5 w-3.5" />
                         <span>Get Directions</span>
@@ -198,7 +198,7 @@ const FoodDetails = () => {
                   )}
                 </div>
               ) : (
-                <div className="py-12 text-center text-xs font-semibold text-slate-500">
+                <div className="py-12 text-center text-xs font-semibold text-[#626760]">
                   Donor pickup coordinates are not available for this donation.
                 </div>
               )}
@@ -220,89 +220,89 @@ const FoodDetails = () => {
               </div>
             </Card>
           ) : (
-            <Card title="Submit Pickup Request" icon={<FiSend className="h-5 w-5" />}>
+            <Card title="Submit Pickup Request" icon={<FiSend className="h-5 w-5 text-[#BD715C]" />}>
               <form onSubmit={handleSubmit(onRequestSubmit)} className="space-y-4 text-xs font-medium">
                 <div>
-                  <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
-                    <FiCalendar className="h-3.5 w-3.5 text-[#428475]" />
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <FiCalendar className="h-3.5 w-3.5 text-[#BD715C]" />
                     <span>Pickup Date *</span>
                   </label>
                   <input
                     type="date"
-                  {...register('pickupDate', { required: 'Pickup date is required' })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-                {errors.pickupDate && <p className="mt-1 text-red-600 font-semibold">{errors.pickupDate.message}</p>}
-              </div>
+                    {...register('pickupDate', { required: 'Pickup date is required' })}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                  {errors.pickupDate && <p className="mt-1 text-red-600 font-semibold">{errors.pickupDate.message}</p>}
+                </div>
 
-              <div>
-                <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
-                  <FiCalendar className="h-3.5 w-3.5 text-[#428475]" />
-                  <span>Pickup Time *</span>
-                </label>
-                <input
-                  type="time"
-                  {...register('pickupTime', { required: 'Pickup time is required' })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-                {errors.pickupTime && <p className="mt-1 text-red-600 font-semibold">{errors.pickupTime.message}</p>}
-              </div>
+                <div>
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <FiCalendar className="h-3.5 w-3.5 text-[#BD715C]" />
+                    <span>Pickup Time *</span>
+                  </label>
+                  <input
+                    type="time"
+                    {...register('pickupTime', { required: 'Pickup time is required' })}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                  {errors.pickupTime && <p className="mt-1 text-red-600 font-semibold">{errors.pickupTime.message}</p>}
+                </div>
 
-              <div>
-                <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
-                  <FiUser className="h-3.5 w-3.5 text-[#428475]" />
-                  <span>Contact Person *</span>
-                </label>
-                <input
-                  type="text"
-                  {...register('contactPerson', { required: 'Contact person is required' })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-                {errors.contactPerson && <p className="mt-1 text-red-600 font-semibold">{errors.contactPerson.message}</p>}
-              </div>
+                <div>
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <FiUser className="h-3.5 w-3.5 text-[#BD715C]" />
+                    <span>Contact Person *</span>
+                  </label>
+                  <input
+                    type="text"
+                    {...register('contactPerson', { required: 'Contact person is required' })}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                  {errors.contactPerson && <p className="mt-1 text-red-600 font-semibold">{errors.contactPerson.message}</p>}
+                </div>
 
-              <div>
-                <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
-                  <FiPhone className="h-3.5 w-3.5 text-[#428475]" />
-                  <span>Contact Phone Number *</span>
-                </label>
-                <input
-                  type="tel"
-                  {...register('contactNumber', { required: 'Contact phone is required' })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-                {errors.contactNumber && <p className="mt-1 text-red-600 font-semibold">{errors.contactNumber.message}</p>}
-              </div>
+                <div>
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <FiPhone className="h-3.5 w-3.5 text-[#BD715C]" />
+                    <span>Contact Phone Number *</span>
+                  </label>
+                  <input
+                    type="tel"
+                    {...register('contactNumber', { required: 'Contact phone is required' })}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                  {errors.contactNumber && <p className="mt-1 text-red-600 font-semibold">{errors.contactNumber.message}</p>}
+                </div>
 
-              <div>
-                <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
-                  <FiTruck className="h-3.5 w-3.5 text-[#428475]" />
-                  <span>Estimated Beneficiaries</span>
-                </label>
-                <input
-                  type="number"
-                  min={1}
-                  {...register('beneficiaries', { valueAsNumber: true })}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-sm font-semibold text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-              </div>
+                <div>
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1 flex items-center gap-1">
+                    <FiTruck className="h-3.5 w-3.5 text-[#BD715C]" />
+                    <span>Estimated Beneficiaries</span>
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    {...register('beneficiaries', { valueAsNumber: true })}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-sm font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                </div>
 
-              <div>
-                <label className="block text-slate-600 font-bold uppercase tracking-wider mb-1">
-                  Request Message
-                </label>
-                <textarea
-                  {...register('requestMessage')}
-                  rows={3}
-                  className="w-full rounded-xl border border-slate-200 bg-[#FFF4E1]/20 px-3 py-2 text-xs font-medium text-[#1A312C] outline-none focus:border-[#428475]"
-                />
-              </div>
+                <div>
+                  <label className="block text-[#626760] font-bold uppercase tracking-wider mb-1">
+                    Request Message
+                  </label>
+                  <textarea
+                    {...register('requestMessage')}
+                    rows={3}
+                    className="w-full rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-medium text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
+                  />
+                </div>
 
-              <Button type="submit" loading={sending} className="w-full py-3 text-xs font-bold uppercase tracking-wider">
-                Send Pickup Request
-              </Button>
-            </form>
-          </Card>
+                <Button type="submit" loading={sending} className="w-full py-3 text-xs font-bold uppercase tracking-wider">
+                  Send Pickup Request
+                </Button>
+              </form>
+            </Card>
           )}
         </div>
       </div>

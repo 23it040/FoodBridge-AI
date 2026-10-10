@@ -65,27 +65,28 @@ const AppRoutes = () => (
         <Route path="/register" element={<Navigate replace to="/auth/register" />} />
         <Route path="/forgot-password" element={<Navigate replace to="/auth/forgot-password" />} />
 
-        <Route
-          path="/auth"
-          element={
-            <PublicRoute>
-              <AuthLayout>
-                <AuthPage />
-              </AuthLayout>
-            </PublicRoute>
-          }
-        >
-          <Route index element={<Navigate replace to="login" />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
-          <Route path="forgot-password" element={<ForgotPasswordPage />} />
-        </Route>
-
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="/500" element={<InternalErrorPage />} />
         <Route path="/401" element={<UnauthorizedPage />} />
         <Route path="/403" element={<ForbiddenPage />} />
         <Route path="/offline" element={<OfflinePage />} />
+      </Route>
+
+      {/* AUTHENTICATION ROUTES (STANDALONE AUTHLAYOUT) */}
+      <Route
+        path="/auth"
+        element={
+          <PublicRoute>
+            <AuthLayout />
+          </PublicRoute>
+        }
+      >
+        <Route element={<AuthPage />}>
+          <Route index element={<Navigate replace to="login" />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        </Route>
       </Route>
 
       {/* AUTHENTICATED DASHBOARD ROUTES WRAPPED IN DASHBOARDLAYOUT (NO MAINLAYOUT) */}

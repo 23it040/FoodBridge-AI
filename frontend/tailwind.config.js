@@ -3,32 +3,56 @@ export default {
   theme: {
     extend: {
       colors: {
-        'primary-dark': '#102A2A',
-        primary: '#2F8F72',
-        'accent-green': '#79D6B2',
-        'light-mint': '#E8F6F0',
-        bgMain: '#F6F7F4',
+        bgMain: '#FAF7F2',
         surface: '#FFFFFF',
-        textPrimary: '#17201F',
-        textSecondary: '#687370',
-        borderColor: '#DDE5E1',
-        success: '#2F8F72',
-        warning: '#E5A83B',
-        danger: '#D95C5C',
-        mapAccent: '#5BAA8B',
+        softSurface: '#F6F4EF',
+        terracotta: {
+          DEFAULT: '#BD715C',
+          hover: '#A85F4D',
+          soft: '#F3DED6'
+        },
+        sage: {
+          DEFAULT: '#7D9588',
+          hover: '#6C8376',
+          soft: '#E6EEE8'
+        },
+        mint: {
+          DEFAULT: '#79D6B2',
+          soft: '#E8F6F0'
+        },
+        primary: {
+          DEFAULT: '#BD715C',
+          hover: '#A85F4D',
+          soft: '#F3DED6'
+        },
+        secondary: {
+          DEFAULT: '#7D9588',
+          hover: '#6C8376',
+          soft: '#E6EEE8'
+        },
+        'primary-hover': '#A85F4D',
+        'soft-terracotta': '#F3DED6',
+        'soft-sage': '#E6EEE8',
+        textPrimary: '#292B29',
+        textSecondary: '#626760',
+        borderColor: '#E6DED6',
+        success: '#6F987C',
+        info: '#7196A3',
+        'soft-info': '#EAF2F4',
 
         // Backward compatibility mappings
-        mint: '#79D6B2',
-        cream: '#F6F7F4',
-        secondary: '#2F8F72',
-        accent: '#79D6B2',
-        muted: '#687370'
+        'primary-dark': '#292B29',
+        'accent-green': '#7D9588',
+        'light-mint': '#E6EEE8',
+        cream: '#FAF7F2',
+        accent: '#BD715C',
+        muted: '#626760'
       },
       boxShadow: {
-        card: '0 1px 3px 0 rgba(16, 42, 42, 0.05), 0 1px 2px -1px rgba(16, 42, 42, 0.05)',
-        elevated: '0 10px 25px -5px rgba(16, 42, 42, 0.08), 0 8px 10px -6px rgba(16, 42, 42, 0.04)',
-        soft: '0 4px 20px 0 rgba(16, 42, 42, 0.05)',
-        glow: '0 0 15px rgba(47, 143, 114, 0.15)'
+        card: '0 1px 4px 0 rgba(41, 43, 41, 0.04), 0 1px 2px -1px rgba(41, 43, 41, 0.04)',
+        elevated: '0 10px 25px -5px rgba(41, 43, 41, 0.07), 0 8px 10px -6px rgba(41, 43, 41, 0.03)',
+        soft: '0 4px 20px 0 rgba(41, 43, 41, 0.04)',
+        glow: '0 0 15px rgba(189, 113, 92, 0.18)'
       },
       fontFamily: {
         sans: ['Inter', 'Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif']

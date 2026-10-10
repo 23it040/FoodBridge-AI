@@ -7,7 +7,7 @@ import ImpactSection from '../../components/home/ImpactSection';
 import FinalCTA from '../../components/home/FinalCTA';
 
 const HomePage = () => (
-  <div className="w-full bg-[#0A1A1A] text-white overflow-x-hidden">
+  <div className="w-full bg-[#FAF7F2] text-[#2E302D] overflow-x-hidden">
     <HeroSection />
     <MetricStrip />
     <HowItWorks />
@@ -17,6 +17,5 @@ const HomePage = () => (
     <FinalCTA />
   </div>
 );
-
 
 export default HomePage;

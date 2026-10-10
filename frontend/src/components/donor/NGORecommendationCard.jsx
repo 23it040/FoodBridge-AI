@@ -19,12 +19,12 @@ const NGORecommendationCard = ({ ngo, rank, donation, onViewOnMap, onViewDetails
   const scoreVariant = isHighMatch ? 'success' : isMedMatch ? 'warning' : 'default';
 
   return (
-    <div className="flex flex-col justify-between rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm hover:border-[#89D7B7] hover:shadow-md transition-all duration-300">
+    <div className="flex flex-col justify-between rounded-[24px] border border-[#E6DED6] bg-white/90 backdrop-blur-md p-5 shadow-card hover:border-[#BD715C]/40 hover:shadow-md transition-all duration-300">
       <div className="flex flex-col gap-3">
         <div className="flex justify-between items-start">
-          <Badge variant="success" className="text-[10px]">Rank #{rank}</Badge>
+          <Badge variant="terracotta" className="text-[10px]">Rank #{rank}</Badge>
           {ngo.verified ? (
-            <Badge variant="success" className="text-[10px] flex items-center gap-1">
+            <Badge variant="sage" className="text-[10px] flex items-center gap-1">
               <FiShield className="h-3 w-3" /> VERIFIED FOODBRIDGE
             </Badge>
           ) : (
@@ -33,22 +33,22 @@ const NGORecommendationCard = ({ ngo, rank, donation, onViewOnMap, onViewDetails
         </div>
 
         <div>
-          <h3 className="text-lg font-bold text-[#1A312C]">{ngo.ngoName || ngo.name}</h3>
-          {ngo.city && <p className="text-sm text-slate-500 font-medium">{ngo.city}</p>}
+          <h3 className="text-lg font-bold text-[#292B29]">{ngo.ngoName || ngo.name}</h3>
+          {ngo.city && <p className="text-sm text-[#626760] font-medium">{ngo.city}</p>}
         </div>
 
         {(ngo.matchScore !== undefined && ngo.matchScore !== null) && (
-          <div className="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <div className="flex justify-between items-center bg-[#FAF7F2] p-3 rounded-xl border border-[#E6DED6]">
             <div className="flex items-center gap-2">
-              <FiAward className="h-4 w-4 text-[#428475]" />
-              <span className="text-xs font-bold text-slate-700 uppercase">Match Score</span>
+              <FiAward className="h-4 w-4 text-[#BD715C]" />
+              <span className="text-xs font-bold text-[#292B29] uppercase">Match Score</span>
             </div>
             <Badge variant={scoreVariant}>{formatMatchScore(ngo.matchScore)}</Badge>
           </div>
         )}
 
-        <div className="text-sm font-semibold text-slate-700 flex items-center gap-2">
-          <FiMapPin className="text-[#428475]" />
+        <div className="text-sm font-semibold text-[#292B29] flex items-center gap-2">
+          <FiMapPin className="text-[#BD715C]" />
           <span>{ngo.distanceKm != null ? `${ngo.distanceKm} km away` : 'Distance unknown'}</span>
         </div>
 

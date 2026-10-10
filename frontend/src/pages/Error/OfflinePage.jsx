@@ -31,7 +31,7 @@ const OfflinePage = () => {
             </div>
           )}
         />
-        {!online && <div className="mt-4 text-center text-xs font-semibold text-[#428475]">Detecting connection... Will update automatically when online.</div>}
+        {!online && <div className="mt-4 text-center text-xs font-semibold text-[#7D9588]">Detecting connection... Will update automatically when online.</div>}
       </Card>
     </section>
   );

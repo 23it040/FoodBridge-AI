@@ -34,21 +34,21 @@ const ChangePassword = () => {
   return (
     <section className="py-6 space-y-6 max-w-2xl mx-auto">
       <PageHeader title="Change Password" subtitle="Ensure your account stays secure with a strong password" />
-      <Card title="Security Credentials" icon={<FiLock className="h-5 w-5" />}>
+      <Card title="Security Credentials" icon={<FiLock className="h-5 w-5 text-[#BD715C]" />}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">Current Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Current Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.current ? 'text' : 'password'}
                 {...register('currentPassword', { required: 'Current password is required' })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, current: !s.current }))}
-                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
+                className="absolute right-3.5 top-3.5 text-[#626760] hover:text-[#BD715C]"
               >
                 {show.current ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>
@@ -57,7 +57,7 @@ const ChangePassword = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">New Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">New Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.new ? 'text' : 'password'}
@@ -66,12 +66,12 @@ const ChangePassword = () => {
                   minLength: { value: 8, message: 'Password must be at least 8 characters' }
                 })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, new: !s.new }))}
-                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
+                className="absolute right-3.5 top-3.5 text-[#626760] hover:text-[#BD715C]"
               >
                 {show.new ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>
@@ -80,7 +80,7 @@ const ChangePassword = () => {
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#687370]">Confirm New Password *</label>
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#626760]">Confirm New Password *</label>
             <div className="relative mt-1.5">
               <input
                 type={show.confirm ? 'text' : 'password'}
@@ -89,12 +89,12 @@ const ChangePassword = () => {
                   validate: (v) => v === newPass || 'Passwords do not match'
                 })}
                 placeholder="••••••••"
-                className="w-full rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-4 py-3 text-sm font-semibold text-[#102A2A] outline-none transition focus:border-[#2F8F72] focus:ring-2 focus:ring-[#2F8F72]/20"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-3 text-sm font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => ({ ...s, confirm: !s.confirm }))}
-                className="absolute right-3.5 top-3.5 text-[#687370] hover:text-[#2F8F72]"
+                className="absolute right-3.5 top-3.5 text-[#626760] hover:text-[#BD715C]"
               >
                 {show.confirm ? <FiEyeOff className="h-4 w-4" /> : <FiEye className="h-4 w-4" />}
               </button>

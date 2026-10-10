@@ -108,11 +108,11 @@ const AIFoodSpoilageRiskCard = ({
     return {
       badgeVariant: 'success',
       label: 'LOW',
-      textClass: 'text-[#2F8F72]',
-      bgClass: 'bg-[#2F8F72]',
-      meterBg: 'bg-[#E8F6F0]',
-      ringColor: '#2F8F72',
-      icon: <FiCheckCircle className="h-5 w-5 text-[#2F8F72]" />
+      textClass: 'text-[#7D9588]',
+      bgClass: 'bg-[#7D9588]',
+      meterBg: 'bg-[#E6EEE8]',
+      ringColor: '#7D9588',
+      icon: <FiCheckCircle className="h-5 w-5 text-[#7D9588]" />
     };
   };
 
@@ -121,15 +121,15 @@ const AIFoodSpoilageRiskCard = ({
   // LOADING STATE
   if (loading) {
     return (
-      <div className={`rounded-3xl border border-[#79D6B2]/40 bg-white/90 backdrop-blur-md p-6 shadow-sm ${className}`}>
-        <div className="flex items-center justify-between border-b border-[#79D6B2]/20 pb-4 mb-4">
+      <div className={`rounded-3xl border border-[#E6DED6] bg-white/90 backdrop-blur-md p-6 shadow-sm ${className}`}>
+        <div className="flex items-center justify-between border-b border-[#E6DED6] pb-4 mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E8F6F0] text-[#2F8F72]">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FAF7F2] text-[#BD715C]">
               <FiActivity className="h-5 w-5 animate-pulse" />
             </div>
             <div>
-              <h3 className="text-sm font-extrabold text-[#102A2A]">AI Food Spoilage Risk</h3>
-              <p className="text-[11px] text-slate-500 font-medium">Analyzing food shelf-life parameters...</p>
+              <h3 className="text-sm font-extrabold text-[#292B29]">AI Food Spoilage Risk</h3>
+              <p className="text-[11px] text-[#626760] font-medium">Analyzing food shelf-life parameters...</p>
             </div>
           </div>
           <Badge variant="default" className="text-[10px]">Processing</Badge>
@@ -137,8 +137,8 @@ const AIFoodSpoilageRiskCard = ({
 
         <div className="py-8 flex flex-col items-center justify-center gap-3 text-center">
           <Spinner size={32} />
-          <p className="text-xs font-semibold text-[#102A2A]">Calculating spoilage risk via USDA FoodKeeper ML model...</p>
-          <p className="text-[11px] text-slate-400">Evaluating perishability, temperature, and storage parameters</p>
+          <p className="text-xs font-semibold text-[#292B29]">Calculating spoilage risk via USDA FoodKeeper ML model...</p>
+          <p className="text-[11px] text-[#626760]">Evaluating perishability, temperature, and storage parameters</p>
         </div>
       </div>
     );
@@ -153,7 +153,7 @@ const AIFoodSpoilageRiskCard = ({
             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-100 text-red-600">
               <FiAlertTriangle className="h-5 w-5" />
             </div>
-            <h3 className="text-sm font-extrabold text-[#102A2A]">AI Food Spoilage Risk</h3>
+            <h3 className="text-sm font-extrabold text-[#292B29]">AI Food Spoilage Risk</h3>
           </div>
           <Badge variant="danger" className="text-[10px]">Error</Badge>
         </div>
@@ -161,11 +161,11 @@ const AIFoodSpoilageRiskCard = ({
         <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-center space-y-3">
           <FiInfo className="h-6 w-6 text-amber-600 mx-auto" />
           <p className="text-xs font-bold text-amber-900">AI prediction temporarily unavailable.</p>
-          <p className="text-[11px] text-slate-600">{error}</p>
+          <p className="text-[11px] text-[#626760]">{error}</p>
           <Button
             size="sm"
             onClick={() => fetchSpoilageRisk()}
-            className="text-xs gap-1.5 mx-auto bg-[#2F8F72] hover:bg-[#102A2A] text-white"
+            className="text-xs gap-1.5 mx-auto bg-[#BD715C] hover:bg-[#A85F4D] text-white"
           >
             <FiRefreshCw className="h-3.5 w-3.5" />
             Retry Prediction
@@ -180,21 +180,21 @@ const AIFoodSpoilageRiskCard = ({
   const hoursLeft = data?.hoursUntilExpiry != null ? data.hoursUntilExpiry : null;
 
   return (
-    <div className={`rounded-3xl border border-[#79D6B2]/40 bg-white/95 backdrop-blur-md p-6 shadow-sm transition-all hover:shadow-md ${className}`}>
+    <div className={`rounded-3xl border border-[#E6DED6] bg-white/95 backdrop-blur-md p-6 shadow-sm transition-all hover:shadow-md ${className}`}>
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#79D6B2]/20 pb-4 mb-5">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E6DED6] pb-4 mb-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8F6F0] text-[#2F8F72] border border-[#79D6B2]/40 shadow-xs">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#FAF7F2] text-[#BD715C] border border-[#E6DED6] shadow-xs">
             <FiCpu className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-base font-extrabold text-[#102A2A]">AI Food Spoilage Risk</h3>
+              <h3 className="text-base font-extrabold text-[#292B29]">AI Food Spoilage Risk</h3>
               <Badge variant={riskConfig.badgeVariant} className="text-[10px]">
                 {riskConfig.label} RISK
               </Badge>
             </div>
-            <p className="text-[11px] font-semibold text-slate-500">
+            <p className="text-[11px] font-semibold text-[#626760]">
               {isModelUnavailable ? 'Safety Heuristic Engine' : 'Trained on USDA FoodKeeper Dataset'}
             </p>
           </div>
@@ -202,7 +202,7 @@ const AIFoodSpoilageRiskCard = ({
 
         <div className="flex items-center gap-2">
           {evaluating && (
-            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-[#2F8F72]">
+            <span className="flex items-center gap-1.5 text-[11px] font-semibold text-[#BD715C]">
               <Spinner size={14} /> Recalculating...
             </span>
           )}
@@ -211,7 +211,7 @@ const AIFoodSpoilageRiskCard = ({
             variant="ghost"
             onClick={() => fetchSpoilageRisk()}
             disabled={evaluating}
-            className="h-8 w-8 p-0 rounded-xl hover:bg-[#E8F6F0] text-[#2F8F72]"
+            className="h-8 w-8 p-0 rounded-xl hover:bg-[#FAF7F2] text-[#BD715C]"
             title="Refresh prediction"
           >
             <FiRefreshCw className={`h-4 w-4 ${evaluating ? 'animate-spin' : ''}`} />
@@ -235,8 +235,8 @@ const AIFoodSpoilageRiskCard = ({
       {/* Main Metric & Score Card */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
         {/* Risk Percentage Gauge */}
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-[#79D6B2]/30 bg-[#E8F6F0]/60 p-4 text-center">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">Spoilage Probability</span>
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-4 text-center">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-[#626760] mb-1">Spoilage Probability</span>
           <div className="flex items-baseline gap-1">
             <span className={`text-4xl font-black tracking-tight ${riskConfig.textClass}`}>
               {riskScore.toFixed(1)}%
@@ -244,13 +244,13 @@ const AIFoodSpoilageRiskCard = ({
           </div>
 
           <div className="w-full mt-3">
-            <div className="h-2 w-full rounded-full bg-slate-200 overflow-hidden">
+            <div className="h-2 w-full rounded-full bg-[#E6DED6] overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all duration-700 ease-out ${riskConfig.bgClass}`}
                 style={{ width: `${Math.min(100, Math.max(5, riskScore))}%` }}
               />
             </div>
-            <div className="flex justify-between text-[9px] font-bold text-slate-400 mt-1">
+            <div className="flex justify-between text-[9px] font-bold text-[#626760] mt-1">
               <span>0% Low</span>
               <span>50% Mid</span>
               <span>100% High</span>
@@ -259,16 +259,16 @@ const AIFoodSpoilageRiskCard = ({
         </div>
 
         {/* Risk Tier & Shelf Window */}
-        <div className="flex flex-col justify-between rounded-2xl border border-[#79D6B2]/30 bg-white p-4">
+        <div className="flex flex-col justify-between rounded-2xl border border-[#E6DED6] bg-white p-4">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Risk Evaluation</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#626760] block mb-1">Risk Evaluation</span>
             <div className="flex items-center gap-2">
               {riskConfig.icon}
               <span className={`text-xl font-extrabold ${riskConfig.textClass}`}>
                 {riskConfig.label} RISK
               </span>
             </div>
-            <p className="text-[11px] text-slate-500 mt-1 font-medium">
+            <p className="text-[11px] text-[#626760] mt-1 font-medium">
               {rawLevel === 'HIGH' || rawLevel === 'CRITICAL'
                 ? 'High decay probability. Immediate consumption or cold chain advised.'
                 : 'Safe shelf life. Compatible with normal redistribution timeline.'}
@@ -276,9 +276,9 @@ const AIFoodSpoilageRiskCard = ({
           </div>
 
           {hoursLeft !== null && (
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span className="text-slate-500 font-semibold text-[11px]">Time to Expiry:</span>
-              <span className={`font-black ${hoursLeft <= 6 ? 'text-red-600' : 'text-[#102A2A]'}`}>
+            <div className="pt-2 border-t border-[#E6DED6] flex items-center justify-between text-xs">
+              <span className="text-[#626760] font-semibold text-[11px]">Time to Expiry:</span>
+              <span className={`font-black ${hoursLeft <= 6 ? 'text-red-600' : 'text-[#292B29]'}`}>
                 {hoursLeft <= 0 ? 'Expired' : `${hoursLeft} hours`}
               </span>
             </div>
@@ -286,29 +286,29 @@ const AIFoodSpoilageRiskCard = ({
         </div>
 
         {/* Model Status & Confidence */}
-        <div className="flex flex-col justify-between rounded-2xl border border-[#79D6B2]/30 bg-white p-4">
+        <div className="flex flex-col justify-between rounded-2xl border border-[#E6DED6] bg-white p-4">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Model Diagnostics</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#626760] block mb-1">Model Diagnostics</span>
             <div className="flex items-center gap-1.5">
-              <FiShield className="h-4 w-4 text-[#2F8F72]" />
-              <span className="text-xs font-bold text-[#102A2A]">
+              <FiShield className="h-4 w-4 text-[#BD715C]" />
+              <span className="text-xs font-bold text-[#292B29]">
                 {isModelUnavailable ? 'Rule-Based Fallback' : 'RandomForest v1.0.0'}
               </span>
             </div>
             {confidencePercent && (
               <div className="mt-2">
                 <div className="flex justify-between text-[11px] font-bold mb-1">
-                  <span className="text-slate-500">Confidence</span>
-                  <span className="text-[#2F8F72]">{confidencePercent}%</span>
+                  <span className="text-[#626760]">Confidence</span>
+                  <span className="text-[#BD715C]">{confidencePercent}%</span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-slate-100 overflow-hidden">
-                  <div className="h-full rounded-full bg-[#2F8F72]" style={{ width: `${confidencePercent}%` }} />
+                <div className="h-1.5 w-full rounded-full bg-[#FAF7F2] overflow-hidden">
+                  <div className="h-full rounded-full bg-[#BD715C]" style={{ width: `${confidencePercent}%` }} />
                 </div>
               </div>
             )}
           </div>
 
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+          <div className="pt-2 border-t border-[#E6DED6] flex items-center justify-between text-[11px] text-[#626760] font-medium">
             <span>Status:</span>
             <span className={`font-bold ${isModelUnavailable ? 'text-amber-700' : 'text-emerald-700'}`}>
               {isModelUnavailable ? '● Offline (Protected)' : '● Active & Verified'}
@@ -318,36 +318,36 @@ const AIFoodSpoilageRiskCard = ({
       </div>
 
       {/* Main Contributing Factors */}
-      <div className="mb-5 rounded-2xl border border-[#79D6B2]/20 bg-[#E8F6F0]/30 p-4">
-        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#102A2A] mb-3 flex items-center gap-1.5">
-          <FiInfo className="h-3.5 w-3.5 text-[#2F8F72]" />
+      <div className="mb-5 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-4">
+        <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#292B29] mb-3 flex items-center gap-1.5">
+          <FiInfo className="h-3.5 w-3.5 text-[#BD715C]" />
           Key Contributing Spoilage Factors
         </h4>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div className="rounded-xl bg-white p-2.5 border border-slate-100 shadow-2xs">
-            <span className="text-[10px] font-bold text-slate-400 uppercase block">Category</span>
-            <span className="font-bold text-[#102A2A] line-clamp-1">{data?.featuresUsed?.category || donation?.category || 'Cooked Meals'}</span>
+          <div className="rounded-xl bg-white p-2.5 border border-[#E6DED6] shadow-2xs">
+            <span className="text-[10px] font-bold text-[#626760] uppercase block">Category</span>
+            <span className="font-bold text-[#292B29] line-clamp-1">{data?.featuresUsed?.category || donation?.category || 'Cooked Meals'}</span>
           </div>
 
-          <div className="rounded-xl bg-white p-2.5 border border-slate-100 shadow-2xs">
-            <span className="text-[10px] font-bold text-slate-400 uppercase block">Storage Temp</span>
-            <span className="font-bold text-[#102A2A] flex items-center gap-1">
-              <FiThermometer className="h-3.5 w-3.5 text-[#2F8F72]" />
+          <div className="rounded-xl bg-white p-2.5 border border-[#E6DED6] shadow-2xs">
+            <span className="text-[10px] font-bold text-[#626760] uppercase block">Storage Temp</span>
+            <span className="font-bold text-[#292B29] flex items-center gap-1">
+              <FiThermometer className="h-3.5 w-3.5 text-[#BD715C]" />
               {data?.featuresUsed?.storageTemperatureC != null ? `${data.featuresUsed.storageTemperatureC}°C` : '22°C'}
             </span>
           </div>
 
-          <div className="rounded-xl bg-white p-2.5 border border-slate-100 shadow-2xs">
-            <span className="text-[10px] font-bold text-slate-400 uppercase block">Packaging</span>
-            <span className="font-bold text-[#102A2A]">
+          <div className="rounded-xl bg-white p-2.5 border border-[#E6DED6] shadow-2xs">
+            <span className="text-[10px] font-bold text-[#626760] uppercase block">Packaging</span>
+            <span className="font-bold text-[#292B29]">
               {data?.featuresUsed?.isOpened === 1 ? 'Opened / Prepared' : 'Sealed / Original'}
             </span>
           </div>
 
-          <div className="rounded-xl bg-white p-2.5 border border-slate-100 shadow-2xs">
-            <span className="text-[10px] font-bold text-slate-400 uppercase block">Cold Chain</span>
-            <span className={`font-bold ${data?.featuresUsed?.requiresRefrigeration === 1 ? 'text-red-700' : 'text-[#2F8F72]'}`}>
+          <div className="rounded-xl bg-white p-2.5 border border-[#E6DED6] shadow-2xs">
+            <span className="text-[10px] font-bold text-[#626760] uppercase block">Cold Chain</span>
+            <span className={`font-bold ${data?.featuresUsed?.requiresRefrigeration === 1 ? 'text-red-700' : 'text-[#7D9588]'}`}>
               {data?.featuresUsed?.requiresRefrigeration === 1 ? 'Mandatory' : 'Room Temp OK'}
             </span>
           </div>
@@ -355,10 +355,10 @@ const AIFoodSpoilageRiskCard = ({
       </div>
 
       {/* Interactive Storage Simulator */}
-      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl border border-[#79D6B2]/30 bg-white">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 p-3 rounded-2xl border border-[#E6DED6] bg-white">
         <div className="flex items-center gap-2">
-          <FiThermometer className="h-4 w-4 text-[#2F8F72]" />
-          <span className="text-xs font-bold text-[#102A2A]">Simulate Storage Condition:</span>
+          <FiThermometer className="h-4 w-4 text-[#BD715C]" />
+          <span className="text-xs font-bold text-[#292B29]">Simulate Storage Condition:</span>
         </div>
 
         <div className="flex gap-1.5">
@@ -374,8 +374,8 @@ const AIFoodSpoilageRiskCard = ({
               disabled={evaluating}
               className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                 selectedStorage === s.id
-                  ? 'bg-[#2F8F72] text-white shadow-xs'
-                  : 'bg-[#E8F6F0] text-[#102A2A] hover:bg-[#79D6B2]/30'
+                  ? 'bg-[#BD715C] text-white shadow-xs'
+                  : 'bg-[#FAF7F2] text-[#292B29] border border-[#E6DED6] hover:bg-[#F3DED6]/40'
               }`}
             >
               {s.label}
@@ -385,14 +385,14 @@ const AIFoodSpoilageRiskCard = ({
       </div>
 
       {/* AI Recommendation */}
-      <div className="rounded-2xl border border-[#79D6B2]/40 bg-gradient-to-r from-[#E8F6F0] to-white p-4">
+      <div className="rounded-2xl border border-[#E6DED6] bg-gradient-to-r from-[#FAF7F2] to-white p-4">
         <div className="flex items-start gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#2F8F72] text-white shrink-0 shadow-xs">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#BD715C] text-white shrink-0 shadow-xs">
             <FiActivity className="h-4 w-4" />
           </div>
           <div className="space-y-1">
-            <h5 className="text-xs font-extrabold uppercase tracking-wider text-[#102A2A]">AI Action Recommendation</h5>
-            <p className="text-xs text-[#102A2A] font-semibold leading-relaxed">
+            <h5 className="text-xs font-extrabold uppercase tracking-wider text-[#292B29]">AI Action Recommendation</h5>
+            <p className="text-xs text-[#292B29] font-semibold leading-relaxed">
               {data?.recommendation || 'Evaluate immediate pickup urgency to prevent surplus food decay.'}
             </p>
           </div>

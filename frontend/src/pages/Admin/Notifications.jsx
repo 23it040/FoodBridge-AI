@@ -118,35 +118,35 @@ const NotificationsPage = () => {
         }
       />
 
-      <Card title="Broadcast & System Logs" icon={<FiBell className="h-5 w-5" />}>
+      <Card title="Broadcast & System Logs" icon={<FiBell className="h-5 w-5 text-[#BD715C]" />}>
         {showSendForm && (
-          <form onSubmit={handleSendBroadcast} className="mb-6 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 p-5 space-y-4 shadow-sm">
-            <h4 className="font-extrabold text-[#1A312C] text-sm flex items-center gap-2">
-              <FiSend className="h-4 w-4 text-[#428475]" />
+          <form onSubmit={handleSendBroadcast} className="mb-6 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-5 space-y-4 shadow-sm">
+            <h4 className="font-extrabold text-[#292B29] text-sm flex items-center gap-2">
+              <FiSend className="h-4 w-4 text-[#BD715C]" />
               <span>Send Broadcast Notification</span>
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Announcement Title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                   placeholder="e.g. Platform Maintenance Scheduled"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                   Audience Target
                 </label>
                 <select
                   value={recipientType}
                   onChange={(e) => setRecipientType(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-[#1A312C] outline-none"
+                  className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-2 text-xs font-semibold text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                 >
                   <option value="ALL">All Registered Users</option>
                   <option value="NGO">NGO Partners Only</option>
@@ -155,13 +155,13 @@ const NotificationsPage = () => {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#626760] mb-1">
                 Message Content
               </label>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-medium text-[#1A312C] outline-none transition focus:border-[#428475]"
+                className="w-full rounded-xl border border-[#E6DED6] bg-white px-4 py-2 text-xs font-medium text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
                 rows={3}
                 placeholder="Write your broadcast message here..."
                 required
@@ -203,19 +203,19 @@ const NotificationsPage = () => {
                 <div
                   key={n._id || n.id}
                   className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl p-4 transition-all ${
-                    isUnread ? 'bg-[#FFF4E1]/50 border border-[#89D7B7] shadow-xs' : 'bg-white border border-slate-200'
+                    isUnread ? 'bg-[#F3DED6]/40 border border-[#BD715C]/40 shadow-xs' : 'bg-white border border-[#E6DED6]'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#428475] text-white' : 'bg-slate-100 text-slate-500'}`}>
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${isUnread ? 'bg-[#BD715C] text-white' : 'bg-[#FAF7F2] text-[#626760]'}`}>
                       <FiBell className="h-5 w-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-extrabold text-[#1A312C] text-sm">{n.title || n.message}</h4>
+                        <h4 className="font-extrabold text-[#292B29] text-sm">{n.title || n.message}</h4>
                         {isUnread && <Badge variant="primary">Unread</Badge>}
                       </div>
-                      <p className="mt-0.5 text-xs font-medium text-slate-600">{n.message || n.body}</p>
+                      <p className="mt-0.5 text-xs font-medium text-[#626760]">{n.message || n.body}</p>
                       {n.createdAt && <span className="text-[10px] text-slate-400 font-semibold">{new Date(n.createdAt).toLocaleString()}</span>}
                     </div>
                   </div>

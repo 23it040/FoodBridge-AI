@@ -77,9 +77,9 @@ const NGOVerification = () => {
       sortable: true,
       render: (row) => (
         <div>
-          <span className="font-extrabold text-[#1A312C]">{row.name || 'Unnamed NGO'}</span>
+          <span className="font-extrabold text-[#292B29]">{row.name || 'Unnamed NGO'}</span>
           {row.registrationNumber && (
-            <div className="text-xs font-medium text-slate-500">Reg: {row.registrationNumber}</div>
+            <div className="text-xs font-medium text-[#626760]">Reg: {row.registrationNumber}</div>
           )}
         </div>
       )
@@ -89,15 +89,15 @@ const NGOVerification = () => {
       title: 'Contact Details',
       render: (row) => (
         <div>
-          <div className="text-xs font-semibold text-[#1A312C]">{row.email}</div>
-          <div className="text-xs text-slate-500">{row.phone || 'No phone'}</div>
+          <div className="text-xs font-semibold text-[#292B29]">{row.email}</div>
+          <div className="text-xs text-[#626760]">{row.phone || 'No phone'}</div>
         </div>
       )
     },
     {
       key: 'address',
       title: 'Location',
-      render: (row) => <span className="text-xs text-slate-700">{row.address || row.city || 'Not provided'}</span>
+      render: (row) => <span className="text-xs text-[#292B29]">{row.address || row.city || 'Not provided'}</span>
     },
     {
       key: 'verificationStatus',
@@ -122,7 +122,7 @@ const NGOVerification = () => {
             size="sm"
             onClick={() => handleApprove(row._id || row.id)}
             disabled={submittingAction}
-            className="gap-1 text-xs py-1 px-2.5 bg-emerald-600 hover:bg-emerald-700"
+            className="gap-1 text-xs py-1 px-2.5 bg-[#7D9588] hover:bg-[#688073] text-white"
           >
             <FiCheckCircle className="h-3.5 w-3.5" />
             <span>Approve</span>
@@ -189,15 +189,15 @@ const NGOVerification = () => {
       {rejectModalNgo && (
         <Modal isOpen={Boolean(rejectModalNgo)} onClose={() => setRejectModalNgo(null)} title="Decline NGO Verification">
           <form onSubmit={handleRejectSubmit} className="space-y-4 text-xs">
-            <p className="text-slate-700 font-medium">
-              You are declining verification for <strong className="text-[#1A312C]">{rejectModalNgo.name}</strong>. Please state the reason for rejection:
+            <p className="text-[#626760] font-medium">
+              You are declining verification for <strong className="text-[#292B29]">{rejectModalNgo.name}</strong>. Please state the reason for rejection:
             </p>
             <div>
-              <label className="block font-bold text-slate-700 mb-1">Rejection Reason</label>
+              <label className="block font-bold text-[#626760] mb-1">Rejection Reason</label>
               <textarea
                 value={rejectReason}
                 onChange={(e) => setRejectReason(e.target.value)}
-                className="w-full rounded-xl border border-slate-200 p-3 text-xs"
+                className="w-full rounded-xl border border-[#E6DED6] p-3 text-xs text-[#292B29] outline-none focus:border-[#BD715C]"
                 rows={4}
                 placeholder="Specify missing documents, invalid registration number, etc..."
                 required

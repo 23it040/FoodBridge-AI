@@ -76,9 +76,9 @@ const RouteDisplay = ({ routeData, onClearRoute }) => {
   if (!routeData) return null;
 
   return (
-    <div className="absolute left-3 top-3 z-10 max-w-sm rounded-2xl border border-emerald-200 bg-white/95 p-3.5 shadow-xl backdrop-blur-sm text-[#1A312C] font-sans">
+    <div className="absolute left-3 top-3 z-10 max-w-sm rounded-2xl border border-[#E6DED6] bg-white/95 p-3.5 shadow-xl backdrop-blur-sm text-[#292B29] font-sans">
       <div className="flex items-center justify-between gap-2 border-b border-slate-100 pb-2 mb-2">
-        <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#047857]">
+        <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#BD715C]">
           <FiNavigation className="h-4 w-4" />
           <span>ROUTE DETAILS</span>
         </div>
@@ -95,19 +95,19 @@ const RouteDisplay = ({ routeData, onClearRoute }) => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 text-xs font-medium">
-        <div className="flex items-center gap-2 rounded-xl bg-emerald-50/80 p-2.5 border border-emerald-100">
-          <FiNavigation className="h-4 w-4 text-[#047857] shrink-0" />
+        <div className="flex items-center gap-2 rounded-xl bg-[#E6EEE8] p-2.5 border border-[#7D9588]/20">
+          <FiNavigation className="h-4 w-4 text-[#7D9588] shrink-0" />
           <div>
             <span className="text-[10px] font-bold text-slate-400 uppercase block">Distance</span>
-            <span className="font-extrabold text-[#047857]">{routeData.distanceText || 'N/A'}</span>
+            <span className="font-extrabold text-[#7D9588]">{routeData.distanceText || 'N/A'}</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 rounded-xl bg-[#FFF4E1]/80 p-2.5 border border-amber-200">
-          <FiClock className="h-4 w-4 text-amber-700 shrink-0" />
+        <div className="flex items-center gap-2 rounded-xl bg-[#F8EAE3] p-2.5 border border-[#BD715C]/20">
+          <FiClock className="h-4 w-4 text-[#BD715C] shrink-0" />
           <div>
             <span className="text-[10px] font-bold text-slate-400 uppercase block">Est. Time</span>
-            <span className="font-extrabold text-amber-800">{routeData.durationText || 'N/A'}</span>
+            <span className="font-extrabold text-[#A85F4D]">{routeData.durationText || 'N/A'}</span>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@ const RouteDisplay = ({ routeData, onClearRoute }) => {
           href={getDirectionsUrl(routeData.origin, routeData.destination)}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 flex items-center justify-center gap-1.5 w-full py-2 px-3 bg-[#047857] hover:bg-[#065F46] text-white font-bold rounded-xl text-xs transition-colors shadow-sm text-center"
+          className="mt-3 flex items-center justify-center gap-1.5 w-full py-2 px-3 bg-[#BD715C] hover:bg-[#A85F4D] text-white font-bold rounded-xl text-xs transition-colors shadow-sm text-center"
         >
           <FiNavigation className="h-3.5 w-3.5" />
           <span>Start Navigation (Google Maps)</span>

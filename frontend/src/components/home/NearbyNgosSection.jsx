@@ -87,14 +87,14 @@ const NearbyNgosSection = () => {
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-[#E8F6F0] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#2F8F72] border border-[#79D6B2] mb-2">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#F3DED6] px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#BD715C] border border-[#BD715C]/30 mb-2">
             <FiCompass className="h-3.5 w-3.5" />
             <span>FoodBridge Discovery Network</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#102A2A]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#292B29]">
             Nearby Verified Non-Profit NGOs & Food Banks
           </h2>
-          <p className="text-xs sm:text-sm font-medium text-[#687370] mt-1">
+          <p className="text-xs sm:text-sm font-medium text-[#626760] mt-1">
             Discover verified food banks, social facilities, and community relief partners near your live position
           </p>
         </div>
@@ -106,7 +106,7 @@ const NearbyNgosSection = () => {
             variant="outline"
             className="gap-2 text-xs py-2 px-4"
           >
-            <FiMapPin className="h-4 w-4 text-[#2F8F72]" />
+            <FiMapPin className="h-4 w-4 text-[#BD715C]" />
             <span>Detect My Location</span>
           </Button>
 
@@ -136,11 +136,11 @@ const NearbyNgosSection = () => {
       <Card>
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#687370]">Search Radius:</label>
+            <label className="text-xs font-bold uppercase tracking-wider text-[#626760]">Search Radius:</label>
             <select
               value={radiusKm}
               onChange={(e) => setRadiusKm(Number(e.target.value))}
-              className="rounded-xl border border-[#DDE5E1] bg-[#F6F7F4] px-3 py-1.5 text-xs font-bold text-[#102A2A] outline-none focus:border-[#2F8F72]"
+              className="rounded-xl border border-[#E6DED6] bg-white px-3 py-1.5 text-xs font-bold text-[#292B29] outline-none focus:border-[#BD715C]"
             >
               <option value={5}>5 km</option>
               <option value={10}>10 km</option>
@@ -148,14 +148,14 @@ const NearbyNgosSection = () => {
               <option value={50}>50 km</option>
             </select>
           </div>
-          <span className="text-xs font-semibold text-[#687370]">
+          <span className="text-xs font-semibold text-[#626760]">
             {ngos.length} Partner(s) Available
           </span>
         </div>
       </Card>
 
       {/* Interactive Google Map */}
-      <div id="home-ngo-map-container" className="overflow-hidden rounded-3xl border border-[#DDE5E1]">
+      <div id="home-ngo-map-container" className="overflow-hidden rounded-3xl border border-[#E6DED6]">
         <NGOMap
           pickupLocation={userLocation}
           initialNgos={ngos}
@@ -192,28 +192,28 @@ const NearbyNgosSection = () => {
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       {isFoodBridge ? (
-                        <Badge variant="success" className="gap-1 text-[10px]">
+                        <Badge variant="sage" className="gap-1 text-[10px]">
                           <FiCheckCircle className="h-3 w-3" />
                           VERIFIED FOODBRIDGE NGO
                         </Badge>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-cyan-50 border border-cyan-200 px-2 py-0.5 text-[10px] font-bold text-cyan-700">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-[#FAF7F2] border border-[#E6DED6] px-2 py-0.5 text-[10px] font-bold text-[#626760]">
                           NEARBY NGO
                         </span>
                       )}
                       {ngo.distanceKm != null && (
-                        <span className="text-xs font-bold text-[#2F8F72] bg-[#E8F6F0] px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-bold text-[#BD715C] bg-[#F3DED6] px-2 py-0.5 rounded-full">
                           {ngo.distanceKm} km away
                         </span>
                       )}
                     </div>
 
                     <div>
-                      <h3 className="font-extrabold text-base text-[#102A2A] line-clamp-1">
+                      <h3 className="font-extrabold text-base text-[#292B29] line-clamp-1">
                         {ngo.organizationName || ngo.name}
                       </h3>
-                      <p className="text-xs text-[#687370] mt-1 flex items-start gap-1 line-clamp-2">
-                        <FiMapPin className="h-3.5 w-3.5 shrink-0 text-[#2F8F72] mt-0.5" />
+                      <p className="text-xs text-[#626760] mt-1 flex items-start gap-1 line-clamp-2">
+                        <FiMapPin className="h-3.5 w-3.5 shrink-0 text-[#BD715C] mt-0.5" />
                         <span>{ngo.address || 'Address on file'}</span>
                       </p>
                     </div>
@@ -224,7 +224,7 @@ const NearbyNgosSection = () => {
                           ngo.foodTypesAccepted.map((t, idx) => (
                             <span
                               key={idx}
-                              className="text-[10px] font-medium bg-slate-100 text-slate-600 px-2 py-0.5 rounded"
+                              className="text-[10px] font-medium bg-[#FAF7F2] text-[#626760] px-2 py-0.5 rounded border border-[#E6DED6]"
                             >
                               {t}
                             </span>
@@ -237,11 +237,11 @@ const NearbyNgosSection = () => {
                     ) : null}
                   </div>
 
-                  <div className="pt-4 mt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <div className="pt-4 mt-3 border-t border-[#E6DED6] flex items-center justify-between text-xs">
                     {ngo.phone ? (
                       <a
                         href={`tel:${ngo.phone}`}
-                        className="text-slate-600 font-semibold hover:text-[#2F8F72] flex items-center gap-1"
+                        className="text-[#626760] font-semibold hover:text-[#BD715C] flex items-center gap-1"
                       >
                         <FiPhone className="h-3.5 w-3.5" />
                         <span>{ngo.phone}</span>
@@ -255,7 +255,7 @@ const NearbyNgosSection = () => {
                         href={directionsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#2F8F72] font-bold hover:underline flex items-center gap-1"
+                        className="text-[#BD715C] font-bold hover:underline flex items-center gap-1"
                       >
                         <FiNavigation className="h-3.5 w-3.5" />
                         <span>Directions</span>
@@ -264,7 +264,7 @@ const NearbyNgosSection = () => {
                         href={gMapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-slate-500 hover:text-slate-800"
+                        className="text-[#626760] hover:text-[#292B29]"
                         title="View on Google Maps"
                       >
                         <FiExternalLink className="h-3.5 w-3.5" />

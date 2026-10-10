@@ -16,7 +16,7 @@ const ForbiddenPage = () => {
           action={(
             <div className="flex items-center justify-center gap-3">
               <Button onClick={() => nav(-1)}>Go Back</Button>
-              <Button variant="outline" onClick={() => nav('/')} className="bg-white text-[#428475] border-[#428475]">
+              <Button variant="secondary" onClick={() => nav('/')}>
                 Return Home
               </Button>
             </div>

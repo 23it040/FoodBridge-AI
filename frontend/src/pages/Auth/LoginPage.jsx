@@ -56,13 +56,13 @@ const LoginPage = () => {
     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
       {/* HEADINGS */}
       <div className="text-center space-y-1">
-        <h2 className="text-2xl font-black text-white tracking-tight">Welcome Back</h2>
-        <p className="text-xs font-semibold text-[#A7B8B3]">Sign in to continue to FoodBridge</p>
+        <h2 className="text-2xl font-black text-[#292B29] tracking-tight">Welcome Back</h2>
+        <p className="text-xs font-semibold text-[#626760]">Sign in to continue to FoodBridge</p>
       </div>
 
       {/* DEMO ACCOUNTS QUICK-FILL PILLS */}
-      <div className="rounded-xl border border-white/10 bg-[#061918]/60 p-3 text-center">
-        <span className="block text-[11px] font-extrabold uppercase tracking-wider text-[#79D6B2] mb-2">
+      <div className="rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-3.5 text-center">
+        <span className="block text-[11px] font-extrabold uppercase tracking-wider text-[#BD715C] mb-2">
           ⚡ Quick Demo Login Fill:
         </span>
         <div className="flex flex-wrap justify-center gap-2">
@@ -71,7 +71,7 @@ const LoginPage = () => {
               key={acc.role}
               type="button"
               onClick={() => handleFillDemo(acc.email, acc.pass)}
-              className="rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-bold text-[#D7E0DC] transition-all hover:border-[#79D6B2] hover:bg-[#79D6B2]/20 hover:text-white"
+              className="rounded-full border border-[#E6DED6] bg-white px-3 py-1 text-xs font-bold text-[#626760] transition-all hover:border-[#BD715C] hover:bg-[#F3DED6] hover:text-[#BD715C]"
             >
               {acc.role}
             </button>
@@ -83,11 +83,11 @@ const LoginPage = () => {
       <div className="space-y-4">
         {/* EMAIL INPUT */}
         <div>
-          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+          <label htmlFor="email" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
             Email Address
           </label>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiMail className="h-4 w-4" />
             </div>
             <input
@@ -101,11 +101,11 @@ const LoginPage = () => {
                   message: 'Enter a valid email address'
                 }
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.email && (
-            <p className="mt-1.5 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1.5 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.email.message}
             </p>
           )}
@@ -114,18 +114,18 @@ const LoginPage = () => {
         {/* PASSWORD INPUT */}
         <div>
           <div className="flex items-center justify-between">
-            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#A7B8B3]">
+            <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-[#626760]">
               Password
             </label>
             <Link
               to="/auth/forgot-password"
-              className="text-xs font-bold text-[#79D6B2] hover:text-white transition-colors"
+              className="text-xs font-bold text-[#BD715C] hover:text-[#A85F4D] transition-colors"
             >
               Forgot password?
             </Link>
           </div>
           <div className="relative mt-1.5">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#70827D]">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#BD715C]">
               <FiLock className="h-4 w-4" />
             </div>
             <input
@@ -136,11 +136,11 @@ const LoginPage = () => {
                 required: 'Password is required',
                 minLength: { value: 8, message: 'Password must be at least 8 characters' }
               })}
-              className="w-full rounded-xl border border-white/15 bg-[#061918]/80 pl-10 pr-4 py-3 text-sm text-white placeholder-[#70827D] outline-none transition focus:border-[#79D6B2] focus:ring-2 focus:ring-[#79D6B2]/20"
+              className="w-full rounded-xl border border-[#E6DED6] bg-white pl-10 pr-4 py-3 text-sm text-[#292B29] placeholder-[#A8ADA5] outline-none transition focus:border-[#BD715C] focus:ring-2 focus:ring-[#BD715C]/20"
             />
           </div>
           {errors.password && (
-            <p className="mt-1.5 text-xs font-semibold text-[#FF6B6B] flex items-center gap-1">
+            <p className="mt-1.5 text-xs font-semibold text-rose-600 flex items-center gap-1">
               <span>⚠️</span> {errors.password.message}
             </p>
           )}
@@ -152,11 +152,11 @@ const LoginPage = () => {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full py-3.5 bg-[#79D6B2] hover:bg-[#68D8B0] text-[#0A1A1A] font-extrabold rounded-xl shadow-[0_0_20px_rgba(121,214,178,0.25)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+          className="w-full py-3.5 bg-[#BD715C] hover:bg-[#A85F4D] text-white font-extrabold rounded-full shadow-[0_4px_14px_rgba(189,113,92,0.25)] hover:shadow-[0_6px_20px_rgba(189,113,92,0.35)] transition-all flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm hover:-translate-y-0.5"
         >
           {submitting ? (
             <>
-              <svg className="h-4 w-4 animate-spin text-[#0A1A1A]" viewBox="0 0 24 24" fill="none">
+              <svg className="h-4 w-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
               </svg>
@@ -172,9 +172,9 @@ const LoginPage = () => {
       </div>
 
       {/* FOOTER SWITCH */}
-      <div className="pt-2 text-center text-xs font-medium text-[#A7B8B3]">
+      <div className="pt-2 text-center text-xs font-medium text-[#626760]">
         Don't have an account?{' '}
-        <Link to="/auth/register" className="font-extrabold text-[#79D6B2] hover:underline">
+        <Link to="/auth/register" className="font-extrabold text-[#BD715C] hover:underline">
           Create Account
         </Link>
       </div>

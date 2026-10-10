@@ -266,7 +266,7 @@ const GooglePlacesMarkers = ({ foodBridgeNGOs = [] }) => {
                   gap: '4px',
                   fontSize: '12px',
                   fontWeight: 700,
-                  color: '#2F8F72',
+                  color: '#BD715C',
                   textDecoration: 'none'
                 }}
               >

@@ -49,8 +49,8 @@ const Donations = () => {
       sortable: true,
       render: (row) => (
         <div>
-          <span className="font-extrabold text-[#1A312C]">{row.foodName || row.name || 'Unnamed Food'}</span>
-          {row.category && <span className="ml-2 text-xs font-semibold text-slate-500">({row.category})</span>}
+          <span className="font-extrabold text-[#292B29]">{row.foodName || row.name || 'Unnamed Food'}</span>
+          {row.category && <span className="ml-2 text-xs font-semibold text-[#626760]">({row.category})</span>}
         </div>
       )
     },
@@ -62,8 +62,8 @@ const Donations = () => {
         if (!donor) return <span className="text-xs text-slate-400">Anonymous</span>;
         return (
           <div>
-            <div className="text-xs font-bold text-[#1A312C]">{donor.name || 'Donor'}</div>
-            <div className="text-xs text-slate-500">{donor.email || ''}</div>
+            <div className="text-xs font-bold text-[#292B29]">{donor.name || 'Donor'}</div>
+            <div className="text-xs text-[#626760]">{donor.email || ''}</div>
           </div>
         );
       }
@@ -72,7 +72,7 @@ const Donations = () => {
       key: 'quantity',
       title: 'Qty / Servings',
       sortable: true,
-      render: (row) => <span className="font-bold text-[#428475]">{row.quantity || 0}</span>
+      render: (row) => <span className="font-bold text-[#BD715C]">{row.quantity || 0}</span>
     },
     {
       key: 'status',
@@ -122,16 +122,16 @@ const Donations = () => {
       />
 
       <Card>
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/30 p-4">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1A312C]">
-            <FiFilter className="h-4 w-4 text-[#428475]" />
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] p-4">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#292B29]">
+            <FiFilter className="h-4 w-4 text-[#BD715C]" />
             <span>Filters</span>
           </div>
           <div className="flex flex-wrap gap-3">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+              className="rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
             >
               <option value="">All Statuses</option>
               <option value="AVAILABLE">AVAILABLE</option>
@@ -146,7 +146,7 @@ const Donations = () => {
               placeholder="Filter Category..."
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#1A312C] outline-none transition focus:border-[#428475]"
+              className="rounded-xl border border-[#E6DED6] bg-white px-3 py-2 text-xs font-semibold text-[#292B29] outline-none transition focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
             />
           </div>
         </div>
@@ -187,39 +187,39 @@ const Donations = () => {
           title="Donation Details"
         >
           <div className="space-y-4 text-xs">
-            <div className="rounded-xl border border-slate-200 p-3 bg-slate-50">
-              <span className="font-bold text-[#1A312C] text-sm">{selectedDonation.foodName || selectedDonation.name}</span>
-              <div className="text-slate-500 mt-1">{selectedDonation.description || 'No description provided.'}</div>
+            <div className="rounded-xl border border-[#E6DED6] p-3 bg-[#FAF7F2]">
+              <span className="font-bold text-[#292B29] text-sm">{selectedDonation.foodName || selectedDonation.name}</span>
+              <div className="text-[#626760] mt-1">{selectedDonation.description || 'No description provided.'}</div>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <span className="font-bold text-slate-700">Category:</span>
-                <p className="font-medium text-slate-900">{selectedDonation.category || 'General'}</p>
+                <span className="font-bold text-[#626760]">Category:</span>
+                <p className="font-medium text-[#292B29]">{selectedDonation.category || 'General'}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Quantity:</span>
-                <p className="font-medium text-slate-900">{selectedDonation.quantity || 0}</p>
+                <span className="font-bold text-[#626760]">Quantity:</span>
+                <p className="font-medium text-[#292B29]">{selectedDonation.quantity || 0}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Status:</span>
-                <p className="font-medium text-slate-900">{selectedDonation.status}</p>
+                <span className="font-bold text-[#626760]">Status:</span>
+                <p className="font-medium text-[#292B29]">{selectedDonation.status}</p>
               </div>
               <div>
-                <span className="font-bold text-slate-700">Expiry Date:</span>
-                <p className="font-medium text-slate-900">
+                <span className="font-bold text-[#626760]">Expiry Date:</span>
+                <p className="font-medium text-[#292B29]">
                   {selectedDonation.expiryDate ? new Date(selectedDonation.expiryDate).toLocaleString() : 'N/A'}
                 </p>
               </div>
             </div>
-            <div className="border-t border-slate-200 pt-3 space-y-1">
-              <span className="font-bold text-slate-700">Donor Info:</span>
-              <p className="text-slate-800">{selectedDonation.donorId?.name || 'Unknown Donor'}</p>
-              <p className="text-slate-500">{selectedDonation.donorId?.email || 'No email'}</p>
+            <div className="border-t border-[#E6DED6] pt-3 space-y-1">
+              <span className="font-bold text-[#626760]">Donor Info:</span>
+              <p className="text-[#292B29]">{selectedDonation.donorId?.name || 'Unknown Donor'}</p>
+              <p className="text-[#626760]">{selectedDonation.donorId?.email || 'No email'}</p>
             </div>
             {selectedDonation.pickupAddress && (
-              <div className="border-t border-slate-200 pt-3">
-                <span className="font-bold text-slate-700">Pickup Address:</span>
-                <p className="text-slate-800 mt-0.5">{selectedDonation.pickupAddress}</p>
+              <div className="border-t border-[#E6DED6] pt-3">
+                <span className="font-bold text-[#626760]">Pickup Address:</span>
+                <p className="text-[#292B29] mt-0.5">{selectedDonation.pickupAddress}</p>
               </div>
             )}
             <div className="flex justify-end pt-3">

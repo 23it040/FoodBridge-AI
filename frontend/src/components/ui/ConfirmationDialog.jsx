@@ -50,7 +50,7 @@ const ConfirmationDialog = ({
       }
     >
       <div className="space-y-3 font-sans">
-        {description && <p className="text-xs text-slate-600 font-medium leading-relaxed">{description}</p>}
+        {description && <p className="text-xs text-[#626760] font-medium leading-relaxed">{description}</p>}
         {children}
       </div>
     </Modal>

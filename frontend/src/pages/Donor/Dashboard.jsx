@@ -199,7 +199,7 @@ const Dashboard = () => {
           <Card
             title="Pickup & Nearby NGOs Map"
             description="Interactive map displaying your location, verified FoodBridge partner NGOs, and active food donation points"
-            icon={<FiMapPin className="h-5 w-5 text-[#428475]" />}
+            icon={<FiMapPin className="h-5 w-5 text-[#BD715C]" />}
             action={
               <Button
                 size="sm"
@@ -208,7 +208,7 @@ const Dashboard = () => {
                 loading={locating}
                 className="gap-1.5 text-xs py-1.5"
               >
-                <FiNavigation className="h-3.5 w-3.5 text-[#428475]" />
+                <FiNavigation className="h-3.5 w-3.5 text-[#BD715C]" />
                 <span>Use My Location</span>
               </Button>
             }
@@ -218,7 +218,7 @@ const Dashboard = () => {
                 {locationError}
               </div>
             )}
-            <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+            <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
               <NGOMap
                 pickupLocation={activeDonorLocation}
                 initialNgos={nearbyNgos}
@@ -245,7 +245,7 @@ const Dashboard = () => {
                     title: 'Food Item',
                     render: (r) => (
                       <div
-                        className="font-semibold text-[#1A312C] hover:text-[#2F8F72] cursor-pointer transition-colors"
+                        className="font-semibold text-[#292B29] hover:text-[#BD715C] cursor-pointer transition-colors"
                         onClick={() => navigate(`/donor/donations/${r._id || r.id}`)}
                       >
                         {r.foodName || r.name || 'Food Item'}
@@ -255,7 +255,7 @@ const Dashboard = () => {
                   {
                     key: 'quantity',
                     title: 'Quantity',
-                    render: (r) => <span className="font-medium text-slate-700">{r.quantity} {r.unit || ''}</span>
+                    render: (r) => <span className="font-medium text-[#626760]">{r.quantity} {r.unit || ''}</span>
                   },
                   {
                     key: 'status',
@@ -270,7 +270,7 @@ const Dashboard = () => {
                         size="xs"
                         variant="outline"
                         onClick={() => navigate(`/donor/donations/${r._id || r.id}`)}
-                        className="text-[11px] py-1 px-2.5 gap-1 border-[#79D6B2] text-[#2F8F72] hover:bg-[#E8F6F0]"
+                        className="text-[11px] py-1 px-2.5 gap-1 border-[#BD715C]/40 text-[#BD715C] hover:bg-[#F3DED6]/40"
                       >
                         <FiActivity className="h-3 w-3" />
                         <span>AI Risk</span>
@@ -295,7 +295,7 @@ const Dashboard = () => {
             >
               <DataTable
                 columns={[
-                  { key: 'ngoName', title: 'NGO Partner', render: (r) => <span className="font-bold text-[#1A312C]">{r.ngoId?.name || r.ngoName || 'NGO'}</span> },
+                  { key: 'ngoName', title: 'NGO Partner', render: (r) => <span className="font-bold text-[#292B29]">{r.ngoId?.name || r.ngoName || 'NGO'}</span> },
                   { key: 'status', title: 'Status', render: (r) => <Badge variant={r.status === 'ACCEPTED' ? 'success' : 'warning'}>{r.status || 'PENDING'}</Badge> }
                 ]}
                 data={recentRequests}

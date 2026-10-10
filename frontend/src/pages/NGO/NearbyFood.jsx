@@ -69,17 +69,17 @@ const NearbyFood = () => {
               <img
                 src={imgUrl}
                 alt={row.foodName || row.name || 'Food'}
-                className="h-12 w-12 rounded-xl object-cover border border-[#89D7B7]/60 shadow-xs shrink-0"
+                className="h-12 w-12 rounded-xl object-cover border border-[#E6DED6] shadow-xs shrink-0"
               />
             ) : (
-              <div className="h-12 w-12 rounded-xl border border-[#89D7B7]/60 bg-[#FFF4E1]/50 flex items-center justify-center text-[#428475] shrink-0">
+              <div className="h-12 w-12 rounded-xl border border-[#E6DED6] bg-[#FAF7F2] flex items-center justify-center text-[#BD715C] shrink-0">
                 <FiBox className="h-5 w-5" />
               </div>
             )}
             <div>
-              <div className="font-extrabold text-[#1A312C] text-sm">{row.foodName || row.name}</div>
-              <div className="text-xs text-slate-500 flex items-center gap-1">
-                <FiMapPin className="h-3 w-3 text-[#428475]" />
+              <div className="font-extrabold text-[#292B29] text-sm">{row.foodName || row.name}</div>
+              <div className="text-xs text-[#626760] flex items-center gap-1">
+                <FiMapPin className="h-3 w-3 text-[#BD715C]" />
                 <span>{row.pickupAddress || 'Local Area'}</span>
               </div>
             </div>
@@ -95,12 +95,12 @@ const NearbyFood = () => {
     {
       key: 'quantity',
       title: 'Quantity',
-      render: (row) => <span className="font-bold text-[#428475]">{row.quantity} {row.unit || 'servings'}</span>
+      render: (row) => <span className="font-bold text-[#BD715C]">{row.quantity} {row.unit || 'servings'}</span>
     },
     {
       key: 'donorName',
       title: 'Donor',
-      render: (row) => <span className="text-xs font-semibold text-slate-700">{row.donorName || row.donorId?.name || 'Verified Donor'}</span>
+      render: (row) => <span className="text-xs font-semibold text-[#292B29]">{row.donorName || row.donorId?.name || 'Verified Donor'}</span>
     },
     {
       key: 'actions',
@@ -127,23 +127,23 @@ const NearbyFood = () => {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <Card title="Surplus Listings" icon={<FiSearch className="h-5 w-5" />}>
-            <form onSubmit={handleSubmit(onSearch)} className="mb-6 flex flex-wrap items-center gap-2.5 bg-[#FFF4E1]/40 p-3 rounded-2xl border border-[#89D7B7]">
+          <Card title="Surplus Listings" icon={<FiSearch className="h-5 w-5 text-[#BD715C]" />}>
+            <form onSubmit={handleSubmit(onSearch)} className="mb-6 flex flex-wrap items-center gap-2.5 bg-[#FAF7F2] p-3 rounded-2xl border border-[#E6DED6]">
               <input
                 {...register('q')}
                 placeholder="Search food name..."
-                className="flex-1 min-w-[160px] rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-[#1A312C] outline-none focus:border-[#428475]"
+                className="flex-1 min-w-[160px] rounded-xl border border-[#E6DED6] bg-white px-3.5 py-2 text-xs font-medium text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               <input
                 {...register('category')}
                 placeholder="Category (e.g. Cooked)"
-                className="w-36 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-medium text-[#1A312C] outline-none focus:border-[#428475]"
+                className="w-36 rounded-xl border border-[#E6DED6] bg-white px-3.5 py-2 text-xs font-medium text-[#292B29] outline-none focus:border-[#BD715C] focus:ring-1 focus:ring-[#BD715C]"
               />
               <Button type="submit" size="sm" className="gap-1">
                 <FiFilter className="h-3.5 w-3.5" />
                 <span>Filter</span>
               </Button>
-              <Button type="button" size="sm" variant="outline" onClick={onClear} className="bg-white text-slate-600 border-slate-200">
+              <Button type="button" size="sm" variant="outline" onClick={onClear} className="bg-white text-[#626760] border-[#E6DED6] hover:bg-[#FAF7F2]">
                 Clear
               </Button>
             </form>
@@ -161,8 +161,8 @@ const NearbyFood = () => {
         </div>
 
         <div>
-          <Card title="Donation Locations Map" icon={<FiMapPin className="h-5 w-5" />}>
-            <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+          <Card title="Donation Locations Map" icon={<FiMapPin className="h-5 w-5 text-[#BD715C]" />}>
+            <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
               <NGOMap
                 key={`nearby-food-map-${donations.length}`}
                 pickupLocation={currentLocation}

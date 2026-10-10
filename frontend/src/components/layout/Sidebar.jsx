@@ -64,26 +64,26 @@ const Sidebar = ({
             aria-label={item.label}
             className={({ isActive }) =>
               `group relative flex items-center ${
-                collapsed ? 'justify-center px-2' : 'gap-3.5 px-4'
-              } rounded-xl py-3 text-sm font-semibold transition-all duration-200 ${
+                collapsed ? 'justify-center px-2 py-3' : 'gap-3.5 px-3.5 py-3'
+              } rounded-2xl text-sm font-semibold transition-all duration-200 outline-none focus:ring-2 focus:ring-[#BD715C]/30 ${
                 isActive
-                  ? 'bg-[#2F8F72] text-white shadow-md'
-                  : 'text-slate-200 hover:bg-[#79D6B2]/15 hover:text-white'
+                  ? 'bg-[#BD715C] text-white shadow-[0_4px_16px_rgba(189,113,92,0.30)]'
+                  : 'bg-transparent text-[#292B29] hover:bg-[#F3DED6] hover:text-[#BD715C] hover:shadow-xs hover:-translate-y-0.5'
               }`
             }
             onClick={onClose}
           >
-            <span className="text-lg text-[#79D6B2] group-hover:text-white shrink-0 flex items-center justify-center">
+            <span className="text-lg shrink-0 flex items-center justify-center transition-transform duration-200 group-hover:scale-105">
               {icon}
             </span>
             {!collapsed && (
-              <span className="truncate transition-opacity duration-200">
+              <span className="truncate transition-opacity duration-200 font-bold">
                 {item.label}
               </span>
             )}
             {/* Tooltip in collapsed mode */}
             {collapsed && (
-              <div className="absolute left-full ml-3 hidden group-hover:block z-50 whitespace-nowrap rounded-lg bg-[#102A2A] border border-[#79D6B2]/40 px-3 py-1.5 text-xs font-bold text-white shadow-xl pointer-events-none">
+              <div className="absolute left-full ml-3 hidden group-hover:block z-50 whitespace-nowrap rounded-xl bg-[#292B29] border border-[#E6DED6]/20 px-3 py-1.5 text-xs font-bold text-white shadow-xl pointer-events-none">
                 {item.label}
               </div>
             )}
@@ -96,26 +96,26 @@ const Sidebar = ({
   return (
     <>
       <div
-        className={`fixed inset-0 z-30 bg-[#102A2A]/60 backdrop-blur-xs transition-opacity md:hidden ${
+        className={`fixed inset-0 z-30 bg-[#292B29]/40 backdrop-blur-xs transition-opacity md:hidden ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={onClose}
       />
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex flex-col overflow-hidden bg-[#102A2A] text-white px-3 py-6 shadow-2xl transition-all duration-300 md:sticky md:top-[61px] md:h-[calc(100vh-61px)] md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex flex-col overflow-hidden bg-white/95 backdrop-blur-xl md:bg-transparent md:backdrop-blur-none text-[#292B29] border-r border-[#E6DED6] md:border-r-0 px-3 py-6 shadow-xl md:shadow-none transition-all duration-300 md:sticky md:top-[61px] md:h-[calc(100vh-61px)] md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } ${widthClass} ${className}`}
       >
         {/* LOGO AREA */}
         <div className="mb-6 flex items-center justify-between">
           <div className={`flex items-center gap-3 px-2 ${collapsed ? 'justify-center w-full' : ''}`}>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2F8F72] text-white shadow-sm">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#BD715C] text-white shadow-xs transition-transform hover:scale-105">
               <FiHeart className="h-5 w-5" />
             </div>
             {!collapsed && (
               <div className="transition-opacity duration-200">
-                <div className="text-base font-extrabold tracking-wide text-white">FoodBridge</div>
-                <div className="text-[10px] font-bold uppercase tracking-widest text-[#79D6B2]">Platform</div>
+                <div className="text-base font-extrabold tracking-wide text-[#292B29]">FoodBridge</div>
+                <div className="text-[10px] font-bold uppercase tracking-widest text-[#BD715C]">Platform</div>
               </div>
             )}
           </div>
@@ -123,7 +123,7 @@ const Sidebar = ({
             type="button"
             onClick={onClose}
             aria-label="Close sidebar"
-            className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-white/20 text-white hover:bg-white/10 md:hidden"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-xl border border-[#E6DED6] text-[#626760] hover:bg-[#F3DED6] hover:text-[#BD715C] md:hidden"
           >
             <FiX className="h-4 w-4" />
           </button>
@@ -132,7 +132,7 @@ const Sidebar = ({
         {/* NAVIGATION HEADER & TOGGLE ARROW BUTTON */}
         <div className={`mb-4 hidden items-center px-2 md:flex ${collapsed ? 'justify-center' : 'justify-between'}`}>
           {!collapsed && (
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#79D6B2]">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#626760]">
               Navigation
             </span>
           )}
@@ -143,12 +143,12 @@ const Sidebar = ({
               aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               aria-expanded={!collapsed}
               title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/15 text-white transition-all duration-200 hover:bg-white/15 hover:border-white/30 focus:outline-none focus:ring-2 focus:ring-[#79D6B2]"
+              className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#E6DED6] bg-white/60 text-[#292B29] transition-all duration-200 hover:bg-[#F3DED6] hover:text-[#BD715C] hover:border-[#BD715C]/40 hover:-translate-y-0.5 shadow-xs focus:outline-none focus:ring-2 focus:ring-[#BD715C]/30"
             >
               {collapsed ? (
-                <FiChevronRight className="h-4 w-4 text-[#79D6B2]" />
+                <FiChevronRight className="h-4 w-4 text-[#BD715C]" />
               ) : (
-                <FiChevronLeft className="h-4 w-4 text-white" />
+                <FiChevronLeft className="h-4 w-4 text-[#292B29]" />
               )}
             </button>
           )}

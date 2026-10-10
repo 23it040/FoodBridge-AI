@@ -229,23 +229,23 @@ const DonationDetails = () => {
                 src={getFoodImageUrl(donation)}
                 alt={donation.foodName || donation.name || 'Food Donation'}
                 onError={() => setImageError(true)}
-                className="h-56 w-full rounded-2xl object-cover border border-[#89D7B7] shadow-sm"
+                className="h-56 w-full rounded-2xl object-cover border border-[#E6DED6] shadow-sm"
               />
             ) : (
-              <div className="h-56 w-full rounded-2xl border border-[#89D7B7] bg-[#FFF4E1]/40 flex flex-col items-center justify-center gap-2 text-slate-500 shadow-xs p-4 text-center">
-                <FiImage className="h-10 w-10 text-[#428475]/60" />
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">No image uploaded</span>
-                <span className="text-[11px] text-slate-400 font-medium">Donor did not attach a food photo</span>
+              <div className="h-56 w-full rounded-2xl border border-[#E6DED6] bg-[#FAF7F2] flex flex-col items-center justify-center gap-2 text-[#626760] shadow-xs p-4 text-center">
+                <FiImage className="h-10 w-10 text-[#BD715C]" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[#626760]">No image uploaded</span>
+                <span className="text-[11px] text-[#A8ADA5] font-medium">Donor did not attach a food photo</span>
               </div>
             )}
-            <div className="space-y-2 text-xs font-medium text-[#1A312C]">
+            <div className="space-y-2 text-xs font-medium text-[#292B29]">
               <div className="flex items-center gap-2 mb-1">
                 <Badge variant="secondary">{donation.category || 'General'}</Badge>
                 <Badge variant="success">{donation.status || 'AVAILABLE'}</Badge>
               </div>
-              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Quantity</span> <span className="text-sm font-extrabold text-[#428475]">{donation.quantity} {donation.unit || 'servings'}</span></div>
-              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Pickup Address</span> <span className="font-semibold text-slate-800">{donation.pickupAddress || 'Address not specified'}</span></div>
-              <div><span className="font-bold text-slate-500 uppercase tracking-wider block text-[10px]">Expiry</span> <span className="text-amber-700 font-bold">{donation.expiryTime || 'N/A'}</span></div>
+              <div><span className="font-bold text-[#626760] uppercase tracking-wider block text-[10px]">Quantity</span> <span className="text-sm font-extrabold text-[#BD715C]">{donation.quantity} {donation.unit || 'servings'}</span></div>
+              <div><span className="font-bold text-[#626760] uppercase tracking-wider block text-[10px]">Pickup Address</span> <span className="font-semibold text-[#292B29]">{donation.pickupAddress || 'Address not specified'}</span></div>
+              <div><span className="font-bold text-[#626760] uppercase tracking-wider block text-[10px]">Expiry</span> <span className="text-amber-700 font-bold">{donation.expiryTime || 'N/A'}</span></div>
               {donation.description && (
                 <div className="pt-2 border-t border-slate-100 text-slate-600 leading-relaxed text-[11px]">{donation.description}</div>
               )}
@@ -295,7 +295,7 @@ const DonationDetails = () => {
       {/* ============ RECOMMENDED NGO MATCHES ============ */}
       <Card
         title="Recommended NGO Matches"
-        icon={<FiAward className="h-5 w-5 text-[#428475]" />}
+        icon={<FiAward className="h-5 w-5 text-[#BD715C]" />}
         action={
           <Button
             size="sm"
@@ -391,7 +391,7 @@ const DonationDetails = () => {
       {/* ============ PICKUP & NGO ROUTE MAP ============ */}
       <div ref={mapRef}>
         <Card icon={<FiMapPin className="h-5 w-5" />} title="Pickup & NGO Route Map">
-          <div className="overflow-hidden rounded-2xl border border-[#89D7B7]">
+          <div className="overflow-hidden rounded-2xl border border-[#E6DED6]">
             <NGOMap
               pickupLocation={hasValidCoords ? {
                 latitude: donLat,
@@ -412,10 +412,10 @@ const DonationDetails = () => {
         title={selectedNgoModal?.ngoName || selectedNgoModal?.name || 'NGO Details'}
       >
         {selectedNgoModal && (
-          <div className="space-y-4 text-xs font-medium text-[#1A312C]">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div className="space-y-4 text-xs font-medium text-[#292B29]">
+            <div className="flex items-center justify-between pb-2 border-b border-[#E6DED6]/60">
               <div>
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Verification</span>
+                <span className="text-[10px] font-bold text-[#626760] uppercase tracking-wider block">Verification</span>
                 {selectedNgoModal.verified || selectedNgoModal.source === 'FOODBRIDGE' ? (
                   <Badge variant="success"><FiShield className="inline h-3 w-3 mr-1" />Verified Partner</Badge>
                 ) : (
@@ -425,8 +425,8 @@ const DonationDetails = () => {
               <div className="text-right">
                 {(selectedNgoModal.matchScore !== undefined && selectedNgoModal.matchScore !== null) && (
                   <>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Match Score</span>
-                    <span className="text-base font-extrabold text-[#428475]">{formatMatchScore(selectedNgoModal.matchScore)}</span>
+                    <span className="text-[10px] font-bold text-[#626760] uppercase tracking-wider block">Match Score</span>
+                    <span className="text-base font-extrabold text-[#BD715C]">{formatMatchScore(selectedNgoModal.matchScore)}</span>
                   </>
                 )}
               </div>
@@ -473,25 +473,25 @@ const DonationDetails = () => {
               )}
 
               {selectedNgoModal.phone && (
-                <div className="flex items-center gap-2"><FiPhone className="h-3.5 w-3.5 text-[#428475]" /> <span>{selectedNgoModal.phone}</span></div>
+                <div className="flex items-center gap-2"><FiPhone className="h-3.5 w-3.5 text-[#BD715C]" /> <span>{selectedNgoModal.phone}</span></div>
               )}
               {selectedNgoModal.email && (
-                <div className="flex items-center gap-2"><FiMail className="h-3.5 w-3.5 text-[#428475]" /> <span>{selectedNgoModal.email}</span></div>
+                <div className="flex items-center gap-2"><FiMail className="h-3.5 w-3.5 text-[#BD715C]" /> <span>{selectedNgoModal.email}</span></div>
               )}
             </div>
 
             {selectedNgoModal.factors && typeof selectedNgoModal.factors === 'object' && Object.keys(selectedNgoModal.factors).length > 0 && (
-              <div className="pt-2 border-t border-slate-100">
-                <strong className="text-slate-500 uppercase text-[10px] block mb-2">Match Factors</strong>
-                <div className="grid grid-cols-3 gap-2 bg-[#FFF4E1]/40 p-3 rounded-xl text-center">
+              <div className="pt-2 border-t border-[#E6DED6]/60">
+                <strong className="text-[#626760] uppercase text-[10px] block mb-2">Match Factors</strong>
+                <div className="grid grid-cols-3 gap-2 bg-[#FAF7F2] border border-[#E6DED6] p-3 rounded-xl text-center">
                   {selectedNgoModal.factors.distance && (
-                    <div><span className="block text-[9px] uppercase text-slate-400 font-bold">Proximity</span> <span className="font-extrabold text-[#428475]">{selectedNgoModal.factors.distance}</span></div>
+                    <div><span className="block text-[9px] uppercase text-[#626760] font-bold">Proximity</span> <span className="font-extrabold text-[#BD715C]">{selectedNgoModal.factors.distance}</span></div>
                   )}
                   {selectedNgoModal.factors.quantityCompatibility && (
-                    <div><span className="block text-[9px] uppercase text-slate-400 font-bold">Capacity</span> <span className="font-extrabold text-[#428475]">{selectedNgoModal.factors.quantityCompatibility}</span></div>
+                    <div><span className="block text-[9px] uppercase text-[#626760] font-bold">Capacity</span> <span className="font-extrabold text-[#BD715C]">{selectedNgoModal.factors.quantityCompatibility}</span></div>
                   )}
                   {selectedNgoModal.factors.urgency && (
-                    <div><span className="block text-[9px] uppercase text-slate-400 font-bold">Urgency</span> <span className="font-extrabold text-[#428475]">{selectedNgoModal.factors.urgency}</span></div>
+                    <div><span className="block text-[9px] uppercase text-[#626760] font-bold">Urgency</span> <span className="font-extrabold text-[#BD715C]">{selectedNgoModal.factors.urgency}</span></div>
                   )}
                 </div>
               </div>

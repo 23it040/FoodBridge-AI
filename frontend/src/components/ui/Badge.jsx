@@ -1,14 +1,16 @@
 import { memo } from 'react';
 
 const variantStyles = {
-  default: 'bg-[#E8F6F0] text-[#102A2A] border border-[#79D6B2]/40',
-  primary: 'bg-[#2F8F72] text-white',
-  secondary: 'bg-[#79D6B2]/25 text-[#102A2A] border border-[#79D6B2]/40',
+  default: 'bg-[#FAF7F2] text-[#626760] border border-[#E6DED6]',
+  primary: 'bg-[#F3DED6] text-[#BD715C] border border-[#BD715C]/30',
+  secondary: 'bg-[#E6EEE8] text-[#7D9588] border border-[#7D9588]/30',
+  terracotta: 'bg-[#BD715C] text-white shadow-xs',
+  sage: 'bg-[#7D9588] text-white shadow-xs',
   success: 'bg-emerald-50 text-emerald-800 border border-emerald-200',
   warning: 'bg-amber-50 text-amber-800 border border-amber-200',
-  danger: 'bg-red-50 text-red-800 border border-red-200',
-  info: 'bg-sky-50 text-sky-800 border border-sky-200',
-  outline: 'bg-white text-slate-700 border border-slate-300'
+  danger: 'bg-rose-50 text-rose-800 border border-rose-200',
+  info: 'bg-[#EAF2F4] text-[#487180] border border-[#7196A3]/30',
+  outline: 'bg-white text-[#626760] border border-[#E6DED6]'
 };
 
 const Badge = ({ variant = 'default', children, className = '' }) => (
