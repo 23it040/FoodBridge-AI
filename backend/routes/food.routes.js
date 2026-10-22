@@ -12,6 +12,8 @@ const {
 const router = express.Router();
 
 // Public / optionally authenticated routes
+router.get('/metrics/impact', optionalAuthenticate, asyncHandler(foodDonationController.getDonationImpactMetrics));
+router.get('/summary', optionalAuthenticate, asyncHandler(foodDonationController.getDonationImpactMetrics));
 router.get('/', optionalAuthenticate, asyncHandler(foodDonationController.listDonations));
 router.get('/:id', optionalAuthenticate, asyncHandler(foodDonationController.getDonation));
 

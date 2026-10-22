@@ -661,6 +661,18 @@ const getDonationSpoilageRisk = async (req, res) => {
   }
 };
 
+const getDonationImpactMetrics = async (req, res) => {
+  const metrics = await foodDonationService.getDonationImpactMetrics();
+  res.status(200).json(
+    new ApiResponse({
+      success: true,
+      statusCode: 200,
+      message: 'Platform redistribution and environmental impact metrics retrieved successfully',
+      data: metrics
+    })
+  );
+};
+
 module.exports = {
   createDonation,
   listDonations,
@@ -669,5 +681,6 @@ module.exports = {
   deleteDonation,
   getDonationMatches,
   getDonationSpoilageRisk,
-  calculateLogisticsMatchScore
+  calculateLogisticsMatchScore,
+  getDonationImpactMetrics
 };
