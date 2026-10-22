@@ -97,6 +97,14 @@ const Navigation = () => {
             >
               Impact
             </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('faq')}
+              className="text-xs font-semibold tracking-wide text-[#5E625D] transition-colors hover:text-[#BD715C]"
+            >
+              FAQ
+            </button>
           </nav>
 
           {/* RIGHT: Actions */}
@@ -181,6 +189,13 @@ const Navigation = () => {
                 className="text-left px-3 py-2 text-sm font-semibold text-[#73756F] hover:bg-[#F1DED7]/40 hover:text-[#2E302D] rounded-xl"
               >
                 Impact
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollToSection('faq')}
+                className="text-left px-3 py-2 text-sm font-semibold text-[#73756F] hover:bg-[#F1DED7]/40 hover:text-[#2E302D] rounded-xl"
+              >
+                FAQ & Safety
               </button>
               <div className="my-1 border-t border-[#E5DED7]" />
               {!isAuthenticated ? (

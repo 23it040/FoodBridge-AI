@@ -5,6 +5,7 @@ import LiveMapSection from '../../components/home/LiveMapSection';
 import SmartMatchingSection from '../../components/home/SmartMatchingSection';
 import ImpactSection from '../../components/home/ImpactSection';
 import ImpactCalculator from '../../components/home/ImpactCalculator';
+import FAQSection from '../../components/home/FAQSection';
 import FinalCTA from '../../components/home/FinalCTA';
 
 const HomePage = () => (
@@ -16,6 +17,7 @@ const HomePage = () => (
     <SmartMatchingSection />
     <ImpactSection />
     <ImpactCalculator />
+    <FAQSection />
     <FinalCTA />
   </div>
 );
